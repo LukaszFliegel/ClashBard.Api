@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClashBard.Api", "ClashBard.Api\ClashBard.Api.csproj", "{AE130008-A48E-4D3F-AA5D-0D55523DEED8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClashBard.Tow.Domain", "ClashBard.Tow.Domain\ClashBard.Tow.Domain.csproj", "{58A88BF9-1A2B-4596-8018-0F492AE34991}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{046E5CD3-807D-445E-8018-1F51A608D752}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClashBard.Tow.DataAccess", "ClashBard.Tow.DataAccess\ClashBard.Tow.DataAccess.csproj", "{6A6D35A3-4B1E-4D08-8E0A-2EDD215E3047}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClashBard.Tow.Models", "ClashBard.Tow.Models\ClashBard.Tow.Models.csproj", "{65D2D74B-53BC-4812-A05D-FAFB594E874F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE130008-A48E-4D3F-AA5D-0D55523DEED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE130008-A48E-4D3F-AA5D-0D55523DEED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE130008-A48E-4D3F-AA5D-0D55523DEED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE130008-A48E-4D3F-AA5D-0D55523DEED8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58A88BF9-1A2B-4596-8018-0F492AE34991}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58A88BF9-1A2B-4596-8018-0F492AE34991}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58A88BF9-1A2B-4596-8018-0F492AE34991}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58A88BF9-1A2B-4596-8018-0F492AE34991}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A6D35A3-4B1E-4D08-8E0A-2EDD215E3047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A6D35A3-4B1E-4D08-8E0A-2EDD215E3047}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A6D35A3-4B1E-4D08-8E0A-2EDD215E3047}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A6D35A3-4B1E-4D08-8E0A-2EDD215E3047}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65D2D74B-53BC-4812-A05D-FAFB594E874F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65D2D74B-53BC-4812-A05D-FAFB594E874F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65D2D74B-53BC-4812-A05D-FAFB594E874F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65D2D74B-53BC-4812-A05D-FAFB594E874F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74811242-D663-46EE-8E05-E5A3AFDA51F2}
+	EndGlobalSection
+EndGlobal
