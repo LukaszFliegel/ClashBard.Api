@@ -10,7 +10,7 @@ public class ArmyListController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        //return Ok(await Mediator.Send(new GetArmyListsQuery()));
+        return Ok();
     }
 
 }

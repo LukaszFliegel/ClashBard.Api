@@ -1,17 +1,35 @@
-﻿using ClashBard.Tow.Pdf.Console;
-using QuestPDF;
+﻿using ClashBard.Tow.DataAccess;
+using ClashBard.Tow.DataAccess.FactionRepositories;
+using ClashBard.Tow.Pdf.Console;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using QuestPDF.Previewer;
 
-//QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
+var builder = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-// parse dark-elves-default.owb.json into OwbImportModel
-var owbImportModel = Newtonsoft.Json.JsonConvert.DeserializeObject<OwbImportModel>(System.IO.File.ReadAllText("dark-elves-default.owb.json"));
+IConfiguration configuration = builder.Build();
+
+var services = new ServiceCollection();
+services.AddDbContext<TowDbContext>(options =>
+        options.UseSqlServer(configuration.GetConnectionString("ClashBardConnection")));
+services.AddTransient<DarkElvesRepository>();
+services.AddTransient<SampleArmyList>();
+
+var serviceProvider = services.BuildServiceProvider();
+
+var sampleArmyList = serviceProvider.GetService<SampleArmyList>();
+
+var army = sampleArmyList.GetSampleDarkElfArmy();
 
 Document.Create(container =>
 {
+
     float fontSize = 10;
     container.Page(page =>
     {
@@ -27,8 +45,8 @@ Document.Create(container =>
             });
 
 
-            table.Cell().Row(1).Column(1).Padding(4).AlignRight().Text($"{owbImportModel.points} Pts");
-            table.Cell().Row(1).Column(2).Padding(4).AlignLeft().Text($"{owbImportModel.army} Roster");
+            table.Cell().Row(1).Column(1).Padding(4).AlignRight().Text($"{army.Points} Pts");
+            table.Cell().Row(1).Column(2).Padding(4).AlignLeft().Text($"{army.Faction.Name} Roster");
         });
 
         //page.Content().PaddingVertical(1, Unit.Centimetre)
@@ -79,12 +97,12 @@ Document.Create(container =>
             table.Cell().Row(1).Column(16).Element(Block).Text("US").FontSize(fontSize);
             table.Cell().Row(1).Column(17).Element(Block).Text("Cost").FontSize(fontSize);
 
-            uint RowIterator = 2;
-            foreach (var character in owbImportModel.characters)
-            {
-                table.Cell().Row(RowIterator).Column(1).Element(Block).Text(character.name_en).FontSize(fontSize);
-                table.Cell().Row(RowIterator).Column(2).Element(Block).Text(1).FontSize(fontSize);
-            }
+            //uint RowIterator = 2;
+            //foreach (var character in owbImportModel.characters)
+            //{
+            //    table.Cell().Row(RowIterator).Column(1).Element(Block).Text(character.name_en).FontSize(fontSize);
+            //    table.Cell().Row(RowIterator).Column(2).Element(Block).Text(1).FontSize(fontSize);
+            //}
 
             static IContainer Block(IContainer container)
             {
