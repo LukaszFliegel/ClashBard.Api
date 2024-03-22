@@ -39,6 +39,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ClashBard.Tow.DataAccess\ClashBard.Tow.DataAccess.csproj" />
     <ProjectReference Include="..\ClashBard.Tow.Models\ClashBard.Tow.Models.csproj" />
+    <ProjectReference Include="..\ClashBard.Tow.StaticData\ClashBard.Tow.StaticData.csproj" />
   </ItemGroup>
 
 </Project>

@@ -17,6 +17,7 @@ public class TowModelAdditional
     public int Attacks { get; set; }
     public int Leadership { get; set; }
 
-    public required TowFaction Faction { get; set; }
-    public ICollection<TowModelSpecialRule>? SpecialRules { get; set; }
+    //public virtual required int FactionId { get; set; }
+    public virtual TowFaction Faction { get; set; }
+    public ICollection<TowSpecialRule>? SpecialRules { get; set; }
 }

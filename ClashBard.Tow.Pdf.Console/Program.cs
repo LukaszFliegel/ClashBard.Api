@@ -1,6 +1,8 @@
 ﻿using ClashBard.Tow.DataAccess;
-using ClashBard.Tow.DataAccess.FactionRepositories;
 using ClashBard.Tow.Pdf.Console;
+using ClashBard.Tow.StaticData.FactionRepositories;
+using ClashBard.Tow.StaticData.Repositories;
+using ClashBard.Tow.StaticData.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,8 +20,13 @@ IConfiguration configuration = builder.Build();
 var services = new ServiceCollection();
 services.AddDbContext<TowDbContext>(options =>
         options.UseSqlServer(configuration.GetConnectionString("ClashBardConnection")));
-services.AddTransient<DarkElvesRepository>();
 services.AddTransient<SampleArmyList>();
+services.AddTransient<DarkElvesRepository>();
+services.AddTransient<IFactionsListRepository, FactionsListRepository>();
+services.AddTransient<IWeaponsRepository, WeaponsRepository>();
+services.AddTransient<IArmorsRepository, ArmorsRepository>();
+services.AddTransient<ISpecialRulesRepository, SpecialRulesRepository>();
+
 
 var serviceProvider = services.BuildServiceProvider();
 
@@ -46,7 +53,7 @@ Document.Create(container =>
 
 
             table.Cell().Row(1).Column(1).Padding(4).AlignRight().Text($"{army.Points} Pts");
-            table.Cell().Row(1).Column(2).Padding(4).AlignLeft().Text($"{army.Faction.Name} Roster");
+            table.Cell().Row(1).Column(2).Padding(4).AlignLeft().Text($"{army.Faction.FactionType} Roster");
         });
 
         //page.Content().PaddingVertical(1, Unit.Centimetre)

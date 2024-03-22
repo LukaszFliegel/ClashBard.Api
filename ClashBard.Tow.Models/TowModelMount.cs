@@ -21,10 +21,12 @@ public class TowModelMount
 
     public int PointsCostAdded { get; set; }
 
-    public TowModelTroopType ModelTroopType { get; set; }
+    public required TowModelTroopType ModelTroopType { get; set; }
 
     public virtual ICollection<TowModelAdditional>? Crew { get; set; }
 
-    public required TowFaction Faction { get; set; }
-    public ICollection<TowModelSpecialRule>? SpecialRules { get; set; }
+
+    //public virtual required int FactionId { get; set; }
+    public required virtual TowFaction Faction { get; set; }
+    public ICollection<TowSpecialRule>? SpecialRules { get; set; }
 }

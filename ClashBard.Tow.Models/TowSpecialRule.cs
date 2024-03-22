@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClashBard.Tow.Models.TowTypes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,13 +8,15 @@ using System.Threading.Tasks;
 
 namespace ClashBard.Tow.Models;
 
-public class TowModelSpecialRule
+public class TowSpecialRule
 {
-    [Key]
-    public int Id { get; set; }
-    public string Name { get; set; }
+    //[Key]
+    //public int Id { get; set; }
+    //public string Name { get; set; }
+
+    public TowSpecialRuleType RuleType { get; set; }
     public string ShortDescription { get; set; }
     public string LongDescription { get; set; }
 
-    public ICollection<TowModel> TowModel { get; set; }
+    //public ICollection<TowModel> TowModel { get; set; }
 }

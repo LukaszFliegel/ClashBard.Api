@@ -11,4 +11,6 @@ public class TowArmy
     public int Points { get; set; }
     public TowFaction Faction { get; set; }
     public ICollection<TowModel> Models { get; set; }
+
+    public TowCharacter General { get; set; }
 }
