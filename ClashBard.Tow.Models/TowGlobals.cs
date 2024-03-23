@@ -25,6 +25,6 @@ public static class TowGlobals
     //public static string LizardmenName = "Lizardmen";
     //public static string ChaosDwarfsName = "Chaos Dwarfs";
 
-    public static TowWeapon HandWeapon = new TowWeapon { WeaponType = TowWeaponType.AdditionalHandWeapon, Range = 0, Strength = TowWeaponStrength.S, ArmorPiercing = 0, SpecialRules = null };
+    //public static TowWeapon HandWeapon = new TowWeapon { WeaponType = TowWeaponType.AdditionalHandWeapon, Range = 0, Strength = TowWeaponStrength.S, ArmorPiercing = 0, SpecialRules = null };
     //new TowWeapon { Id = 1, Name = "Hand Weapon", Range = 0, Strength = TowWeaponStrength.S, ArmorPiercing = 0, SpecialRules = null };
 }

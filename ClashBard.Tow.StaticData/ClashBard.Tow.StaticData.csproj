@@ -10,4 +10,12 @@
     <ProjectReference Include="..\ClashBard.Tow.Models\ClashBard.Tow.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\dev\GitHub\ClashBard.Api\ClashBard.Tow.StaticData\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\dev\GitHub\ClashBard.Api\ClashBard.Tow.StaticData\.editorconfig" />
+  </ItemGroup>
+
 </Project>

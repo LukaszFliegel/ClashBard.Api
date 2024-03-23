@@ -8,7 +8,7 @@ namespace ClashBard.Tow.Models.TowTypes;
 
 
 
-public enum TowDarkElfModelType
+public enum DarkElfTowModelType
 {
     DarkElfDreadlord,
     DarkElfMaster,

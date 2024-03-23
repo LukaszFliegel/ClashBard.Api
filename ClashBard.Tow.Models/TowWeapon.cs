@@ -5,10 +5,19 @@ namespace ClashBard.Tow.Models;
 
 public class TowWeapon
 {
+    public TowWeapon(TowWeaponType weaponType, int range, TowWeaponStrength strength, int armorPiercing)
+    {
+        WeaponType = weaponType;
+        Range = range;
+        Strength = strength;
+        ArmorPiercing = armorPiercing;
+    }
+
+
     //[Key]
     //public int Id { get; set; }
 
-    public required TowWeaponType WeaponType { get; set; }
+    public TowWeaponType WeaponType { get; set; }
     //public required string Name { get; set; }
 
     public int Range { get; set; } = 0;
@@ -18,7 +27,7 @@ public class TowWeapon
     public int ArmorPiercing { get; set; }
 
     //public virtual ICollection<int>? SpecialRuleId { get; set; }
-    public virtual ICollection<TowSpecialRule>? SpecialRules { get; set; }
+    public virtual ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>();
 
     //public required TowModel OwnerModel { get; set; }
 

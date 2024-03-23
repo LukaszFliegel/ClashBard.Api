@@ -10,6 +10,13 @@ namespace ClashBard.Tow.Models;
 
 public class TowSpecialRule
 {
+    public TowSpecialRule(TowSpecialRuleType ruleType, string shortDescription, string longDescription)
+    {
+        RuleType = ruleType;
+        ShortDescription = shortDescription;
+        LongDescription = longDescription;
+    }
+
     //[Key]
     //public int Id { get; set; }
     //public string Name { get; set; }

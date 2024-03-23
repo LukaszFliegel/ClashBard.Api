@@ -68,6 +68,8 @@ public enum TowSpecialRuleType
     FuriousCharge,
     [Description("Hatred (X)")]
     HatredX,
+    [Description("Hatred (High Elves)")]
+    HatredHighElves,
     [Description("Horde")]
     Horde,
     [Description("Howdah")]

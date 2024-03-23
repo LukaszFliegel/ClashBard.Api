@@ -1,8 +1,7 @@
 ﻿using ClashBard.Tow.DataAccess;
+using ClashBard.Tow.Models.Deprecated.Repositories;
+using ClashBard.Tow.Models.Interfaces;
 using ClashBard.Tow.Pdf.Console;
-using ClashBard.Tow.StaticData.FactionRepositories;
-using ClashBard.Tow.StaticData.Repositories;
-using ClashBard.Tow.StaticData.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +20,7 @@ var services = new ServiceCollection();
 services.AddDbContext<TowDbContext>(options =>
         options.UseSqlServer(configuration.GetConnectionString("ClashBardConnection")));
 services.AddTransient<SampleArmyList>();
-services.AddTransient<DarkElvesRepository>();
+//services.AddTransient<DarkElvesRepository>();
 services.AddTransient<IFactionsListRepository, FactionsListRepository>();
 services.AddTransient<IWeaponsRepository, WeaponsRepository>();
 services.AddTransient<IArmorsRepository, ArmorsRepository>();

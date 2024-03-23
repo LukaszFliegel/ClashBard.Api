@@ -1,24 +1,14 @@
 ﻿using ClashBard.Tow.Models;
-using ClashBard.Tow.Models.TowTypes;
-using ClashBard.Tow.StaticData.FactionRepositories;
-using ClashBard.Tow.StaticData.Factions;
-using ClashBard.Tow.StaticData.Repositories.Interfaces;
+using ClashBard.Tow.Models.Factions;
+using ClashBard.Tow.Models.Interfaces;
 
 namespace ClashBard.Tow.Pdf.Console;
 
 public class SampleArmyList
 {
-    private readonly DarkElvesRepository _darkElvesRepository;
-    private readonly IWeaponsRepository _weaponsRepository;
-    private readonly IArmorsRepository _armorsRepository;
-    private readonly IFactionsListRepository _factionsListRepository;
-
-    public SampleArmyList(DarkElvesRepository darkElvesRepository, IWeaponsRepository weaponsRepository, IArmorsRepository armorsRepository, IFactionsListRepository factionsListRepository)
+    public SampleArmyList()
     {
-        _darkElvesRepository = darkElvesRepository;
-        _weaponsRepository = weaponsRepository;
-        _armorsRepository = armorsRepository;
-        _factionsListRepository = factionsListRepository;
+
     }
 
     public TowArmy GetSampleDarkElfArmy()
