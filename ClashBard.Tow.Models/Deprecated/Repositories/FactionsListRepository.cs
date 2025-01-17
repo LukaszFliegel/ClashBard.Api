@@ -1,4 +1,5 @@
-﻿using ClashBard.Tow.Models.Interfaces;
+﻿using ClashBard.Tow.Models.Factions;
+using ClashBard.Tow.Models.Interfaces;
 using ClashBard.Tow.Models.TowTypes;
 using System;
 using System.Collections.Generic;
@@ -28,22 +29,22 @@ public class FactionsListRepository : IFactionsListRepository
     {
         var factionsTemp = new List<TowFaction>
         {
-            new TowFaction { FactionType = TowFactionType.EmpireOfMan },
-            new TowFaction { FactionType = TowFactionType.OrcAndGoblinTribes},
-            new TowFaction { FactionType = TowFactionType.DwarfenMountainHolds},
-            new TowFaction { FactionType = TowFactionType.WarriorsOfChaos},
-            new TowFaction { FactionType = TowFactionType.KingdomOfBretonnia},
-            new TowFaction { FactionType = TowFactionType.BeastmenBrayherds},
-            new TowFaction { FactionType = TowFactionType.WoodElves},
-            new TowFaction { FactionType = TowFactionType.TombKingsOfKhemri},
-            new TowFaction { FactionType = TowFactionType.HighElves},
-            new TowFaction { FactionType = TowFactionType.DarkElves},
-            new TowFaction { FactionType = TowFactionType.Skaven},
-            new TowFaction { FactionType = TowFactionType.VampireCounts},
-            new TowFaction { FactionType = TowFactionType.DaemonsOfChaos},
-            new TowFaction { FactionType = TowFactionType.OgreKingdoms},
-            new TowFaction { FactionType = TowFactionType.Lizardmen},
-            new TowFaction { FactionType = TowFactionType.ChaosDwarfs }
+            new EmpireOfManTowFaction(),
+            new OrcAndGoblinTribesTowFaction(),
+            new DwarfenMountainHoldsTowFaction(),
+            new WarriorsOfChaosTowFaction(),
+            new KingdomOfBretonniaTowFaction(),
+            new BeastmenBrayherdsTowFaction(),
+            new WoodElvesTowFaction(),
+            new TombKingsOfKhemriTowFaction(),
+            new HighElvesTowFaction(),
+            new DarkElvesTowFaction(),
+            new SkavenTowFaction(),
+            new VampireCountsTowFaction(),
+            new DaemonsOfChaosTowFaction(),
+            new OgreKingdomsTowFaction(),
+            new LizardmenTowFaction(),
+            new ChaosDwarfsTowFaction()
         };
 
         Factions.AddRange(factionsTemp);

@@ -1,11 +1,12 @@
 ﻿using ClashBard.Tow.Models.TowTypes;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace ClashBard.Tow.Models;
 
 public class TowWeapon
 {
-    public TowWeapon(TowWeaponType weaponType, int range, TowWeaponStrength strength, int armorPiercing)
+    public TowWeapon(TowWeaponType weaponType, int? range, TowWeaponStrength strength, int armorPiercing)
     {
         WeaponType = weaponType;
         Range = range;
@@ -13,51 +14,40 @@ public class TowWeapon
         ArmorPiercing = armorPiercing;
     }
 
-
-    //[Key]
-    //public int Id { get; set; }
-
     public TowWeaponType WeaponType { get; set; }
-    //public required string Name { get; set; }
 
-    public int Range { get; set; } = 0;
+    public int? Range { get; set; } = 0; // 0 means range "Combat"
 
     public TowWeaponStrength Strength { get; set; }
 
     public int ArmorPiercing { get; set; }
 
-    //public virtual ICollection<int>? SpecialRuleId { get; set; }
     public virtual ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>();
 
-    //public required TowModel OwnerModel { get; set; }
-
-    //public void AssigneToOwner()
-    //{
-    //    if(OwnerModel == null)
-    //    {
-    //        throw new Exception($"Owner model of {Name} weapon not set");
-    //    }
-
-    //    OwnerModel.Weapons.Add(this);
-    //}
-
-    //public void UnassigneFromOwner()
-    //{
-    //    if (OwnerModel == null)
-    //    {
-    //        throw new Exception($"Owner model of {Name} weapon not set");
-    //    }
-
-    //    OwnerModel.Weapons.Remove(this);
-    //}
 }
 
 public enum TowWeaponStrength
 {
+    [Description("S")]
     S = 1,
+    [Description("S+1")]
     Splus1,
+    [Description("S+2")]
     Splus2,
+    [Description("S+3")]
     Splus3,
+    [Description("2")]
+    Two,
+    [Description("3")]
     Three,
+    [Description("4")]
     Four,
+    [Description("5")]
+    Five,
+    [Description("6")]
+    Six,
+    [Description("10")]
+    Ten,
+    [Description("*")]
+    Special,
 }

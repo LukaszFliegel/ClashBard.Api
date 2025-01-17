@@ -8,9 +8,11 @@ namespace ClashBard.Tow.Models.FactionModels.DarkElves;
 
 public class DarkElfWarriorTowModel : TowModel
 {
+    private static int pointsCost = 8;
+
     public DarkElfWarriorTowModel() : this(m: 5, ws: 4, bs: 4, s: 3, t: 3, w: 1, i: 4, a: 1, ld: 8)
     {
-        AssignCommandGroupCost(new DarkElfWarriorChampionTowModel(), 5, 5, 5, 50, "Lordling");
+        SetCommandGroup(new DarkElfWarriorChampionTowModel(), 5, 5, 5, 50, "Lordling");
 
         Armors.Add(new LightArmorTowArmor());
         Armors.Add(new ShieldTowArmor());
@@ -25,8 +27,8 @@ public class DarkElfWarriorTowModel : TowModel
         AvailableSpecialRules.Add((TowSpecialRuleType.Veteran, 1));
     }
 
-    public DarkElfWarriorTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(DarkElfTowModelType.DarkElfWarriors, m, ws, bs, s, t, w, i, a, ld, pointCost: 8, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
+    protected DarkElfWarriorTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
+        : base(DarkElfTowModelType.DarkElfWarriors, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
     {
     }
 }

@@ -6,11 +6,13 @@ using ClashBard.Tow.Models.Weapons;
 
 namespace ClashBard.Tow.Models.FactionModels.DarkElves;
 
-public class RepeaterCrossbowmenTowModel : TowModel
+public class RepeaterCrossbowmanTowModel : TowModel
 {
-    public RepeaterCrossbowmenTowModel() : this(m: 5, ws: 4, bs: 4, s: 3, t: 3, w: 1, i: 4, a: 1, ld: 8)
+    private static int pointsCost = 11;
+
+    public RepeaterCrossbowmanTowModel() : this(m: 5, ws: 4, bs: 4, s: 3, t: 3, w: 1, i: 4, a: 1, ld: 8)
     {
-        AssignCommandGroupCost(new RepeaterCrossbowmenTowModelChampionTowModel(), 5, 5, 5, 50, "Lordling");
+        SetCommandGroup(new RepeaterCrossbowmanChampionTowModel(), 5, 5, 5, 50, "Lordling");
 
         Armors.Add(new LightArmorTowArmor());
         AvailableArmors.Add((TowArmorType.Shield, 1));
@@ -25,15 +27,15 @@ public class RepeaterCrossbowmenTowModel : TowModel
         AvailableSpecialRules.Add((TowSpecialRuleType.Veteran, 1));
     }
 
-    public RepeaterCrossbowmenTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(DarkElfTowModelType.RepeaterCrossbowmen, m, ws, bs, s, t, w, i, a, ld, pointCost: 11, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
+    protected RepeaterCrossbowmanTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
+        : base(DarkElfTowModelType.RepeaterCrossbowmen, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
     {
     }
 }
 
-public class RepeaterCrossbowmenTowModelChampionTowModel : RepeaterCrossbowmenTowModel
+public class RepeaterCrossbowmanChampionTowModel : RepeaterCrossbowmanTowModel
 {
-    public RepeaterCrossbowmenTowModelChampionTowModel()
+    public RepeaterCrossbowmanChampionTowModel()
         : base(m: 5, ws: 4, bs: 5, s: 3, t: 3, w: 1, i: 4, a: 1, ld: 8)
     {
         

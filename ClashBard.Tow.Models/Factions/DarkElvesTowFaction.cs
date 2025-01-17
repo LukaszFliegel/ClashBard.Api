@@ -10,11 +10,11 @@ public class DarkElvesTowFaction : TowFaction
     }
 }
 
-public class DarkElvesArmyComposition
+public class DarkElvesGrandArmyComposition
 {
     private readonly TowArmy _towArmy;
 
-    public DarkElvesArmyComposition(TowArmy towArmy)
+    public DarkElvesGrandArmyComposition(TowArmy towArmy)
     {
         _towArmy = towArmy;
     }

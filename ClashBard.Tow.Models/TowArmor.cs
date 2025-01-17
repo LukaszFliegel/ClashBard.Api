@@ -5,10 +5,6 @@ namespace ClashBard.Tow.Models;
 
 public class TowArmor
 {
-    //[Key]
-    //public int Id { get; set; }
-    //public required string Name { get; set; }
-
     public TowArmor(TowArmorType armorType, int meleeSaveBaseline, int rangedSaveBaseline, int magicMeleeSaveBaseline, int magicRangedSaveBaseline, int meleeSaveImprovement = 0, int rangedSaveImprovement = 0, int magicMeleeSaveImprovement = 0, int magicRangedSaveImprovement = 0)
     {
         ArmorType = armorType;

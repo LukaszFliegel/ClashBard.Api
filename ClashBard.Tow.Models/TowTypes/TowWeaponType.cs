@@ -60,4 +60,48 @@ public enum TowWeaponType
     Sling,
     //[Description("Other")]
     //Other
+
+    // Artillery
+    [Description("Bolt Thrower")]
+    BoltThrower,
+    [Description("Repeater Bolt Thrower")]
+    RepeaterBoltThrower,
+    [Description("Repeater Bolt Thrower (Rapid Fire)")]
+    RepeaterBoltThrowerRapidFire,
+    [Description("Stone Thrower")]
+    StoneThrower,
+    [Description("Cannon")]
+    Cannon,
+    [Description("Great Cannon")]
+    GreatCannon,
+    [Description("Grapeshot")]
+    Grapeshot,    
+    [Description("Organ Gun")]
+    OrganGun,
+    [Description("Mortar")]
+    Mortar,
+    [Description("Fire Thrower")]
+    FireThrower,
+
+    // Dark Elves weapon types
+    [Description("Dread Halberd")]
+    DreadHalberd,
+    [Description("Har Ganeth Greatsword")]
+    HarGanethGreatsword,
+    [Description("Lash & Buckler")]
+    LashAndBuckler,
+    [Description("Petrifying Gaze")]
+    PetrifyingGaze,
+    [Description("Wicked Claws")]
+    WickedClaws,
+    [Description("Serrated Maw")]
+    SerratedMaw,
+    [Description("Noxious Breath")]
+    NoxiousBreath,
+    [Description("Venomous Tail")]
+    VenomousTail,
+    [Description("Fiery Breath")]
+    FieryBreath,
+    [Description("Cavernous Maw")]
+    CavernousMaw,
 }
