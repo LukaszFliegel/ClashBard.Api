@@ -5,8 +5,8 @@ namespace ClashBard.Tow.Models.SpecialRules;
 
 public class ExtraAttacksPlus4 : TowSpecialRule
 {
-    private static new string ShortDescription = "Through fury, extra limbs, or being armed to the teeth, this warrior can strike more blows.";
-    private static new string LongDescription = "A model with this special rule has a modifier to its Attacks characteristic, as shown in brackets after the name of this special rule (shown here as '+X'). If this modifier is determined by the roll of a dice, roll when the model's combat is chosen during any Choose & Fight Combat sub-phase.";
+    private static new string ShortDescription = "No limit to duplicates";
+    private static new string LongDescription = "Items are seen in great number and, as such, can be purchased alongside other magic items from the same category. In addition, there is no limit to how many duplicates of such items can be included in an army, or even how many duplicates a character can carry (beyond the limit of how many points that character can spend on magic items).";
 
     public ExtraAttacksPlus4()
         : base(TowSpecialRuleType.ExtraAttacksPlus4,

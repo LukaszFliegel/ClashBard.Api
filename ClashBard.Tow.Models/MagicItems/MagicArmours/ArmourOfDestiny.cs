@@ -1,16 +1,16 @@
-﻿using ClashBard.Tow.Models.SpecialRules;
-using ClashBard.Tow.Models.TowTypes;
+﻿//using ClashBard.Tow.Models.SpecialRules;
+//using ClashBard.Tow.Models.TowTypes;
 
-namespace ClashBard.Tow.Models.MagicItems.MagicWeapons;
+//namespace ClashBard.Tow.Models.MagicItems.MagicArmours;
 
-public class ArmourOfDestiny : TowMagicArmour
-{
-    private const int points = 65;
+//public class ArmourOfDestiny : TowMagicArmour
+//{
+//    private const int points = 65;
 
-    public ArmourOfDestiny() : base(TowMagicItemArmorType.AmourOfDestiny, points, 5, 4)
-    {
-        SpecialRules.Add(new ArmourBane1());
-        SpecialRules.Add(new MagicalAttacks());
-        SpecialRules.Add(new MultipleWoundsD3());
-    }
-}
+//    public ArmourOfDestiny() : base(TowMagicItemArmorType.AmourOfDestiny, points, 5, 4)
+//    {
+//        SpecialRules.Add(new ArmourBane1());
+//        SpecialRules.Add(new MagicalAttacks());
+//        SpecialRules.Add(new MultipleWoundsD3());
+//    }
+//}

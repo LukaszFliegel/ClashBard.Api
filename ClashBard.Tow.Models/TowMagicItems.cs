@@ -2,7 +2,7 @@
 
 namespace ClashBard.Tow.Models;
 
-public class TowMagicItem
+public abstract class TowMagicItem
 {
     public TowMagicItem(Enum magicItemType, int points)
     {
@@ -119,6 +119,28 @@ public class TowEnchantedItem : TowMagicItem
 {
     public TowEnchantedItem(TowMagicItemEnchantedType talismanType, int points)
         : base(talismanType, points)
+    {
+
+    }
+
+    public virtual ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>();
+}
+
+public class TowArcaneItem : TowMagicItem
+{
+    public TowArcaneItem(TowMagicItemArcaneType arcaneType, int points)
+        : base(arcaneType, points)
+    {
+
+    }
+
+    public virtual ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>();
+}
+
+public class TowMagicBanner : TowMagicItem
+{
+    public TowMagicBanner(TowMagicItemBannerType magicBannerType, int points)
+        : base(magicBannerType, points)
     {
 
     }

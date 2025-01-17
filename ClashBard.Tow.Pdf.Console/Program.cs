@@ -1,4 +1,5 @@
 ﻿using ClashBard.Tow.DataAccess;
+using ClashBard.Tow.Models;
 using ClashBard.Tow.Models.Deprecated.Repositories;
 using ClashBard.Tow.Models.Interfaces;
 using ClashBard.Tow.Pdf.Console;
@@ -9,6 +10,7 @@ using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using QuestPDF.Previewer;
+using static SkiaSharp.SKPath;
 
 var builder = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -26,6 +28,7 @@ services.AddTransient<IWeaponsRepository, WeaponsRepository>();
 services.AddTransient<IArmorsRepository, ArmorsRepository>();
 services.AddTransient<ISpecialRulesRepository, SpecialRulesRepository>();
 
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 
 var serviceProvider = services.BuildServiceProvider();
 
@@ -103,6 +106,8 @@ Document.Create(container =>
             table.Cell().Row(1).Column(16).Element(Block).Text("US").FontSize(fontSize);
             table.Cell().Row(1).Column(17).Element(Block).Text("Cost").FontSize(fontSize);
 
+            //table.Cell().Row(1).Column(18).Element(Block).Text("aaaa").FontSize(fontSize);
+
             //uint RowIterator = 2;
             //foreach (var character in owbImportModel.characters)
             //{
@@ -110,16 +115,58 @@ Document.Create(container =>
             //    table.Cell().Row(RowIterator).Column(2).Element(Block).Text(1).FontSize(fontSize);
             //}
 
-            static IContainer Block(IContainer container)
+            uint RowIterator = 2;
+            foreach (var unit in army.Units)
             {
-                return container
-                    .Border(1)
-                    .Background(Colors.Grey.Lighten3)
-                    .ShowOnce()
-                    //.MinWidth(50)
-                    //.MinHeight(50)
-                    .AlignCenter()
-                    .AlignMiddle();
+                PrintModelRow(table, fontSize, RowIterator, unit.GetAmount(), unit.Model);
+                
+
+                table.Cell().Row(RowIterator).Column(16).Element(UnitContainer).Text(unit.Model.PointCost * unit.GetAmount()).FontSize(fontSize);
+                table.Cell().Row(RowIterator).Column(17).Element(UnitContainer).Text(unit.Model.PointCost * unit.GetAmount()).FontSize(fontSize);
+
+                if (unit.HasChampion() && unit.Model.ChampionModel != null)
+                {
+                    PrintChampionModelRow(table, fontSize, RowIterator + 1, unit.Model.ChampionModel);
+                    RowIterator++;
+                }
+
+                RowIterator++;
+            }
+
+            
+
+            static void PrintModelRow(TableDescriptor table, float fontSize, uint rowNumber, int? unitAmount, TowModel model)
+            {
+                table.Cell().Row(rowNumber).Column(1).Element(UnitName).Text(model.ModelType.ToString()).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(2).Element(UnitContainer).Text(unitAmount.HasValue ? unitAmount.ToString() : string.Empty).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(3).Element(UnitContainer).Text(model.Movement).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(4).Element(UnitContainer).Text(model.WeaponSkill).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(5).Element(UnitContainer).Text(model.BallisticSkill).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(6).Element(UnitContainer).Text(model.Strength).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(7).Element(UnitContainer).Text(model.Toughness).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(8).Element(UnitContainer).Text(model.Wounds).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(9).Element(UnitContainer).Text(model.Initiative).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(10).Element(UnitContainer).Text(model.Attacks).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(11).Element(UnitContainer).Text(model.Leadership).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(12).Element(UnitContainer).Text($"{model.GetMeleeSave()}/{model.GetRangedSave()}").FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(13).Element(UnitContainer).Text($"{model.GetMagicMeleeSave()}/{model.GetRangedSave()}").FontSize(fontSize);
+            }
+
+            static void PrintChampionModelRow(TableDescriptor table, float fontSize, uint rowNumber, TowModel model)
+            {
+                table.Cell().Row(rowNumber).Column(1).Element(UnitContainer).Text(model.ChampionName).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(2).Element(UnitContainer).Text("1").FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(3).Element(UnitContainer).Text(model.Movement).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(4).Element(UnitContainer).Text(model.WeaponSkill).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(5).Element(UnitContainer).Text(model.BallisticSkill).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(6).Element(UnitContainer).Text(model.Strength).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(7).Element(UnitContainer).Text(model.Toughness).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(8).Element(UnitContainer).Text(model.Wounds).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(9).Element(UnitContainer).Text(model.Initiative).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(10).Element(UnitContainer).Text(model.Attacks).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(11).Element(UnitContainer).Text(model.Leadership).FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(12).Element(UnitContainer).Text($"{model.GetMeleeSave()}/{model.GetRangedSave()}").FontSize(fontSize);
+                table.Cell().Row(rowNumber).Column(13).Element(UnitContainer).Text($"{model.GetMagicMeleeSave()}/{model.GetRangedSave()}").FontSize(fontSize);
             }
         });
 
@@ -133,3 +180,53 @@ Document.Create(container =>
     });
 })
 .ShowInPreviewer();
+
+
+
+static IContainer Block(IContainer container)
+{
+    return container
+        .Border(1)
+        .Background(Colors.Grey.Lighten2)
+        .ShowOnce()
+        //.MinWidth(50)
+        //.MinHeight(50)
+        .AlignCenter()
+        .AlignMiddle();
+}
+
+static IContainer UnitContainer(IContainer container)
+{
+    return container
+        .Border(1)
+        .Background(Colors.Grey.Lighten4)
+        .ShowOnce()
+        //.MinWidth(50)
+        //.MinHeight(50)
+        .AlignCenter()
+        .AlignMiddle();
+}
+
+static IContainer UnitName(IContainer container)
+{
+    return container
+        .Border(1)
+        .Background(Colors.Grey.Lighten4)
+        .ShowOnce()
+        //.MinWidth(50)
+        //.MinHeight(50)
+        .AlignLeft()
+        .AlignMiddle();
+}
+
+static IContainer UnitCommandGroupMember(IContainer container)
+{
+    return container
+        .Border(0)
+        .Background(Colors.Grey.Lighten5)
+        .ShowOnce()
+        //.MinWidth(50)
+        //.MinHeight(50)
+        .AlignCenter()
+        .AlignMiddle();
+}

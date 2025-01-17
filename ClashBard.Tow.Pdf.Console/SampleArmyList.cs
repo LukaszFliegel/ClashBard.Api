@@ -1,4 +1,5 @@
 ﻿using ClashBard.Tow.Models;
+using ClashBard.Tow.Models.FactionModels.DarkElves;
 using ClashBard.Tow.Models.Factions;
 using ClashBard.Tow.Models.Interfaces;
 
@@ -28,9 +29,11 @@ public class SampleArmyList
             Name = "Dark Elves default",
             Points = 2000,
             //General = dreadlord,
-            Models = new List<TowModel>
+            Units = new List<TowUnit>
             {
-                
+                new TowUnit(
+                    new DarkElfWarriorTowModel(), 37, faction, true, true, true
+                    )
             }
         };
     }

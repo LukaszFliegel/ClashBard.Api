@@ -66,6 +66,7 @@ public class TowModel
         ChampionModel = championModel;
         ChampionUpgradeCost = championUpgradeCost;
         ChampionName = championName;
+        championModel.ChampionName = championName;
         ChampionMagicItemsUpToPoints = championMagicItemsUpToPoints;
 
         StandardBearerUpgradeCost = standardBearerUpgradeCost;
@@ -101,6 +102,66 @@ public class TowModel
     public virtual ICollection<(TowSpecialRuleType, int)> AvailableSpecialRules { get; set; } = new HashSet<(TowSpecialRuleType, int)>() { };
     public virtual ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>() { };
 
+    public int GetMeleeSave()
+    {
+        int save = 0;
+
+        // take the highest MeleeSaveBaseline from all armors
+        save = Armors.Count > 0 ? Armors.Max(a => a.MeleeSaveBaseline) : 0;
+
+        // add all MeleeSaveImprovements from all armors
+        foreach (var armor in Armors)
+        {
+            save -= armor.MeleeSaveImprovement;
+        }
+
+        return save;
+    }
+
+    public int GetRangedSave()
+    {
+        int save = 0;
+
+        // take the highest RangedSaveBaseline from all armors
+        save = Armors.Count > 0 ? Armors.Max(a => a.RangedSaveBaseline) : 0;
+
+        // add all RangedSaveImprovements from all armors
+        foreach (var armor in Armors)
+        {
+            save -= armor.RangedSaveImprovement;
+        }
+        return save;
+    }
+
+    public int GetMagicMeleeSave()
+    {
+        int save = 0;
+
+        // take the highest MagicMeleeSaveBaseline from all armors
+        save = Armors.Count > 0 ? Armors.Max(a => a.MagicMeleeSaveBaseline) : 0;
+
+        // add all MagicMeleeSaveImprovements from all armors
+        foreach (var armor in Armors)
+        {
+            save -= armor.MagicMeleeSaveImprovement;
+        }
+        return save;
+    }
+
+    public int GetMagicRangedSave()
+    {
+        int save = 0;
+
+        // take the highest MagicRangedSaveBaseline from all armors
+        save = Armors.Count > 0 ? Armors.Max(a => a.MagicRangedSaveBaseline) : 0;
+
+        // add all MagicRangedSaveImprovements from all armors
+        foreach (var armor in Armors)
+        {
+            save -= armor.MagicRangedSaveImprovement;
+        }
+        return save;
+    }
 
     public void AssignWeapon(TowWeapon weapon)
     {

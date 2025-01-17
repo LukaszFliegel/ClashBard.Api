@@ -7,61 +7,240 @@ Console.WriteLine("Old World Builder json parser");
 // serialize magic-items.sjon file into TowBuilderMagicItems class
 var magicItems = JsonConvert.DeserializeObject<TowBuilderMagicItems>(File.ReadAllText("TowBuilderData\\magic-items.json"));
 
+if (magicItems == null)
+{
+    Console.WriteLine("Failed to deserialize magic-items.json file");
+    return;
+}
+
+// if folder TowBuilderData\\ProducedClasses does not exists create it
+var producedClassesDir = "TowBuilderData\\ProducedClasses";
+if (!Directory.Exists(producedClassesDir))
+{
+    Directory.CreateDirectory(producedClassesDir);
+}
+
+var subDirectories = new[] { "weapon", "armor", "talisman", "banner", "enchanted-item", "arcane-item" };
+
+foreach (var subDir in subDirectories)
+{
+    var fullPath = Path.Combine(producedClassesDir, subDir);
+    if (!Directory.Exists(fullPath))
+    {
+        Directory.CreateDirectory(fullPath);
+    }
+}
 
 foreach (var magicItem in magicItems.general)
 {
-    // create file for each magic item
-    var parsedName = magicItem.name_en.Replace(" ", string.Empty).Replace("'", string.Empty).Replace("*", string.Empty);
-    var magicItemFile = new FileInfo($"TowBuilderData\\ProducedClasses\\{parsedName}.cs");
+    var parsedName = magicItem.name_en.ToLegalClassName();
+    var magicItemFile = new FileInfo($"TowBuilderData\\ProducedClasses\\{magicItem.type}\\{parsedName}_produced.cs");
 
-
-    // TODO: finish this console app for creating classes
-    // write into that file
     using (var writer = magicItemFile.CreateText())
     {
+        //Console.WriteLine($"Creating a class for {magicItem.name_en}");
+
         switch (magicItem.type)
         {
             case "weapon":
                 writer.Write(
-$@"
-using ClashBard.Tow.Models.SpecialRules;
+$@"using ClashBard.Tow.Models.SpecialRules;
 using ClashBard.Tow.Models.TowTypes;
 
 namespace ClashBard.Tow.Models.MagicItems.MagicWeapons;
 
 public class {magicItem.name_en.ToLegalClassName()} : TowMagicWeapon
 {{
-    private const int points = {magicItem.points}
+    private const int points = {magicItem.points};
 
-    public OgreBlade() : base(TowMagicItemWeaponType.OgreBlade, points, 0, TowWeaponStrength.Splus2, 2)
+    public {magicItem.name_en.ToLegalClassName()}() : base(TowMagicItemWeaponType.{magicItem.name_en.ToLegalClassName()}, points, 999, TowWeaponStrength.Unknown, 777)
     {{
-        SpecialRules.Add(new ArmourBane1());
-        SpecialRules.Add(new MagicalAttacks());
-        SpecialRules.Add(new MultipleWoundsD3());
+        //SpecialRules.Add(new ArmourBane1());
+        //SpecialRules.Add(new MagicalAttacks());
+        //SpecialRules.Add(new MultipleWoundsD3());
     }}
 }}
 "
                     );
-            break;
+
+                //Console.WriteLine($"TowMagicItemWeaponType to create {magicItem.name_en.ToLegalClassName()}");
+
+                break;
+
+            case "armor":
+                writer.Write(
+$@"using ClashBard.Tow.Models.SpecialRules;
+using ClashBard.Tow.Models.TowTypes;
+
+namespace ClashBard.Tow.Models.MagicItems.MagicArmours;
+
+public class {magicItem.name_en.ToLegalClassName()} : TowMagicArmour
+{{
+    private const int points = {magicItem.points};
+
+    public {magicItem.name_en.ToLegalClassName()}() : base(TowMagicItemArmorType.{magicItem.name_en.ToLegalClassName()}, points, 999)
+    {{
+        //SpecialRules.Add(new ArmourBane1());
+        //SpecialRules.Add(new MagicalAttacks());
+        //SpecialRules.Add(new MultipleWoundsD3());
+    }}
+}}
+"
+                    );
+
+                //Console.WriteLine($"TowMagicItemArmorType to create {magicItem.name_en.ToLegalClassName()}");
+
+                break;
+
+            case "talisman":
+                writer.Write(
+$@"using ClashBard.Tow.Models.TowTypes;
+
+namespace ClashBard.Tow.Models.MagicItems.Talismans;
+
+public class {magicItem.name_en.ToLegalClassName()} : TowTalisman
+{{
+    private const int points = {magicItem.points};
+
+    public {magicItem.name_en.ToLegalClassName()}() : base(TowMagicItemTalismanType.{magicItem.name_en.ToLegalClassName()}, points)
+    {{
+        SpecialRules.Add(new {magicItem.name_en.ToLegalClassName()}Rules());
+    }}
+}}
+
+
+public class {magicItem.name_en.ToLegalClassName()}Rules : TowSpecialRule
+{{
+    private static new string ShortDescription = ""xxx"";
+    private static new string LongDescription = ""xxx"";
+
+    public {magicItem.name_en.ToLegalClassName()}Rules()
+        : base(TowSpecialRuleType.{magicItem.name_en.ToLegalClassName()}Rules,
+            ShortDescription,
+            LongDescription)
+    {{
+
+    }}
+}}
+"
+                    );
+
+                //Console.WriteLine($"TowMagicItemTalismanType to create {magicItem.name_en.ToLegalClassName()}");
+
+                break;
+
+            case "banner":
+                writer.Write(
+$@"using ClashBard.Tow.Models.TowTypes;
+
+namespace ClashBard.Tow.Models.MagicItems.MagicBanners;
+
+public class {magicItem.name_en.ToLegalClassName()} : TowMagicBanner
+{{
+    private const int points = {magicItem.points};
+
+
+    public {magicItem.name_en.ToLegalClassName()}() : base(TowMagicItemBannerType.{magicItem.name_en.ToLegalClassName()}, points)
+    {{
+        SpecialRules.Add(new {magicItem.name_en.ToLegalClassName()}Rules());
+    }}
+}}
+
+
+public class {magicItem.name_en.ToLegalClassName()}Rules : TowSpecialRule
+{{
+    private static new string ShortDescription = ""Gives unit Stubborn"";
+    private static new string LongDescription = ""A unit carrying the Banner of Iron Resolve gains the Stubborn special rule."";
+
+    public {magicItem.name_en.ToLegalClassName()}Rules()
+        : base(TowSpecialRuleType.{magicItem.name_en.ToLegalClassName()}Rules,
+            ShortDescription,
+            LongDescription)
+    {{
+
+    }}
+}}
+
+");
+
+                //Console.WriteLine($"TowMagicItemBannerType to create {magicItem.name_en.ToLegalClassName()}");
+
+                break;
+            case "enchanted-item":
+                writer.Write(
+$@"using ClashBard.Tow.Models.TowTypes;
+
+namespace ClashBard.Tow.Models.MagicItems.EnchantedItems;
+
+public class {magicItem.name_en.ToLegalClassName()} : TowEnchantedItem
+{{
+    private const int points = {magicItem.points};
+    
+
+    public {magicItem.name_en.ToLegalClassName()}() : base(TowMagicItemEnchantedType.{magicItem.name_en.ToLegalClassName()}, points)
+    {{
+        SpecialRules.Add(new {magicItem.name_en.ToLegalClassName()}Rules());
+        
+    }}
+}}
+
+
+public class {magicItem.name_en.ToLegalClassName()}Rules : TowSpecialRule
+{{
+    private static new string ShortDescription = ""xxx"";
+    private static new string LongDescription = ""xxx"";
+
+    public {magicItem.name_en.ToLegalClassName()}Rules()
+        : base(TowSpecialRuleType.{magicItem.name_en.ToLegalClassName()}Rules,
+            ShortDescription,
+            LongDescription)
+    {{
+
+    }}
+}}
+");
+                //Console.WriteLine($"TowMagicItemEnchantedType to create {magicItem.name_en.ToLegalClassName()}");
+
+                break;
+            case "arcane-item":
+                writer.Write(
+$@"using ClashBard.Tow.Models.TowTypes;
+
+namespace ClashBard.Tow.Models.MagicItems.ArcaneItems;
+
+public class {magicItem.name_en.ToLegalClassName()} : TowArcaneItem
+{{
+    private const int points = {magicItem.points};
+
+    public {magicItem.name_en.ToLegalClassName()}() : base(TowMagicItemArcaneType.{magicItem.name_en.ToLegalClassName()}, points)
+    {{
+        SpecialRules.Add(new {magicItem.name_en.ToLegalClassName()}Rules());
+    }}
+}}
+
+
+public class {magicItem.name_en.ToLegalClassName()}Rules : TowSpecialRule
+{{
+    private static new string ShortDescription = ""xxx"";
+    private static new string LongDescription = ""xxx"";
+
+    public {magicItem.name_en.ToLegalClassName()}Rules()
+        : base(TowSpecialRuleType.{magicItem.name_en.ToLegalClassName()}Rules,
+            ShortDescription,
+            LongDescription)
+    {{
+
+    }}
+}}
+");
+                //Console.WriteLine($"TowMagicItemArcaneType to create {magicItem.name_en.ToLegalClassName()}");
+
+                break;
+            default:
+                Console.WriteLine($"Unknown magic item type: {magicItem.type}");
+                break;
         }
 
-        //writer.WriteLine("using ClashBard.Tow.Models;");
-        //writer.WriteLine("using ClashBard.Tow.Models.MagicItems;");
-        //writer.WriteLine("using ClashBard.Tow.Models.TowTypes;");
-        //writer.WriteLine("using System;");
-        //writer.WriteLine();
-        //writer.WriteLine($"namespace ClashBard.Tow.Models.MagicItems");
-        //writer.WriteLine("{");
-        //writer.WriteLine($"    public class {parsedName}TowMagicItem : MagicItem");
-        //writer.WriteLine("    {");
-        //writer.WriteLine($"        public {parsedName}TowMagicItem()");
-        //writer.WriteLine("        {");
-        //writer.WriteLine($"            Name = \"{magicItem.name_en}\";");
-        //writer.WriteLine($"            Description = \"{magicItem.name_en}\";");
-        //writer.WriteLine($"            PointCost = {magicItem.points};");
-        //writer.WriteLine($"            MagicItemType = MagicItemType.{magicItem.type};");
-        //writer.WriteLine("        }");
-        //writer.WriteLine("    }");
-        //writer.WriteLine("}");
+        Console.WriteLine($"TowSpecialRuleType to create: {magicItem.name_en.ToLegalClassName()}Rules");
     }
 }

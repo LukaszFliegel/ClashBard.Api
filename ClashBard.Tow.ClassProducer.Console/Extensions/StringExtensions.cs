@@ -9,6 +9,8 @@ public static class StringExtensions
         if (string.IsNullOrEmpty(str))
             return str;
 
+        str = str.Trim().Replace("*", string.Empty).Replace("'", string.Empty);
+
         var textInfo = CultureInfo.CurrentCulture.TextInfo;
         var words = str.Split(new[] { ' ', '-', '_' }, StringSplitOptions.RemoveEmptyEntries);
         var sb = new StringBuilder();

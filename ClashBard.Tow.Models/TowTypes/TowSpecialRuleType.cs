@@ -42,6 +42,8 @@ public enum TowSpecialRuleType
     ExtraAttacksPlus3,
     [Description("Extra Attacks (+4)")]
     ExtraAttacksPlus4,
+    [Description("Extremely Common")]
+    ExtremelyCommon,
     [Description("Extra Attacks (+remaining Wounds)")]
     ExtraAttacksPlusRemainingWounds,
     [Description("Fast Cavalry")]
@@ -213,15 +215,131 @@ public enum TowSpecialRuleType
     [Description("S and AP only on turn user charged")]
     SandAPTurnUserCharged,
 
-    // Magic Items
+    //// Magic Items
+    //[Description("Dawnstone")]
+    //DawnstoneRules,
+
+    //// Enchanted Items
+    //[Description("Wizarding Hat")]
+    //WizardingHatRules,
+
+    //// Arcane Items
+    //[Description("Feedback Scroll")]
+    //FeedbackScrollRules,
+
+    //// Magic Banners
+    //[Description("Banner of Iron Resolve")]
+    //BannerOfIronResolveRules,
+
+    // Magic Weapons
+    //[Description("Ogre Blade")]
+    //OgreBladeRules,
+    //[Description("Sword of Battle")]
+    //SwordOfBattleRules,
+    //[Description("Duellist's Blades")]
+    //DuellistsBladesRules,
+    //[Description("Dragon Slaying Sword")]
+    //DragonSlayingSwordRules,
+    //[Description("Headsman's Axe")]
+    //HeadsmansAxeRules,
+    //[Description("Spelleater Axe")]
+    //SpelleaterAxeRules,
+    //[Description("Giant Blade")]
+    //GiantBladeRules,
+    //[Description("Sword of Swiftness")]
+    //SwordOfSwiftnessRules,
+    //[Description("Berserker Blade")]
+    //BerserkerBladeRules,
+    //[Description("Sword of Might")]
+    //SwordOfMightRules,
+    //[Description("Biting Blade")]
+    //BitingBladeRules,
+    [Description("Sword of Striking")]
+    SwordOfStrikingRules,
+    //[Description("Burning Blade")]
+    //BurningBladeRules,
+
+    // Magic Armors
+    //[Description("Armour of Destiny")]
+    //ArmourOfDestinyRules,
+    //[Description("Bedazzling Helm")]
+    //BedazzlingHelmRules,
+    //[Description("Armour of Silvered Steel")]
+    //ArmourOfSilveredSteelRules,
+    //[Description("Glittering Scales")]
+    //GlitteringScalesRules,
+    //[Description("Shield of the Warrior True")]
+    //ShieldOfTheWarriorTrueRules,
+    //[Description("Spellshield")]
+    //SpellshieldRules,
+    //[Description("Armour of Meteoric Iron")]
+    //ArmourOfMeteoricIronRules,
+    //[Description("Enchanted Shield")]
+    //EnchantedShieldRules,
+    //[Description("Charmed Shield")]
+    //CharmedShieldRules,
+
+    // Talismans
     [Description("Dawnstone")]
     DawnstoneRules,
+    [Description("Talisman of Protection")]
+    TalismanOfProtectionRules,
+    [Description("Paymaster's Coin")]
+    PaymastersCoinRules,
+    [Description("Obsidian Lodestone")]
+    ObsidianLodestoneRules,
+    [Description("Luckstone")]
+    LuckstoneRules,
+
+    // Magic Banners
+    [Description("Banner of Iron Resolve")]
+    BannerOfIronResolveRules,
+    [Description("Razor Standard")]
+    RazorStandardRules,
+    [Description("Rampaging Banner")]
+    RampagingBannerRules,
+    [Description("The Blazing Banner")]
+    TheBlazingBannerRules,
+    [Description("War Banner")]
+    WarBannerRules,
 
     // Enchanted Items
     [Description("Wizarding Hat")]
     WizardingHatRules,
+    [Description("Flying Carpet")]
+    FlyingCarpetRules,
+    [Description("Healing Potion")]
+    HealingPotionRules,
+    [Description("Ruby Ring of Ruin")]
+    RubyRingOfRuinRules,
+    [Description("Potion of Strength")]
+    PotionOfStrengthRules,
+    [Description("Potion of Toughness")]
+    PotionOfToughnessRules,
+    [Description("Potion of Speed")]
+    PotionOfSpeedRules,
+    [Description("Potion of Foolhardiness")]
+    PotionOfFoolhardinessRules,
 
-    // Dark Evles
+    // Arcane Items
+    [Description("Feedback Scroll")]
+    FeedbackScrollRules,
+    [Description("Scroll of Transmogrification")]
+    ScrollOfTransmogrificationRules,
+    [Description("Wand of Jet")]
+    WandOfJetRules,
+    [Description("Lore Familiar")]
+    LoreFamiliarRules,
+    [Description("Power Scroll")]
+    PowerScrollRules,
+    [Description("Dispel Scroll")]
+    DispelScrollRules,
+    [Description("Arcane Familiar")]
+    ArcaneFamiliarRules,
+    [Description("Earthing Rod")]
+    EarthingRodRules,
+
+    // Dark Elves
 
     [Description("Cleaving Blow")]
     CleavingBlow,
