@@ -11,7 +11,8 @@ public class MultipleShots3 : TowSpecialRule
     public MultipleShots3()
         : base(TowSpecialRuleType.MultipleShots3,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printShortDescription: false)
     {
 
     }

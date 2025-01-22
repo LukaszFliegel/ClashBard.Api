@@ -13,7 +13,7 @@ public class DarkElfCrewTowModelAdditional : TowModelAdditional
 
     public DarkElfCrewTowModelAdditional() : this(m: 5, ws: 4, bs: 4, s: 3, t: 3, w: 2, i: 4, a: 2, ld: 8)
     {
-        Armors.Add(new LightArmorTowArmor());
+        Armours.Add(new LightArmourTowArmour());
 
         SpecialRules.Add(new ElvenReflexes());
         SpecialRules.Add(new HatredHighElves());

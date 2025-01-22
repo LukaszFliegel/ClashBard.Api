@@ -18,9 +18,14 @@ public class KharibdyssTowModel : TowModel
     private const int baseSizeLength = 100;
     private const int minUnitSize = 1;
     private const int maxUnitSize = 1;
-    private const int armorValue = 5;
+    private const int armourValue = 5;
 
     public KharibdyssTowModel() : this(m: 6, ws: 5, bs: 0, s: 7, t: 5, w: 5, i: 3, a: 5, ld: 6)
+    {
+    }
+
+    protected KharibdyssTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
+        : base(modelType, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize, armourValue)
     {
         Crew.Add(new BeastmasterHandlersTowModelAdditional());
         Crew.Add(new BeastmasterHandlersTowModelAdditional());
@@ -35,10 +40,5 @@ public class KharibdyssTowModel : TowModel
         SpecialRules.Add(new MonsterHandlers());
         SpecialRules.Add(new StompAttacksD3Plus1());
         SpecialRules.Add(new Terror());
-    }
-
-    protected KharibdyssTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(modelType, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize, armorValue)
-    {
     }
 }

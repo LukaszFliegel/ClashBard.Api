@@ -6,13 +6,15 @@ using System.Text;
 namespace ClashBard.Tow.Models;
 
 public abstract class TowMagicItem: TowObjectWithSpecialRules
-{
-    public TowMagicItem(Enum magicItemType, int points)
+{    
+    public TowMagicItem(Enum magicItemType, int points, TowMagicItemCategory towMagicItemCategory)
     {
         MagicItemType = magicItemType;
         Points = points;
+        TowMagicItemCategory = towMagicItemCategory;
     }
 
+    public TowMagicItemCategory TowMagicItemCategory { get; private set; }
     public Enum MagicItemType { get; set; }
     public int Points { get; }
 
@@ -33,7 +35,7 @@ public abstract class TowMagicItem: TowObjectWithSpecialRules
 public class TowMagicWeapon : TowMagicItem
 {
     public TowMagicWeapon(TowMagicItemWeaponType magicWeaponType, int points, int? range, TowWeaponStrength strength, int armorPiercing)
-        :base(magicWeaponType, points)
+        :base(magicWeaponType, points, TowMagicItemCategory.MagicWeapon)
     {
         MagicWeaponType = magicWeaponType;
         Range = range;
@@ -64,7 +66,7 @@ public class TowMagicArmour : TowMagicItem
     public TowMagicArmour(TowMagicItemArmorType armorType, int points,
         int meleeSaveBaseline, int meleeSaveImprovement, int rangedSaveBaseline, int rangedSaveImprovement, int magicMeleeSaveBaseline, int magicMeleeSaveImprovement, int magicRangedSaveBaseline, int magicRangedSaveImprovement, 
         int meleeWardSaveBaseline = 0, int meleeWardSaveImprovement = 0, int rangedWardSaveBaseline = 0, int rangedWardSaveImprovement = 0, int magicWardMeleeSaveBaseline = 0, int magicWardMeleeSaveImprovement = 0, int magicWardRangedSaveBaseline = 0, int magicWardRangedSaveImprovement = 0)
-        : base(armorType, points)
+        : base(armorType, points, TowMagicItemCategory.MagicArmour)
     {
         ArmorType = armorType;
         MeleeSaveBaseline = meleeSaveBaseline;
@@ -119,7 +121,7 @@ public class TowMagicArmour : TowMagicItem
 public class TowTalisman : TowMagicItem
 {
     public TowTalisman(TowMagicItemTalismanType talismanType, int points)
-        : base(talismanType, points)
+        : base(talismanType, points, TowMagicItemCategory.Talisman)
     {
         
     }
@@ -128,7 +130,7 @@ public class TowTalisman : TowMagicItem
 public class TowEnchantedItem : TowMagicItem
 {
     public TowEnchantedItem(TowMagicItemEnchantedType talismanType, int points)
-        : base(talismanType, points)
+        : base(talismanType, points, TowMagicItemCategory.EnchantedItem)
     {
 
     }
@@ -137,7 +139,7 @@ public class TowEnchantedItem : TowMagicItem
 public class TowArcaneItem : TowMagicItem
 {
     public TowArcaneItem(TowMagicItemArcaneType arcaneType, int points)
-        : base(arcaneType, points)
+        : base(arcaneType, points, TowMagicItemCategory.Arcane)
     {
 
     }
@@ -146,7 +148,7 @@ public class TowArcaneItem : TowMagicItem
 public class TowMagicBanner : TowMagicItem
 {
     public TowMagicBanner(TowMagicItemBannerType magicBannerType, int points)
-        : base(magicBannerType, points)
+        : base(magicBannerType, points, TowMagicItemCategory.MagicBanner)
     {
 
     }

@@ -14,6 +14,11 @@ public class WitchElfTowModel : TowModel
     {
         SetCommandGroup(new WitchElfChampionTowModel(), 7, 7, 7, 50, "Hag");
 
+    }
+
+    protected WitchElfTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
+        : base(DarkElfTowModelType.WitchElves, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
+    {
         Weapons.Add(new AdditionalHandWeaponTowWeapon());
 
         SpecialRules.Add(new CloseOrder());
@@ -24,11 +29,6 @@ public class WitchElfTowModel : TowModel
         SpecialRules.Add(new Loner());
         SpecialRules.Add(new Murderous());
         SpecialRules.Add(new PoisonedAttacks());
-    }
-
-    protected WitchElfTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(DarkElfTowModelType.WitchElves, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
-    {
     }
 }
 

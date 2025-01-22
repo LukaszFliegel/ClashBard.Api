@@ -1,8 +1,11 @@
 ﻿using ClashBard.Tow.Models;
 using ClashBard.Tow.Models.FactionModels.DarkElves;
+using ClashBard.Tow.Models.FactionModels.DarkElves.Characters;
 using ClashBard.Tow.Models.Factions;
 using ClashBard.Tow.Models.Interfaces;
 using ClashBard.Tow.Models.MagicItems.MagicBanners;
+using ClashBard.Tow.Models.MagicItems.MagicWeapons;
+using ClashBard.Tow.Models.MagicItems.Talismans;
 using ClashBard.Tow.Models.SpecialRules;
 using ClashBard.Tow.Models.Weapons;
 
@@ -27,6 +30,16 @@ public class SampleArmyList
         //dreadlord.Armors.Add(_armorsRepository.GetArmor(TowArmorType.FullPlateArmour));
 
 
+        var dreadlord = new DarkElfDreadlordTowCharacter();
+
+        dreadlord.SetArmor(new FullPlateArmourTowArmour());
+        dreadlord.SetArmor(new ShieldTowArmour());
+        dreadlord.SetArmor(new SeaDragonCloakTowArmour());
+
+        dreadlord.SetMount(new BlackDragonTowMount());
+
+        dreadlord.SetMagicItem(new OgreBladeTowMagicWeapon());
+        dreadlord.SetMagicItem(new TalismanOfProtectionTowTalisman());
 
         var deWarriors = new TowUnit(
                     new DarkElfWarriorTowModel(), 37, faction, true, true, true
@@ -39,7 +52,7 @@ public class SampleArmyList
                     new RepeaterCrossbowmanTowModel(), 12, faction, false, true, true
                     );
 
-        deCrossbowmen.SetArmor(new ShieldTowArmor());
+        deCrossbowmen.SetArmor(new ShieldTowArmour());
 
         var blackGuards = new TowUnit(
             new BlackGuardOfNaggarondTowModel(), 20, faction, true, false, true
@@ -53,11 +66,15 @@ public class SampleArmyList
             Name = "Dark Elves default ",
             Points = 2000,
             //General = dreadlord,
+            Characters = new List<TowCharacter>
+            {
+                dreadlord,
+            },
             Units = new List<TowUnit>
             {
                 deWarriors,
-                
-                blackGuards
+                deCrossbowmen,
+                blackGuards,
             }
         };
     }

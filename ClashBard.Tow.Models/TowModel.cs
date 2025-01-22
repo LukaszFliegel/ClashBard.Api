@@ -2,6 +2,7 @@
 using ClashBard.Tow.Models.Weapons;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace ClashBard.Tow.Models;
@@ -40,20 +41,26 @@ public class TowModel: TowObjectWithSpecialRules
         BaseSizeLength = baseSizeLength;
     }
 
-    public Enum ModelType { get; set; }
-    public int? Movement { get; set; }
-    public int? WeaponSkill { get; set; }
-    public int? BallisticSkill { get; set; }
-    public int? Strength { get; set; }
-    public int Toughness { get; set; }
+    public Enum ModelType { get; private set; }
+    public int? Movement { get; private set; }
+    public int? WeaponSkill { get; private set; }
+    public int? BallisticSkill { get; private set; }
+    public int? Strength { get; private set; }
+    public int Toughness { get; private set; }
+    //protected int _wounds { get; set; }
+    //public int Wounds { get { return CalculateTotalWounds(); } private set { _wounds = value; } }
+    //public virtual int CalculateTotalWounds()
+    //{
+    //    return _wounds;
+    //}
     public int Wounds { get; set; }
-    public int? Initiative { get; set; }
-    public int? Attacks { get; set; }
-    public int? Leadership { get; set; }
+    public int? Initiative { get; private set; }
+    public int? Attacks { get; private set; }
+    public int? Leadership { get; private set; }
 
-    public int PointCost { get; set; }
+    public int PointCost { get; private set; }
 
-    public int? ArmorValue { get; set; }
+    public int? ArmorValue { get; private set; }
 
     public TowModel? ChampionModel { get; private set; }
     public string? ChampionName { get; private set; }
@@ -87,8 +94,8 @@ public class TowModel: TowObjectWithSpecialRules
     //public virtual ICollection<TowOption<TowWeaponType>> AvailableWeapons { get; protected set; } = new HashSet<TowOption<TowWeaponType>>() { };
     public virtual ICollection<TowWeapon> Weapons { get; protected set; } = new List<TowWeapon>() { new HandWeaponTowWeapon() };
 
-    public virtual ICollection<(TowArmorType, int)> AvailableArmors { get; protected set; } = new HashSet<(TowArmorType, int)>() { };   
-    public virtual ICollection<TowArmor> Armors { get; protected set; } = new List<TowArmor>() { };
+    public virtual ICollection<(TowArmourType, int)> AvailableArmours { get; protected set; } = new HashSet<(TowArmourType, int)>() { };   
+    public virtual ICollection<TowArmour> Armours { get; protected set; } = new List<TowArmour>() { };
     
     //public TowModelSlotType ModelSlotType { get; set; }
 
@@ -97,6 +104,9 @@ public class TowModel: TowObjectWithSpecialRules
     public int? MaxUnitSize { get; set; }
 
     public virtual TowModelMount? Mount { get; set; }
+
+    public virtual ICollection<(TowModelMountType, int)> AvailableMounts { get; protected set; } = new HashSet<(TowModelMountType, int)>() { };
+
     public virtual ICollection<TowModelAdditional> Crew { get; set; } = new HashSet<TowModelAdditional>();
 
 
@@ -104,41 +114,70 @@ public class TowModel: TowObjectWithSpecialRules
 
     public virtual ICollection<(TowSpecialRuleType, int)> AvailableSpecialRules { get; set; } = new HashSet<(TowSpecialRuleType, int)>() { };
 
-    public string GetMeleeSaveString()
+    public virtual ICollection<TowMagicItem> MagicItems { get; set; } = new HashSet<TowMagicItem>();
+
+    public string GetSaveString()
     {
         if (GetMeleeSave().HasValue)
         {
             if (GetRangedSave().HasValue && GetMeleeSave() != GetRangedSave())
-                return $"{GetMeleeSave()}/{GetRangedSave()}";
+                return $"{GetMeleeSave()}/{GetRangedSave()}{PrintAsteriskfNeededForSave()}";
             else
-                return $"{GetMeleeSave()}";
+                return $"{GetMeleeSave()}{PrintAsteriskfNeededForSave()}";
         }
         else
             return string.Empty;
     }
 
-    public string GetMagicSaveString()
+    public string GetWardSaveString()
     {
-        if (GetMagicMeleeSave().HasValue)
+        if (GetMeleeWardSave().HasValue)
         {
-            if (GetMagicRangedSave().HasValue && GetMagicMeleeSave() != GetMagicRangedSave())
-                return $"{GetMagicMeleeSave()}/{GetMagicRangedSave()}";
+            if (GetRangedWardSave().HasValue && GetMeleeWardSave() != GetRangedWardSave())
+                return $"{GetMeleeWardSave()}/{GetRangedWardSave()}{PrintAsteriskfNeededForWardSave()}";
             else
-                return $"{GetMagicMeleeSave()}";
+                return $"{GetMeleeWardSave()}{PrintAsteriskfNeededForWardSave()}";
         }
         else
             return string.Empty;
     }
+
+    private string PrintAsteriskfNeededForSave()
+    {
+        if (Armours.Any(a => a.AsteriskOnSave))
+        {
+            return "*";
+        }
+
+        return string.Empty;
+    }
+
+    private string PrintAsteriskfNeededForWardSave()
+    {
+        if(Armours.Any(a => a.AsteriskOnWardSave))
+        {
+            return "*";
+        }
+
+        return string.Empty;
+    }
+
+    
 
     public int? GetMeleeSave()
     {
-        int save = 0;
+        int? save = null;
+
+        var armorsWithProperSave = new List<TowArmour>();
+
+        if(Armours.Any(a => a.MeleeSaveBaseline.HasValue))
+            armorsWithProperSave = Armours.Where(a => a.MeleeSaveBaseline.HasValue).ToList();
 
         // take the highest MeleeSaveBaseline from all armors
-        save = Armors.Count > 0 ? Armors.Max(a => a.MeleeSaveBaseline) : 0;
+        save = armorsWithProperSave.Count > 0 ? armorsWithProperSave.Min(a => a.MeleeSaveBaseline.Value) : null;
 
         // add all MeleeSaveImprovements from all armors
-        foreach (var armor in Armors)
+        foreach (var armor in Armours)
         {
             save -= armor.MeleeSaveImprovement;
         }
@@ -148,45 +187,60 @@ public class TowModel: TowObjectWithSpecialRules
 
     public int? GetRangedSave()
     {
-        int save = 0;
+        int? save = 0;
+
+        var armorsWithProperSave = new List<TowArmour>();
+
+        if (Armours.Any(a => a.RangedSaveBaseline.HasValue))
+            armorsWithProperSave = Armours.Where(a => a.RangedSaveBaseline.HasValue).ToList();
 
         // take the highest RangedSaveBaseline from all armors
-        save = Armors.Count > 0 ? Armors.Max(a => a.RangedSaveBaseline) : 0;
+        save = armorsWithProperSave.Count > 0 ? armorsWithProperSave.Min(a => a.RangedSaveBaseline.Value) : null;
 
         // add all RangedSaveImprovements from all armors
-        foreach (var armor in Armors)
+        foreach (var armor in Armours)
         {
             save -= armor.RangedSaveImprovement;
         }
         return save > 0 ? save : null;
     }
 
-    public int? GetMagicMeleeSave()
+    public int? GetMeleeWardSave()
     {
-        int save = 0;
+        int? save = 0;
+
+        var armorsWithProperSave = new List<TowArmour>();
+
+        if (Armours.Any(a => a.MeleeWardSaveBaseline.HasValue))
+            armorsWithProperSave = Armours.Where(a => a.MeleeWardSaveBaseline.HasValue).ToList();
 
         // take the highest MagicMeleeSaveBaseline from all armors
-        save = Armors.Count > 0 ? Armors.Max(a => a.MagicMeleeSaveBaseline) : 0;
+        save = armorsWithProperSave.Count > 0 ? armorsWithProperSave.Min(a => a.MeleeWardSaveBaseline.Value) : null;
 
         // add all MagicMeleeSaveImprovements from all armors
-        foreach (var armor in Armors)
+        foreach (var armor in Armours)
         {
-            save -= armor.MagicMeleeSaveImprovement;
+            save -= armor.MeleeWardSaveImprovement;
         }
         return save > 0 ? save : null;
     }
 
-    public int? GetMagicRangedSave()
+    public int? GetRangedWardSave()
     {
-        int save = 0;
+        int? save = 0;
+
+        var armorsWithProperSave = new List<TowArmour>();
+
+        if (Armours.Any(a => a.RangedWardSaveBaseline.HasValue))
+            armorsWithProperSave = Armours.Where(a => a.RangedWardSaveBaseline.HasValue).ToList();
 
         // take the highest MagicRangedSaveBaseline from all armors
-        save = Armors.Count > 0 ? Armors.Max(a => a.MagicRangedSaveBaseline) : 0;
+        save = armorsWithProperSave.Count > 0 ? armorsWithProperSave.Min(a => a.RangedWardSaveBaseline.Value) : null;
 
         // add all MagicRangedSaveImprovements from all armors
-        foreach (var armor in Armors)
+        foreach (var armor in Armours)
         {
-            save -= armor.MagicRangedSaveImprovement;
+            save -= armor.RangedWardSaveImprovement;
         }
         return save > 0 ? save : null;
     }
@@ -199,15 +253,25 @@ public class TowModel: TowObjectWithSpecialRules
         }
 
         Weapons.Add(weapon);
+
+        if (ChampionModel != null)
+        {
+            ChampionModel.Weapons.Add(weapon);
+        }
     }
 
-    public void SetArmor(TowArmor armor)
+    public void SetArmor(TowArmour armor)
     {
-        if (!AvailableArmors.Any(a => a.Item1 == armor.ArmorType))
+        if (!AvailableArmours.Any(a => a.Item1 == armor.ArmorType))
         {
             throw new Exception($"Armor {armor.ArmorType} not available for {ModelType} model");
         }
-        Armors.Add(armor);
+        Armours.Add(armor);
+
+        if(ChampionModel != null)
+        {
+            ChampionModel.Armours.Add(armor);
+        }
     }
 
     public void SetSpecialRule(TowSpecialRule specialRule)
@@ -217,6 +281,59 @@ public class TowModel: TowObjectWithSpecialRules
             throw new Exception($"Special rule {specialRule.RuleType} not available for {ModelType} model");
         }
         SpecialRules.Add(specialRule);
+
+        if (ChampionModel != null)
+        {
+            ChampionModel.SpecialRules.Add(specialRule);
+        }
+    }
+
+    public void SetMount(TowModelMount mount)
+    {
+        if (!AvailableMounts.Any(m => m.Item1 == mount.ModelMountType))
+        {
+            throw new Exception($"Mount {mount.ModelMountType} not available for {ModelType} model");
+        }
+        Mount = mount;
+
+        if (ChampionModel != null)
+        {
+            ChampionModel.Mount = mount;
+        }
+    }
+
+    public int UnitStrength()
+    {
+        switch (ModelTroopType)
+        {
+            case TowModelTroopType.RegularInfantry:
+            case TowModelTroopType.RegularInfantryCharacter:
+                return 1;
+            case TowModelTroopType.MonstrousInfantry:
+                return 3;
+            case TowModelTroopType.LightCavalry:
+                return 2;
+            case TowModelTroopType.HeavyCavalry:
+                return 2;
+            case TowModelTroopType.MonstrousCavalry:
+                return 3;
+            case TowModelTroopType.MonstrousCreature: // as starting wounds
+                return Wounds;
+            case TowModelTroopType.WarMachine: // as starting wounds
+                return Wounds;
+            case TowModelTroopType.HeavyChariot:
+                return 5;
+            case TowModelTroopType.LightChariot:
+                return 3;
+            case TowModelTroopType.Behemoth: // as starting wounds
+                return Wounds;
+            case TowModelTroopType.WarBeast:
+                return 1;
+            case TowModelTroopType.Swarm:
+                return 3;
+            default:
+                throw new Exception("Unknown model type");
+        }
     }
 
     private void SetDefaultBaseSize()
@@ -224,6 +341,7 @@ public class TowModel: TowObjectWithSpecialRules
         switch (ModelTroopType)
         {
             case TowModelTroopType.RegularInfantry:
+            case TowModelTroopType.RegularInfantryCharacter:
                 BaseSizeLength = 25;
                 BaseSizeWidth = 25;
                 break;
@@ -289,6 +407,7 @@ public enum TowModelTroopType
 {     
     //Undefined = 0,
     RegularInfantry = 1,
+    RegularInfantryCharacter,
     MonstrousInfantry,
     Swarm,
     LightCavalry,
@@ -302,38 +421,39 @@ public enum TowModelTroopType
     WarBeast,
 }
 
-public static class TowModelTroopTypeExtensions
-{
-    public static int UnitStrength(this TowModelTroopType troopType)
-    {
-        switch (troopType)
-        {
-            case TowModelTroopType.RegularInfantry:
-                return 1;
-            case TowModelTroopType.MonstrousInfantry:
-                return 1;
-            case TowModelTroopType.LightCavalry:
-                return 1;
-            case TowModelTroopType.HeavyCavalry:
-                return 1;
-            case TowModelTroopType.MonstrousCavalry:
-                return 1;
-            case TowModelTroopType.MonstrousCreature:
-                return 1;
-            case TowModelTroopType.WarMachine:
-                return 1;
-            case TowModelTroopType.HeavyChariot:
-                return 1;
-            case TowModelTroopType.LightChariot:
-                return 1;
-            case TowModelTroopType.Behemoth:
-                return 1;
-            case TowModelTroopType.WarBeast:
-                return 1;
-            case TowModelTroopType.Swarm:
-                return 1;
-            default:
-                throw new Exception("Unknown model type");
-        }
-    }
-}
+//public static class TowModelTroopTypeExtensions
+//{
+//    public static int UnitStrength(this TowModelTroopType troopType)
+//    {
+//        switch (troopType)
+//        {
+//            case TowModelTroopType.RegularInfantry:
+//            case TowModelTroopType.RegularInfantryCharacter:
+//                return 1;
+//            case TowModelTroopType.MonstrousInfantry:
+//                return 3;
+//            case TowModelTroopType.LightCavalry:
+//                return 2;
+//            case TowModelTroopType.HeavyCavalry:
+//                return 2;
+//            case TowModelTroopType.MonstrousCavalry:
+//                return 3;
+//            case TowModelTroopType.MonstrousCreature: // as starting wounds
+//                return 1;
+//            case TowModelTroopType.WarMachine: // as starting wounds
+//                return 1;
+//            case TowModelTroopType.HeavyChariot:
+//                return 5;
+//            case TowModelTroopType.LightChariot:
+//                return 3;
+//            case TowModelTroopType.Behemoth: // as starting wounds
+//                return 1;
+//            case TowModelTroopType.WarBeast:
+//                return 1;
+//            case TowModelTroopType.Swarm:
+//                return 3;
+//            default:
+//                throw new Exception("Unknown model type");
+//        }
+//    }
+//}

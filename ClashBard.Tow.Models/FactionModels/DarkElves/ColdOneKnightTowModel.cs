@@ -13,11 +13,15 @@ public class ColdOneKnightTowModel : TowModel
     public ColdOneKnightTowModel() : this(m: null, ws: 5, bs: 4, s: 4, t: 4, w: 1, i: 5, a: 1, ld: 9)
     {
         SetCommandGroup(new ColdOneKnightChampionTowModel(), 7, 7, 7, 50, "Dread Knight", 50);
+    }
 
-        Armors.Add(new HeavyArmorTowArmor());
-        Armors.Add(new ShieldTowArmor());
+    protected ColdOneKnightTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
+        : base(DarkElfTowModelType.ColdOneKnights, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.HeavyCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
+    {
+        Armours.Add(new HeavyArmourTowArmour());
+        Armours.Add(new ShieldTowArmour());
 
-        AvailableArmors.Add((TowArmorType.FullPlateArmour, 4));
+        AvailableArmours.Add((TowArmourType.FullPlateArmour, 4));
 
         Weapons.Add(new LanceTowWeapon());
 
@@ -33,11 +37,6 @@ public class ColdOneKnightTowModel : TowModel
         AvailableSpecialRules.Add((TowSpecialRuleType.Veteran, 1));
 
         Mount = new ColdOneTowMount();
-    }
-
-    protected ColdOneKnightTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(DarkElfTowModelType.ColdOneKnights, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.HeavyCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
-    {
     }
 }
 

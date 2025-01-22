@@ -11,7 +11,8 @@ public class Murderous : TowSpecialRule
     public Murderous()
         : base(TowSpecialRuleType.Murderous,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printShortDescription: false) // dont print short description, since this rule is dead
     {
 
     }

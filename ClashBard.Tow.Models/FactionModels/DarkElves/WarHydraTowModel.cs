@@ -18,9 +18,15 @@ public class WarHydraTowModel : TowModel
     private const int baseSizeLength = 100;
     private const int minUnitSize = 1;
     private const int maxUnitSize = 1;
-    private const int armorValue = 5;
+    private const int armourValue = 5;
 
     public WarHydraTowModel() : this(m: 6, ws: 4, bs: 0, s: 5, t: 5, w: 5, i: 3, a: 2, ld: 6)
+    {
+        
+    }
+
+    protected WarHydraTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
+        : base(modelType, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize, armourValue)
     {
         Crew.Add(new BeastmasterHandlersTowModelAdditional());
         Crew.Add(new BeastmasterHandlersTowModelAdditional());
@@ -37,10 +43,5 @@ public class WarHydraTowModel : TowModel
         SpecialRules.Add(new Regeneration5Plus());
         SpecialRules.Add(new StompAttacksD3());
         SpecialRules.Add(new Terror());
-    }
-
-    protected WarHydraTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(modelType, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize, armorValue)
-    {
     }
 }

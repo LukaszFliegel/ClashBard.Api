@@ -35,7 +35,7 @@ public class TowModelAdditional: TowObjectWithSpecialRules
 
     public virtual ICollection<TowWeapon> Weapons { get; protected set; } = new List<TowWeapon>() { new HandWeaponTowWeapon() };
 
-    public virtual ICollection<TowArmor> Armors { get; protected set; } = new List<TowArmor>() { };
+    public virtual ICollection<TowArmour> Armours { get; protected set; } = new List<TowArmour>() { };
 
     public Enum ModelType { get; set; }
 

@@ -13,7 +13,11 @@ public class DoomfireWarlockTowModel : TowModel
     public DoomfireWarlockTowModel() : this(m: null, ws: 4, bs: 4, s: 4, t: 3, w: 1, i: 5, a: 1, ld: 8)
     {
         SetCommandGroup(new DoomfireWarlockChampionTowModel(), 6, null, null, null, "Master", 25);
+    }
 
+    protected DoomfireWarlockTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
+        : base(DarkElfTowModelType.DoomfireWarlocks, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.LightCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
+    {
         SpecialRules.Add(new CursedCoven());
         SpecialRules.Add(new DarkRunes());
         SpecialRules.Add(new ElvenReflexes());
@@ -24,11 +28,6 @@ public class DoomfireWarlockTowModel : TowModel
         SpecialRules.Add(new Swiftstride());
 
         Mount = new DarkSteedTowMount();
-    }
-
-    protected DoomfireWarlockTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(DarkElfTowModelType.DoomfireWarlocks, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.LightCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
-    {
     }
 }
 

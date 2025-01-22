@@ -11,7 +11,8 @@ public class Fly10 : TowSpecialRule
     public Fly10()
         : base(TowSpecialRuleType.Fly10,
             ShortDescription,
-            LongDescription)
+            LongDescription, 
+            printShortDescription: false)
     {
 
     }

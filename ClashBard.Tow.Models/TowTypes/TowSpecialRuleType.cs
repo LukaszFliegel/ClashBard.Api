@@ -390,20 +390,7 @@ public enum TowSpecialRuleType
     AbyssalHowl,
     [Description("Cavernous Maw Notes")]
     CavernousMawNotes,
-}
 
-public static class TowSpecialRuleTypeExtensions
-{
-    public static string ToDescriptionString(this TowSpecialRuleType specialRuleType)
-    {
-        FieldInfo fi = specialRuleType.GetType().GetField(specialRuleType.ToString());
-
-        DescriptionAttribute[] attributes =
-            (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
-
-        if (attributes != null && attributes.Length > 0)
-            return attributes[0].Description;
-        else
-            return specialRuleType.ToString();
-    }
+    [Description("Sea Dragon Cloak")]
+    SeaDragonCloakTowArmourRules,
 }

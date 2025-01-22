@@ -6,10 +6,10 @@ namespace ClashBard.Tow.Models;
 
 public class TowModelMount: TowObjectWithSpecialRules
 {
-    public TowModelMount(Enum modelType, int? m, int? ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction,
+    public TowModelMount(TowModelMountType modelType, int? m, int? ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction,
         int baseSizeWidth, int baseSizeLength, int minUnitSize = 1, int? maxUnitSize = null, int? armorValue = null)
     {
-        ModelType = modelType;
+        ModelMountType = modelType;
         Movement = m;
         WeaponSkill = ws;
         BallisticSkill = bs;
@@ -32,7 +32,7 @@ public class TowModelMount: TowObjectWithSpecialRules
         ArmorValue = armorValue;
     }
 
-    public Enum ModelType { get; set; }
+    public TowModelMountType ModelMountType { get; set; }
     public int? Movement { get; set; }
     public int? WeaponSkill { get; set; }
     public int? BallisticSkill { get; set; }
@@ -66,4 +66,23 @@ public class TowModelMount: TowObjectWithSpecialRules
 
     //public virtual required int FactionId { get; set; }
     public virtual TowFaction Faction { get; set; }
+
+    public int UnitStrength()
+    {
+        switch (ModelTroopType)
+        {
+            case TowModelTroopType.LightCavalry:
+                return 2;
+            case TowModelTroopType.HeavyCavalry:
+                return 2;
+            case TowModelTroopType.MonstrousCavalry:
+                return 3;
+            case TowModelTroopType.HeavyChariot:
+                return 5;
+            case TowModelTroopType.LightChariot:
+                return 3;
+            default:
+                throw new Exception($"Unit strength of mount with model troop type {ModelTroopType} unknown");
+        }
+    }
 }

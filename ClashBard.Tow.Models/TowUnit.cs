@@ -35,13 +35,26 @@ public class TowUnit
 
         foreach (var weapon in Model.Weapons.Where(p => p.WeaponType != TowWeaponType.HandWeapon))
         {
-            shortDescriptionSb.Append(weapon.WeaponType.ToDescriptionString() + separator);
+            shortDescriptionSb.Append(weapon.WeaponType.ToDescriptionString() + ": ");
             shortDescriptionSb.Append(weapon.GetSpecialRulesShortDescription() + separator);
         }
 
         shortDescriptionSb.AppendLine();
 
-        foreach (var armor in Model.Armors)
+        // for printing take armour with highest MeleeSaveBaseline and all armours that have any improvement
+        List<TowArmour> armoursToPrint = new();
+        
+        if(Model.Armours.Any(p => p.MeleeSaveBaseline > 0))
+            armoursToPrint.Add(Model.Armours.Where(p => p.MeleeSaveBaseline > 0).OrderBy(p => p.MeleeSaveBaseline).First());
+
+        armoursToPrint.AddRange(Model.Armours.Where(p => 
+            p.MeleeSaveImprovement > 0
+            || p.RangedSaveImprovement > 0
+            || p.MeleeWardSaveImprovement > 0
+            || p.RangedWardSaveImprovement > 0
+            ));
+
+        foreach (var armor in armoursToPrint)
         {
             shortDescriptionSb.Append(armor.ArmorType.ToDescriptionString() + separator);
         }
@@ -74,7 +87,12 @@ public class TowUnit
         Model.SetWeapon(weapon);
     }
 
-    public void SetArmor(TowArmor armor)
+    //public void SetMagicWeapon(TowMagicWeapon magicWeapon)
+    //{
+    //    Model.SetMagicWeapon(magicWeapon);
+    //}
+
+    public void SetArmor(TowArmour armor)
     {
         Model.SetArmor(armor);
     }
@@ -115,7 +133,15 @@ public class TowUnit
         return magicBanner;
     }
 
-    public int GetUnitCost()
+    public int UnitStrength()
+    {
+        if (Model.Mount != null)
+            return Model.Mount.UnitStrength() * GetAmount();
+        else
+            return Model.UnitStrength() * GetAmount();
+    }
+
+    public int CalculateTotalCost()
     {
         var cost = Model.PointCost * GetAmount();
 
@@ -139,9 +165,9 @@ public class TowUnit
         }
 
         // if any available armor is assign to Armors in a model, also add its cost
-        foreach (var availableArmor in Model.AvailableArmors)
+        foreach (var availableArmor in Model.AvailableArmours)
         {
-            if (Model.Armors.Any(p => p.ArmorType == availableArmor.Item1))
+            if (Model.Armours.Any(p => p.ArmorType == availableArmor.Item1))
                 cost += availableArmor.Item2 * GetAmount();
         }
 

@@ -14,7 +14,12 @@ public class HarGanethExecutionerTowModel : TowModel
     {
         SetCommandGroup(new HarGanethExecutionerChampionTowModel(), 6, 6, 6, 50, "Draich Master", 25);
 
-        Armors.Add(new HeavyArmorTowArmor());
+    }
+
+    protected HarGanethExecutionerTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
+        : base(DarkElfTowModelType.HarGanethExecutioners, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
+    {
+        Armours.Add(new HeavyArmourTowArmour());
 
         Weapons.Add(new HarGanethGreatswordTowWeapon());
 
@@ -25,11 +30,6 @@ public class HarGanethExecutionerTowModel : TowModel
         SpecialRules.Add(new Veteran());
 
         AvailableSpecialRules.Add((TowSpecialRuleType.Drilled, 2));
-    }
-
-    protected HarGanethExecutionerTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(DarkElfTowModelType.HarGanethExecutioners, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
-    {
     }
 }
 

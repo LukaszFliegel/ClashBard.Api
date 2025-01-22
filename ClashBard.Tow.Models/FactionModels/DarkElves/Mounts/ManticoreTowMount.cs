@@ -18,7 +18,7 @@ public class ManticoreTowMount : TowModelMount
     private const int baseSizeLength = 100;
     private const int minUnitSize = 1;
     private const int maxUnitSize = 1;
-    private const int armorValue = 5;
+    private const int armourValue = 5;
 
     public ManticoreTowMount() : this(m: 6, ws: 5, bs: null, s: 5, t: null, toughnessAdded: 1, w: null, woundsAdded: 4, i: 5, a: 4, ld: null)
     {
@@ -36,7 +36,7 @@ public class ManticoreTowMount : TowModelMount
     }
 
     protected ManticoreTowMount(int? m, int ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int i, int a, int? ld) 
-        : base(modelType, m, ws, bs, s, t, toughnessAdded, w, woundsAdded, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize, armorValue)
+        : base(modelType, m, ws, bs, s, t, toughnessAdded, w, woundsAdded, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize, armourValue)
     {
     }
 }

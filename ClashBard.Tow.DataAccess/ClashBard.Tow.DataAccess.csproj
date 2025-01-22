@@ -19,4 +19,8 @@
     <ProjectReference Include="..\ClashBard.Tow.Models\ClashBard.Tow.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SeedData\" />
+  </ItemGroup>
+
 </Project>

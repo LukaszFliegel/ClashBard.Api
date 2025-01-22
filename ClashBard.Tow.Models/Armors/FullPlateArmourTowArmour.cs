@@ -3,9 +3,9 @@ using ClashBard.Tow.Models.TowTypes;
 
 namespace ClashBard.Tow.Models.Weapons;
 
-public class FullPlateArmourTowArmor : TowArmor
+public class FullPlateArmourTowArmour : TowArmour
 {
-    public FullPlateArmourTowArmor() : base(TowArmorType.FullPlateArmour, 4, 4, 0, 0)
+    public FullPlateArmourTowArmour() : base(TowArmourType.FullPlateArmour, 4, 4)
     {
         
     }

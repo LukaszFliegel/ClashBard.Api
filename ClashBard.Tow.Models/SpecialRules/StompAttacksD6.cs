@@ -11,7 +11,8 @@ public class StompAttacksD6 : TowSpecialRule
     public StompAttacksD6()
         : base(TowSpecialRuleType.StompAttacksD6,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printShortDescription: false)
     {
 
     }

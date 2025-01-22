@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,13 +11,21 @@ namespace ClashBard.Tow.Models.TowTypes;
 
 public enum TowModelMountType
 {
+    [Description("Cold One")]
     ColdOne,
+    [Description("Dark Steed")]
     DarkSteed,
+    [Description("Cauldron Of Blood")]
     CauldronOfBlood,
+    [Description("Scourgerunner Chariot")]
     ScourgerunnerChariot,
+    [Description("Cold One Chariot")]
     ColdOneChariot,
+    [Description("Black Dragon")]
     BlackDragon,
+    [Description("Manticore")]
     Manticore,
+    [Description("War Hydra")]
     WarHydra,
 }
 

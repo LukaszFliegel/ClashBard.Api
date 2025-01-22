@@ -14,6 +14,11 @@ public class SisterOfSlaughterTowModel : TowModel
     {
         SetCommandGroup(new SisterOfSlaughterChampionTowModel(), 7, 7, 7, 50, "Hag");
 
+    }
+
+    protected SisterOfSlaughterTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
+        : base(DarkElfTowModelType.SistersOfSlaughter, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
+    {
         Weapons.Add(new LashAndBucklerTowWeapon());
 
         SpecialRules.Add(new DanceOfDeath());
@@ -23,11 +28,6 @@ public class SisterOfSlaughterTowModel : TowModel
         SpecialRules.Add(new Loner());
         SpecialRules.Add(new Murderous());
         SpecialRules.Add(new OpenOrder());
-    }
-
-    protected SisterOfSlaughterTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(DarkElfTowModelType.SistersOfSlaughter, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
-    {
     }
 }
 

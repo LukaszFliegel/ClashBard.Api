@@ -14,16 +14,16 @@ public class HarpyTowModel : TowModel
     {
         SetCommandGroup(null, null, null, null);
 
-        SpecialRules.Add(new Fly10());
-        SpecialRules.Add(new MoveThroughCover());
-        SpecialRules.Add(new Scouts());
-        SpecialRules.Add(new Skirmishers());
-        SpecialRules.Add(new Swiftstride());
     }
 
     protected HarpyTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
         : base(DarkElfTowModelType.Harpies, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 5)
     {
+        SpecialRules.Add(new Fly10());
+        SpecialRules.Add(new MoveThroughCover());
+        SpecialRules.Add(new Scouts());
+        SpecialRules.Add(new Skirmishers());
+        SpecialRules.Add(new Swiftstride());
     }
 }
 

@@ -1,4 +1,6 @@
 ﻿using ClashBard.Tow.Models;
+using ClashBard.Tow.Models.MagicItems.MagicArmours;
+using ClashBard.Tow.StaticData;
 using QuestPDF.Companion;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
@@ -43,13 +45,6 @@ public class PdfPrinter
                 table.Cell().Row(1).Column(1).Padding(4).AlignRight().Text($"{army.Points} Pts");
                 table.Cell().Row(1).Column(2).Padding(4).AlignLeft().Text($"{army.Faction.FactionType} Roster");
             });
-
-            //page.Content().PaddingVertical(1, Unit.Centimetre)
-            //    .Column(x => {
-            //        x.Spacing(10);
-            //        x.Item().Text("Name: Malekith");
-            //        x.Item().Text("Points: 500");
-            //    });
 
             page.Content().Border(1).Table(table =>
             {
@@ -102,12 +97,44 @@ public class PdfPrinter
                 //}
 
                 uint RowIterator = 2;
+
+                foreach (var character in army.Characters)
+                {
+                    PrintModelRow(table, fontSize, RowIterator, 1, character);
+                    table.Cell().Row(RowIterator).Column(14).Element(UnitContainer).Text(character.UnitStrength()).FontSize(fontSize);
+                    table.Cell().Row(RowIterator).Column(15).Element(UnitContainer).Text(character.CalculateTotalCost()).FontSize(fontSize);
+
+                    if (character.Mount != null)
+                    {
+                        RowIterator++;
+                        PrintMountRow(table, fontSize, RowIterator, 1, character.Mount);
+
+                        table.Cell().Row(RowIterator).Column(15).Element(UnitContainer).Text(character.Mount.PointCost).FontSize(fontSize).Italic();
+                    }
+
+                    foreach (var magicItem in character.MagicItems)
+                    {
+                        RowIterator++;
+                        PrintMagicItemRow(table, fontSize, RowIterator, magicItem);                        
+                    }
+
+                    PrintCharacterRules(table, fontSize, RowIterator + 1, character);
+                    RowIterator++;
+                    //RowIterator++;
+                    //table.Cell().RowSpan(RowIterator).ColumnSpan(15).LineHorizontal(8, Unit.Point);
+                    //table.ExtendLastCellsToTableBottom();
+                    RowIterator++;
+                    //table.Footer(table => table.
+                    table.Cell().Row(RowIterator++).Element(HorizontalLine);
+                }
+
+
                 foreach (var unit in army.Units)
                 {
                     PrintModelRow(table, fontSize, RowIterator, unit.GetAmount(), unit.Model);
 
-                    table.Cell().Row(RowIterator).Column(14).Element(UnitContainer).Text(unit.Model.ModelTroopType.UnitStrength() * unit.GetAmount()).FontSize(fontSize);
-                    table.Cell().Row(RowIterator).Column(15).Element(UnitContainer).Text(unit.GetUnitCost()).FontSize(fontSize);                    
+                    table.Cell().Row(RowIterator).Column(14).Element(UnitContainer).Text(unit.UnitStrength()).FontSize(fontSize);
+                    table.Cell().Row(RowIterator).Column(15).Element(UnitContainer).Text(unit.CalculateTotalCost()).FontSize(fontSize);                    
 
                     if (unit.HasChampion() && unit.Model.ChampionModel != null)
                     {
@@ -117,7 +144,7 @@ public class PdfPrinter
 
                     if (unit.HasMagicBanner())
                     {
-                        PrintMagicBannerRow(table, fontSize, RowIterator + 1, unit.GetMagicBanner());
+                        PrintMagicItemRow(table, fontSize, RowIterator + 1, unit.GetMagicBanner());
                         RowIterator++;
                     }
 
@@ -146,7 +173,7 @@ public class PdfPrinter
 
                 static void PrintModelRow(TableDescriptor table, float fontSize, uint rowNumber, int? unitAmount, TowModel model)
                 {
-                    table.Cell().Row(rowNumber).Column(1).Element(UnitName).Text(model.ModelType.ToString()).FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(1).Element(UnitName).Text(model.ModelType.ToDescriptionString()).FontSize(fontSize);
                     table.Cell().Row(rowNumber).Column(2).Element(UnitContainer).Text(unitAmount.HasValue ? unitAmount.ToString() : string.Empty).FontSize(fontSize);
                     table.Cell().Row(rowNumber).Column(3).Element(UnitContainer).Text(model.Movement).FontSize(fontSize);
                     table.Cell().Row(rowNumber).Column(4).Element(UnitContainer).Text(model.WeaponSkill).FontSize(fontSize);
@@ -157,26 +184,35 @@ public class PdfPrinter
                     table.Cell().Row(rowNumber).Column(9).Element(UnitContainer).Text(model.Initiative).FontSize(fontSize);
                     table.Cell().Row(rowNumber).Column(10).Element(UnitContainer).Text(model.Attacks).FontSize(fontSize);
                     table.Cell().Row(rowNumber).Column(11).Element(UnitContainer).Text(model.Leadership).FontSize(fontSize);
-                    table.Cell().Row(rowNumber).Column(12).Element(UnitContainer).Text($"{model.GetMeleeSaveString()}").FontSize(fontSize);
-                    table.Cell().Row(rowNumber).Column(13).Element(UnitContainer).Text($"{model.GetMagicSaveString()}").FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(12).Element(UnitContainer).Text($"{model.GetSaveString()}").FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(13).Element(UnitContainer).Text($"{model.GetWardSaveString()}").FontSize(fontSize);
+                }
+
+                static void PrintMountRow(TableDescriptor table, float fontSize, uint rowNumber, int? unitAmount, TowModelMount model)
+                {
+                    table.Cell().Row(rowNumber).Column(1).Element(UnitName).Text(model.ModelMountType.ToDescriptionString()).FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(2).Element(UnitContainer).Text(unitAmount.HasValue ? unitAmount.ToString() : string.Empty).FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(3).Element(UnitContainer).Text(model.Movement).FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(4).Element(UnitContainer).Text(model.WeaponSkill).FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(5).Element(UnitContainer).Text(model.BallisticSkill).FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(6).Element(UnitContainer).Text(model.Strength).FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(7).Element(UnitContainer).Text(model.Toughness).FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(8).Element(UnitContainer).Text(model.Wounds).FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(9).Element(UnitContainer).Text(model.Initiative).FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(10).Element(UnitContainer).Text(model.Attacks).FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(11).Element(UnitContainer).Text(model.Leadership).FontSize(fontSize);
+                    //table.Cell().Row(rowNumber).Column(12).Element(UnitContainer).Text($"{model.GetSaveString()}").FontSize(fontSize);
+                    //table.Cell().Row(rowNumber).Column(13).Element(UnitContainer).Text($"{model.GetWardSaveString()}").FontSize(fontSize);
                 }
 
                 static void PrintUnitRules(TableDescriptor table, float fontSize, uint rowNumber, TowUnit unit)
                 {
-                    //table.Cell().Row(rowNumber).Column(1).Element(UnitContainer).Text(model.ChampionName).FontSize(fontSize);
-                    //table.Cell().Row(rowNumber).Column(2).Element(UnitContainer).Text("1").FontSize(fontSize);
                     table.Cell().Row(rowNumber).Column(2).ColumnSpan(14).Element(UnitContainer).Text(unit.GetRulesShortDescription()).FontSize(fontSize);
-                    //table.Cell().Row(rowNumber).Column(3).Element(UnitContainer).Text(model.Movement).FontSize(fontSize);
-                    //table.Cell().Row(rowNumber).Column(4).Element(UnitContainer).Text(model.WeaponSkill).FontSize(fontSize);
-                    //table.Cell().Row(rowNumber).Column(5).Element(UnitContainer).Text(model.BallisticSkill).FontSize(fontSize);
-                    //table.Cell().Row(rowNumber).Column(6).Element(UnitContainer).Text(model.Strength).FontSize(fontSize);
-                    //table.Cell().Row(rowNumber).Column(7).Element(UnitContainer).Text(model.Toughness).FontSize(fontSize);
-                    //table.Cell().Row(rowNumber).Column(8).Element(UnitContainer).Text(model.Wounds).FontSize(fontSize);
-                    //table.Cell().Row(rowNumber).Column(9).Element(UnitContainer).Text(model.Initiative).FontSize(fontSize);
-                    //table.Cell().Row(rowNumber).Column(10).Element(UnitContainer).Text(model.Attacks).FontSize(fontSize);
-                    //table.Cell().Row(rowNumber).Column(11).Element(UnitContainer).Text(model.Leadership).FontSize(fontSize);
-                    //table.Cell().Row(rowNumber).Column(12).Element(UnitContainer).Text($"{model.GetMeleeSave()}/{model.GetRangedSave()}").FontSize(fontSize);
-                    //table.Cell().Row(rowNumber).Column(13).Element(UnitContainer).Text($"{model.GetMagicMeleeSave()}/{model.GetRangedSave()}").FontSize(fontSize);
+                }
+
+                static void PrintCharacterRules(TableDescriptor table, float fontSize, uint rowNumber, TowCharacter character)
+                {
+                    table.Cell().Row(rowNumber).Column(2).ColumnSpan(14).Element(UnitContainer).Text(character.GetRulesShortDescription()).FontSize(fontSize);
                 }
 
                 static void PrintChampionModelRow(TableDescriptor table, float fontSize, uint rowNumber, TowModel model)
@@ -192,15 +228,15 @@ public class PdfPrinter
                     table.Cell().Row(rowNumber).Column(9).Element(UnitContainer).Text(model.Initiative).FontSize(fontSize);
                     table.Cell().Row(rowNumber).Column(10).Element(UnitContainer).Text(model.Attacks).FontSize(fontSize);
                     table.Cell().Row(rowNumber).Column(11).Element(UnitContainer).Text(model.Leadership).FontSize(fontSize);
-                    table.Cell().Row(rowNumber).Column(12).Element(UnitContainer).Text($"{model.GetMeleeSaveString()}").FontSize(fontSize);
-                    table.Cell().Row(rowNumber).Column(13).Element(UnitContainer).Text($"{model.GetMagicSaveString()}").FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(12).Element(UnitContainer).Text($"{model.GetSaveString()}").FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(13).Element(UnitContainer).Text($"{model.GetWardSaveString()}").FontSize(fontSize);
 
                     table.Cell().Row(rowNumber).Column(15).Element(UnitContainer).Text($"{model.PointCost}").FontSize(fontSize).Italic();
                 }
 
-                static void PrintMagicBannerRow(TableDescriptor table, float fontSize, uint rowNumber, TowMagicBanner banner)
+                static void PrintMagicItemRow(TableDescriptor table, float fontSize, uint rowNumber, TowMagicItem banner)
                 {
-                    table.Cell().Row(rowNumber).Column(1).Element(UnitContainer).Text(banner.MagicItemType.ToString()).FontSize(fontSize).Italic();
+                    table.Cell().Row(rowNumber).Column(1).Element(UnitContainer).Text(banner.MagicItemType.ToDescriptionString()).FontSize(fontSize).Italic();
                     table.Cell().Row(rowNumber).Column(2).ColumnSpan(13).Element(UnitContainer).Text(banner.GetMagicItemRulesShortDescription()).FontSize(fontSize);
                     table.Cell().Row(rowNumber).Column(15).Element(UnitContainer).Text($"{banner.Points}").FontSize(fontSize).Italic();
                 }

@@ -18,8 +18,8 @@ public class DarkElfWarriorTowModel : TowModel
     protected DarkElfWarriorTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
         : base(DarkElfTowModelType.DarkElfWarriors, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
     {        
-        Armors.Add(new LightArmorTowArmor());
-        Armors.Add(new ShieldTowArmor());
+        Armours.Add(new LightArmourTowArmour());
+        Armours.Add(new ShieldTowArmour());
 
         AvailableWeapons.Add((TowWeaponType.ThrustingSpear, 1));
 

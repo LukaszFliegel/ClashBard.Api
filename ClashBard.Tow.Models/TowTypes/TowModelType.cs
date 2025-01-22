@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,41 +12,71 @@ namespace ClashBard.Tow.Models.TowTypes;
 
 public enum DarkElfTowModelType
 {
+    [Description("Dark Elf Dreadlord")]
     DarkElfDreadlord,
+    [Description("Dark Elf Master")]
     DarkElfMaster,
+    [Description("Supreme Sorceress")]
     SupremeSorceress,
+    [Description("Sorceress")]
     Sorceress,
+    [Description("High Beastmaster")]
     HighBeastmaster,
+    [Description("Death Hag")]
     DeathHag,
+    [Description("Khainite Assassin")]
     KhainiteAssassin,
+    //[Description("Dark Steed")]
     //DarkSteed,
+    //[Description("Cold One")]
     //ColdOne,
+    [Description("Dark Pegasus")]
     DarkPegasus,
+    [Description("Dark Elf Warriors")]
     DarkElfWarriors,
+    [Description("Repeater Crossbowmen")]
     RepeaterCrossbowmen,
+    [Description("Black Ark Corsairs")]
     BlackArkCorsairs,
+    [Description("Black Guard Of Naggarond")]
     BlackGuardOfNaggarond,
+    [Description("Har Ganeth Executioners")]
     HarGanethExecutioners,
+    [Description("Dark Elf Shades")]
     DarkElfShades,
+    [Description("Witch Elves")]
     WitchElves,
+    [Description("Sisters Of Slaughter")]
     SistersOfSlaughter,
+    [Description("Harpies")]
     Harpies,
+    [Description("Cold One Knights")]
     ColdOneKnights,
+    [Description("Dark Riders")]
     DarkRiders,
+    [Description("Doomfire Warlocks")]
     DoomfireWarlocks,
+    //[Description("Cauldron Of Blood")]
     //CauldronOfBlood,
+    [Description("Scourgerunner Chariots")]
     ScourgerunnerChariots,
+    [Description("Cold One Chariots")]
     ColdOneChariots,
+    [Description("Bloodwrack Shrine")]
     BloodwrackShrine,
+    //[Description("Black Dragon")]
     //BlackDragon,
+    //[Description("Manticore")]
     //Manticore,
+    [Description("War Hydra")]
     WarHydra,
+    [Description("Bloodwrack Medusa")]
     BloodwrackMedusa,
+    [Description("Kharibdyss")]
     Kharibdyss,
+    [Description("Reaper Bolt Thrower")]
     ReaperBoltThrower,
 }
-
-
 
 /*
  * Lords of Bretonnia (Foot)

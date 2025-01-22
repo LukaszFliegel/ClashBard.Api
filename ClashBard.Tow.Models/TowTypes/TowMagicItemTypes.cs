@@ -2,6 +2,22 @@
 
 namespace ClashBard.Tow.Models.TowTypes;
 
+public enum TowMagicItemCategory
+{
+    [Description("Magic Weapon")]
+    MagicWeapon,
+    [Description("Magic Armor")]
+    MagicArmour,
+    [Description("Magic Banner")]
+    MagicBanner,
+    [Description("Enchanted Ttem")]
+    EnchantedItem,
+    [Description("Talisman")]
+    Talisman,
+    [Description("Arcane")]
+    Arcane,
+}
+
 public enum TowMagicItemWeaponType
 {
     [Description("Ogre Blade")]

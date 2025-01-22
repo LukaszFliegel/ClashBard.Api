@@ -11,6 +11,12 @@ public class BloodwrackShrineTowModel : TowModel
 
     public BloodwrackShrineTowModel() : this(m: 2, ws: null, bs: null, s: 5, t: 5, w: 5, i: null, a: null, ld: null)
     {
+        
+    }
+
+    protected BloodwrackShrineTowModel(int? m, int? ws, int? bs, int s, int t, int w, int? i, int? a, int? ld) 
+        : base(DarkElfTowModelType.BloodwrackShrine, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.HeavyChariot, new DarkElvesTowFaction(), 60, 100, 1, 1, 4)
+    {
         Crew.Add(new ShrinekeeperTowModelAdditional());
         Crew.Add(new ShrinekeeperTowModelAdditional());
 
@@ -28,10 +34,5 @@ public class BloodwrackShrineTowModel : TowModel
         SpecialRules.Add(new PoisonedAttacks());
         SpecialRules.Add(new StonyStare());
         SpecialRules.Add(new Terror());
-    }
-
-    protected BloodwrackShrineTowModel(int? m, int? ws, int? bs, int s, int t, int w, int? i, int? a, int? ld) 
-        : base(DarkElfTowModelType.BloodwrackShrine, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.HeavyChariot, new DarkElvesTowFaction(), 60, 100, 1, 1, 4)
-    {
     }
 }

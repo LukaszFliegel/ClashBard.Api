@@ -14,9 +14,15 @@ public class DarkRiderTowModel : TowModel
     {
         SetCommandGroup(new DarkRiderChampionTowModel(), 6, 6, 6, null, "Herald");
 
-        Armors.Add(new LightArmorTowArmor());
+        
+    }
 
-        AvailableArmors.Add((TowArmorType.Shield, 1));
+    protected DarkRiderTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
+        : base(DarkElfTowModelType.DarkRiders, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.LightCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
+    {
+        Armours.Add(new LightArmourTowArmour());
+
+        AvailableArmours.Add((TowArmourType.Shield, 1));
 
         Weapons.Add(new CavalrySpearTowWeapon());
 
@@ -33,11 +39,6 @@ public class DarkRiderTowModel : TowModel
         AvailableSpecialRules.Add((TowSpecialRuleType.Scouts, 1));
 
         Mount = new DarkSteedTowMount();
-    }
-
-    protected DarkRiderTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(DarkElfTowModelType.DarkRiders, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.LightCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
-    {
     }
 }
 

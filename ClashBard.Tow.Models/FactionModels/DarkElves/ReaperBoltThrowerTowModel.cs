@@ -21,20 +21,21 @@ public class ReaperBoltThrowerTowModel : TowModel
 
     public ReaperBoltThrowerTowModel() : this(m: null, ws: null, bs: null, s: null, t: 6, w: 2, i: null, a: null, ld: null)
     {
+
+    }
+
+    protected ReaperBoltThrowerTowModel(int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld) 
+        : base(modelType, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize)
+    {
         Weapons.Add(new RepeaterBoltThrowerTowWeapon());
         Weapons.Add(new RepeaterBoltThrowerRapidFireTowWeapon());
 
-        Armors.Add(new LightArmorTowArmor());
+        Armours.Add(new LightArmourTowArmour());
 
         Crew.Add(new DarkElfCrewTowModelAdditional()); // Crew represents 2 crew members (2 attacks and 2 wounds, this is how it's described in the army book)
 
         SpecialRules.Add(new ElvenReflexes());
         SpecialRules.Add(new HatredHighElves());
         SpecialRules.Add(new Skirmishers());
-    }
-
-    protected ReaperBoltThrowerTowModel(int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld) 
-        : base(modelType, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize)
-    {
     }
 }
