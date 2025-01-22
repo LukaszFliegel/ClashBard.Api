@@ -11,7 +11,8 @@ public class FightinExtraRankAnyTurnTheyDidNotCharge : TowSpecialRule
     public FightinExtraRankAnyTurnTheyDidNotCharge()
         : base(TowSpecialRuleType.FightinExtraRankanyturntheydidnotcharge,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printName: false)
     {
 
     }

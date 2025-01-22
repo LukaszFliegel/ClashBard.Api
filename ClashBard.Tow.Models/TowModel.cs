@@ -1,10 +1,12 @@
 ﻿using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.Models.Weapons;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using System.Text;
 
 namespace ClashBard.Tow.Models;
 
-public class TowModel
+public class TowModel: TowObjectWithSpecialRules
 {   
     public TowModel(Enum modelType, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction,
         int minUnitSize = 1, int? maxUnitSize = null, int? armorValue = null)
@@ -67,6 +69,7 @@ public class TowModel
         ChampionUpgradeCost = championUpgradeCost;
         ChampionName = championName;
         championModel.ChampionName = championName;
+        championModel.PointCost = championUpgradeCost.Value;
         ChampionMagicItemsUpToPoints = championMagicItemsUpToPoints;
 
         StandardBearerUpgradeCost = standardBearerUpgradeCost;
@@ -74,7 +77,7 @@ public class TowModel
         MusicianUpgradeCost = musicianUpgradeCost;
         MagicStandardUpToPoints = magicStandardUpToPoints;
         
-    }
+    }    
 
     public int BaseSizeWidth { get; set; }
     public int BaseSizeLength { get; set; }
@@ -100,9 +103,34 @@ public class TowModel
     public virtual TowFaction Faction { get; set; }
 
     public virtual ICollection<(TowSpecialRuleType, int)> AvailableSpecialRules { get; set; } = new HashSet<(TowSpecialRuleType, int)>() { };
-    public virtual ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>() { };
 
-    public int GetMeleeSave()
+    public string GetMeleeSaveString()
+    {
+        if (GetMeleeSave().HasValue)
+        {
+            if (GetRangedSave().HasValue && GetMeleeSave() != GetRangedSave())
+                return $"{GetMeleeSave()}/{GetRangedSave()}";
+            else
+                return $"{GetMeleeSave()}";
+        }
+        else
+            return string.Empty;
+    }
+
+    public string GetMagicSaveString()
+    {
+        if (GetMagicMeleeSave().HasValue)
+        {
+            if (GetMagicRangedSave().HasValue && GetMagicMeleeSave() != GetMagicRangedSave())
+                return $"{GetMagicMeleeSave()}/{GetMagicRangedSave()}";
+            else
+                return $"{GetMagicMeleeSave()}";
+        }
+        else
+            return string.Empty;
+    }
+
+    public int? GetMeleeSave()
     {
         int save = 0;
 
@@ -115,10 +143,10 @@ public class TowModel
             save -= armor.MeleeSaveImprovement;
         }
 
-        return save;
+        return save > 0 ? save : null;
     }
 
-    public int GetRangedSave()
+    public int? GetRangedSave()
     {
         int save = 0;
 
@@ -130,10 +158,10 @@ public class TowModel
         {
             save -= armor.RangedSaveImprovement;
         }
-        return save;
+        return save > 0 ? save : null;
     }
 
-    public int GetMagicMeleeSave()
+    public int? GetMagicMeleeSave()
     {
         int save = 0;
 
@@ -145,10 +173,10 @@ public class TowModel
         {
             save -= armor.MagicMeleeSaveImprovement;
         }
-        return save;
+        return save > 0 ? save : null;
     }
 
-    public int GetMagicRangedSave()
+    public int? GetMagicRangedSave()
     {
         int save = 0;
 
@@ -160,10 +188,10 @@ public class TowModel
         {
             save -= armor.MagicRangedSaveImprovement;
         }
-        return save;
+        return save > 0 ? save : null;
     }
 
-    public void AssignWeapon(TowWeapon weapon)
+    public void SetWeapon(TowWeapon weapon)
     {
         if (!AvailableWeapons.Any(w => w.Item1 == weapon.WeaponType))
         {
@@ -173,34 +201,22 @@ public class TowModel
         Weapons.Add(weapon);
     }
 
-    public void UnassignWeapon(TowWeapon weapon)
-    {
-        if (!Weapons.Contains(weapon))
-        {
-            throw new Exception($"Weapon {weapon.WeaponType} not assigned to {ModelType} model");
-        }
-
-        Weapons.Remove(weapon);
-    }
-
-    public void AssignArmor(TowArmor armor)
+    public void SetArmor(TowArmor armor)
     {
         if (!AvailableArmors.Any(a => a.Item1 == armor.ArmorType))
         {
             throw new Exception($"Armor {armor.ArmorType} not available for {ModelType} model");
         }
-
         Armors.Add(armor);
     }
 
-    public void UnassignArmor(TowArmor armor)
+    public void SetSpecialRule(TowSpecialRule specialRule)
     {
-        if (!Armors.Contains(armor))
+        if (!AvailableSpecialRules.Any(sr => sr.Item1 == specialRule.RuleType))
         {
-            throw new Exception($"Armor {armor.ArmorType} not assigned to {ModelType} model");
+            throw new Exception($"Special rule {specialRule.RuleType} not available for {ModelType} model");
         }
-
-        Armors.Remove(armor);
+        SpecialRules.Add(specialRule);
     }
 
     private void SetDefaultBaseSize()
@@ -251,6 +267,12 @@ public class TowModel
                 BaseSizeLength = 50;
                 BaseSizeWidth = 25;
                 break;
+            case TowModelTroopType.Swarm:
+                BaseSizeLength = 999;
+                BaseSizeWidth = 999;
+                break;
+            default:
+                throw new Exception("Unknown model type");
         }
     }
 }
@@ -268,7 +290,8 @@ public enum TowModelTroopType
     //Undefined = 0,
     RegularInfantry = 1,
     MonstrousInfantry,
-    LightCavalry,    
+    Swarm,
+    LightCavalry,
     HeavyCavalry,
     MonstrousCavalry,
     MonstrousCreature,
@@ -277,4 +300,40 @@ public enum TowModelTroopType
     LightChariot,
     Behemoth,
     WarBeast,
+}
+
+public static class TowModelTroopTypeExtensions
+{
+    public static int UnitStrength(this TowModelTroopType troopType)
+    {
+        switch (troopType)
+        {
+            case TowModelTroopType.RegularInfantry:
+                return 1;
+            case TowModelTroopType.MonstrousInfantry:
+                return 1;
+            case TowModelTroopType.LightCavalry:
+                return 1;
+            case TowModelTroopType.HeavyCavalry:
+                return 1;
+            case TowModelTroopType.MonstrousCavalry:
+                return 1;
+            case TowModelTroopType.MonstrousCreature:
+                return 1;
+            case TowModelTroopType.WarMachine:
+                return 1;
+            case TowModelTroopType.HeavyChariot:
+                return 1;
+            case TowModelTroopType.LightChariot:
+                return 1;
+            case TowModelTroopType.Behemoth:
+                return 1;
+            case TowModelTroopType.WarBeast:
+                return 1;
+            case TowModelTroopType.Swarm:
+                return 1;
+            default:
+                throw new Exception("Unknown model type");
+        }
+    }
 }

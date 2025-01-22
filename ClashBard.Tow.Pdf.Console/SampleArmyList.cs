@@ -2,6 +2,9 @@
 using ClashBard.Tow.Models.FactionModels.DarkElves;
 using ClashBard.Tow.Models.Factions;
 using ClashBard.Tow.Models.Interfaces;
+using ClashBard.Tow.Models.MagicItems.MagicBanners;
+using ClashBard.Tow.Models.SpecialRules;
+using ClashBard.Tow.Models.Weapons;
 
 namespace ClashBard.Tow.Pdf.Console;
 
@@ -23,17 +26,38 @@ public class SampleArmyList
         //dreadlord.Weapons.Add(_weaponsRepository.GetByName("Repeater Crossbow"));
         //dreadlord.Armors.Add(_armorsRepository.GetArmor(TowArmorType.FullPlateArmour));
 
+
+
+        var deWarriors = new TowUnit(
+                    new DarkElfWarriorTowModel(), 37, faction, true, true, true
+                    );
+        
+        deWarriors.SetMagicBanner(new WarBanner()); // for test
+        deWarriors.SetWeapon(new ThrustingSpearTowWeapon());
+
+        var deCrossbowmen = new TowUnit(
+                    new RepeaterCrossbowmanTowModel(), 12, faction, false, true, true
+                    );
+
+        deCrossbowmen.SetArmor(new ShieldTowArmor());
+
+        var blackGuards = new TowUnit(
+            new BlackGuardOfNaggarondTowModel(), 20, faction, true, false, true
+            );
+
+        blackGuards.SetSpecialRule(new Drilled());
+
         return new TowArmy
         {
             Faction = faction,
-            Name = "Dark Elves default",
+            Name = "Dark Elves default ",
             Points = 2000,
             //General = dreadlord,
             Units = new List<TowUnit>
             {
-                new TowUnit(
-                    new DarkElfWarriorTowModel(), 37, faction, true, true, true
-                    )
+                deWarriors,
+                
+                blackGuards
             }
         };
     }

@@ -16,8 +16,8 @@ public class WarBanner : TowMagicBanner
 
 public class WarBannerRules : TowSpecialRule
 {
-    private static new string ShortDescription = "Gives unit Stubborn";
-    private static new string LongDescription = "A unit carrying the Banner of Iron Resolve gains the Stubborn special rule.";
+    private static new string ShortDescription = "+1 CR";
+    private static new string LongDescription = "When calculating its combat result, a unit carrying the War Banner may claim an additional bonus of +1 combat result point.";
 
     public WarBannerRules()
         : base(TowSpecialRuleType.WarBannerRules,

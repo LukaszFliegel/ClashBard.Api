@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ClashBard.Tow.Models;
 
-public class TowWeapon
+public class TowWeapon: TowObjectWithSpecialRules
 {
     public TowWeapon(TowWeaponType weaponType, int? range, TowWeaponStrength strength, int armorPiercing)
     {
@@ -21,8 +21,6 @@ public class TowWeapon
     public TowWeaponStrength Strength { get; set; }
 
     public int ArmorPiercing { get; set; }
-
-    public virtual ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>();
 
 }
 

@@ -1,8 +1,11 @@
 ﻿using ClashBard.Tow.Models.TowTypes;
+using ClashBard.Tow.StaticData;
+using System.Reflection;
+using System.Text;
 
 namespace ClashBard.Tow.Models;
 
-public abstract class TowMagicItem
+public abstract class TowMagicItem: TowObjectWithSpecialRules
 {
     public TowMagicItem(Enum magicItemType, int points)
     {
@@ -12,6 +15,19 @@ public abstract class TowMagicItem
 
     public Enum MagicItemType { get; set; }
     public int Points { get; }
+
+    public string GetMagicItemRulesShortDescription()
+    {
+        StringBuilder shortDescriptionSb = new();
+        string separator = ClashBardStatic.Separator;
+
+        foreach (var rule in SpecialRules.Where(p => p.PrintInSummary))
+        {
+            shortDescriptionSb.Append(rule.GetShortDescription() + separator);
+        }
+
+        return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());
+    }
 }
 
 public class TowMagicWeapon : TowMagicItem
@@ -31,9 +47,7 @@ public class TowMagicWeapon : TowMagicItem
 
     public TowWeaponStrength Strength { get; set; }
 
-    public int ArmorPiercing { get; set; }
-
-    public virtual ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>();
+    public int ArmorPiercing { get; set; }    
 }
 
 public class TowMagicArmour : TowMagicItem
@@ -100,8 +114,6 @@ public class TowMagicArmour : TowMagicItem
 
     public int MagicWardRangedSaveBaseline { get; set; }
     public int MagicWardRangedSaveImprovement { get; set; }
-
-    public ICollection<TowSpecialRule>? SpecialRules { get; set; }
 }
 
 public class TowTalisman : TowMagicItem
@@ -111,8 +123,6 @@ public class TowTalisman : TowMagicItem
     {
         
     }
-
-    public virtual ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>();
 }
 
 public class TowEnchantedItem : TowMagicItem
@@ -122,8 +132,6 @@ public class TowEnchantedItem : TowMagicItem
     {
 
     }
-
-    public virtual ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>();
 }
 
 public class TowArcaneItem : TowMagicItem
@@ -133,8 +141,6 @@ public class TowArcaneItem : TowMagicItem
     {
 
     }
-
-    public virtual ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>();
 }
 
 public class TowMagicBanner : TowMagicItem
@@ -144,6 +150,4 @@ public class TowMagicBanner : TowMagicItem
     {
 
     }
-
-    public virtual ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>();
 }

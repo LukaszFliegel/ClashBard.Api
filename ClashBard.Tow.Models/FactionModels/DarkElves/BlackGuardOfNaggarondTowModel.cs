@@ -20,8 +20,8 @@ public class BlackGuardOfNaggarondTowModel : TowModel
 
         SpecialRules.Add(new CloseOrder());
         SpecialRules.Add(new ElvenReflexes());
-        SpecialRules.Add(new EternalHatred());
         SpecialRules.Add(new HatredHighElves());
+        SpecialRules.Add(new EternalHatred());        
         SpecialRules.Add(new ImmuneToPsychology());
         SpecialRules.Add(new MartialProwess());
         SpecialRules.Add(new Stubborn());

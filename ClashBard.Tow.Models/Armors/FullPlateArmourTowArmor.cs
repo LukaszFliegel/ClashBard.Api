@@ -5,7 +5,7 @@ namespace ClashBard.Tow.Models.Weapons;
 
 public class FullPlateArmourTowArmor : TowArmor
 {
-    public FullPlateArmourTowArmor() : base(TowArmorType.FullPlateArmour, 4, 4, 4, 4)
+    public FullPlateArmourTowArmor() : base(TowArmorType.FullPlateArmour, 4, 4, 0, 0)
     {
         
     }

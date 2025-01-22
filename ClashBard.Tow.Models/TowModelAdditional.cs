@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ClashBard.Tow.Models;
 
-public class TowModelAdditional
+public class TowModelAdditional: TowObjectWithSpecialRules
 {
     public TowModelAdditional(Enum modelType, int? m, int ws, int? bs, int s, int? t, int? w, int i, int a, int? ld, /*int pointCost,*/ /*TowModelTroopType modelTroopType,*/ TowFaction faction)
     {
@@ -41,5 +41,4 @@ public class TowModelAdditional
 
     //public virtual required int FactionId { get; set; }
     public virtual TowFaction Faction { get; set; }
-    public ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>() { };
 }

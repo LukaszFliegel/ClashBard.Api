@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Reflection;
 
 namespace ClashBard.Tow.Models.TowTypes;
 
@@ -104,4 +105,20 @@ public enum TowWeaponType
     FieryBreath,
     [Description("Cavernous Maw")]
     CavernousMaw,
+}
+
+public static class TowWeaponTypeExtensions
+{
+    public static string ToDescriptionString(this TowWeaponType weaponType)
+    {
+        FieldInfo fi = weaponType.GetType().GetField(weaponType.ToString());
+
+        DescriptionAttribute[] attributes =
+            (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+        if (attributes != null && attributes.Length > 0)
+            return attributes[0].Description;
+        else
+            return weaponType.ToString();
+    }
 }

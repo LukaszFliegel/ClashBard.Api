@@ -1,4 +1,5 @@
 ﻿using ClashBard.Tow.Models.TowTypes;
+using ClashBard.Tow.StaticData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,20 +11,51 @@ namespace ClashBard.Tow.Models;
 
 public class TowSpecialRule
 {
-    public TowSpecialRule(TowSpecialRuleType ruleType, string shortDescription, string longDescription)
+    
+
+    public TowSpecialRule(TowSpecialRuleType ruleType, string shortDescription, string longDescription, 
+        bool printInSummary = true,
+        bool printName = true,
+        bool printShortDescription = true)
     {
         RuleType = ruleType;
-        ShortDescription = shortDescription;
+        this.shortDescription = shortDescription;
         LongDescription = longDescription;
+        PrintInSummary = printInSummary;
+        this.printName = printName;
+        this.printShortDescription = printShortDescription;
     }
 
     //[Key]
     //public int Id { get; set; }
     //public string Name { get; set; }
 
-    public TowSpecialRuleType RuleType { get; set; }
-    public string ShortDescription { get; set; }
-    public string LongDescription { get; set; }
+    public TowSpecialRuleType RuleType { get; private set; }
+    
+    private string LongDescription { get; set; }
 
-    //public ICollection<TowModel> TowModel { get; set; }
+    public bool PrintInSummary { get; private set; }
+
+    private string shortDescription;
+    private readonly bool printName;
+    private readonly bool printShortDescription;
+
+    public string GetShortDescription()
+    {
+        StringBuilder shortDescriptionSb = new();
+        string separator = ClashBardStatic.Separator;
+
+        if (printName)
+            shortDescriptionSb.Append($"{RuleType.ToDescriptionString()}");
+
+        if (printName && printShortDescription)
+            shortDescriptionSb.Append(": ");
+
+        if (printShortDescription)
+            shortDescriptionSb.Append($"{shortDescription.Trim()}");
+
+        shortDescriptionSb.Append(separator);
+
+        return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());
+    }
 }

@@ -24,7 +24,7 @@ public class ScourgerunnerChariotTowModel : TowModel
         SpecialRules.Add(new HatredHighElves());
         SpecialRules.Add(new ImpactHitsD6());
         SpecialRules.Add(new OpenOrder());
-        SpecialRules.Add(new SeaDragonCloak());
+        base.SpecialRules.Add(new SpecialRules.DarkElvesSpecialRules.SeaDragonCloak());
         SpecialRules.Add(new Swiftstride());
     }
 

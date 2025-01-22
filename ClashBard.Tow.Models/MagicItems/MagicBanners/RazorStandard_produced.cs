@@ -16,8 +16,8 @@ public class RazorStandard : TowMagicBanner
 
 public class RazorStandardRules : TowSpecialRule
 {
-    private static new string ShortDescription = "Gives unit Stubborn";
-    private static new string LongDescription = "A unit carrying the Banner of Iron Resolve gains the Stubborn special rule.";
+    private static new string ShortDescription = "???";
+    private static new string LongDescription = "???";
 
     public RazorStandardRules()
         : base(TowSpecialRuleType.RazorStandardRules,

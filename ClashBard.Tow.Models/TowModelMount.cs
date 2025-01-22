@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ClashBard.Tow.Models;
 
-public class TowModelMount
+public class TowModelMount: TowObjectWithSpecialRules
 {
     public TowModelMount(Enum modelType, int? m, int? ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction,
         int baseSizeWidth, int baseSizeLength, int minUnitSize = 1, int? maxUnitSize = null, int? armorValue = null)
@@ -66,5 +66,4 @@ public class TowModelMount
 
     //public virtual required int FactionId { get; set; }
     public virtual TowFaction Faction { get; set; }
-    public ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>() { };
 }
