@@ -49,7 +49,7 @@ using ClashBard.Tow.Models.TowTypes;
 
 namespace ClashBard.Tow.Models.MagicItems.MagicWeapons;
 
-public class {magicItem.name_en.ToLegalClassName()} : TowMagicWeapon
+public class {magicItem.name_en.ToLegalClassName()}TowMagicWeapon : TowMagicWeapon
 {{
     private const int points = {magicItem.points};
 
@@ -74,7 +74,7 @@ using ClashBard.Tow.Models.TowTypes;
 
 namespace ClashBard.Tow.Models.MagicItems.MagicArmours;
 
-public class {magicItem.name_en.ToLegalClassName()} : TowMagicArmour
+public class {magicItem.name_en.ToLegalClassName()}TowMagicArmour : TowMagicArmour
 {{
     private const int points = {magicItem.points};
 
@@ -98,7 +98,7 @@ $@"using ClashBard.Tow.Models.TowTypes;
 
 namespace ClashBard.Tow.Models.MagicItems.Talismans;
 
-public class {magicItem.name_en.ToLegalClassName()} : TowTalisman
+public class {magicItem.name_en.ToLegalClassName()}TowTalisman : TowTalisman
 {{
     private const int points = {magicItem.points};
 
@@ -135,7 +135,7 @@ $@"using ClashBard.Tow.Models.TowTypes;
 
 namespace ClashBard.Tow.Models.MagicItems.MagicBanners;
 
-public class {magicItem.name_en.ToLegalClassName()} : TowMagicBanner
+public class {magicItem.name_en.ToLegalClassName()}TowMagicBanner : TowMagicBanner
 {{
     private const int points = {magicItem.points};
 
@@ -172,7 +172,7 @@ $@"using ClashBard.Tow.Models.TowTypes;
 
 namespace ClashBard.Tow.Models.MagicItems.EnchantedItems;
 
-public class {magicItem.name_en.ToLegalClassName()} : TowEnchantedItem
+public class {magicItem.name_en.ToLegalClassName()}TowEnchantedItem : TowEnchantedItem
 {{
     private const int points = {magicItem.points};
     
@@ -208,7 +208,7 @@ $@"using ClashBard.Tow.Models.TowTypes;
 
 namespace ClashBard.Tow.Models.MagicItems.ArcaneItems;
 
-public class {magicItem.name_en.ToLegalClassName()} : TowArcaneItem
+public class {magicItem.name_en.ToLegalClassName()}TowArcaneItem : TowArcaneItem
 {{
     private const int points = {magicItem.points};
 

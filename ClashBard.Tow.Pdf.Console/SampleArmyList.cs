@@ -32,7 +32,7 @@ public class SampleArmyList
                     new DarkElfWarriorTowModel(), 37, faction, true, true, true
                     );
         
-        deWarriors.SetMagicBanner(new WarBanner()); // for test
+        deWarriors.SetMagicBanner(new WarBannerTowMagicBanner()); // for test
         deWarriors.SetWeapon(new ThrustingSpearTowWeapon());
 
         var deCrossbowmen = new TowUnit(
