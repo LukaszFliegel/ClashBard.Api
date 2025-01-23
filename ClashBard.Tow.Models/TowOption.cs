@@ -2,7 +2,7 @@
 
 namespace ClashBard.Tow.Models;
 
-public abstract class TowOption<TTowType> : ITowValidatable where TTowType : Enum
+public abstract class TowOption<TTowType> : TowObject, ITowValidatable where TTowType : Enum
 {
     public abstract ICollection<ValidationError> Validate();
 }

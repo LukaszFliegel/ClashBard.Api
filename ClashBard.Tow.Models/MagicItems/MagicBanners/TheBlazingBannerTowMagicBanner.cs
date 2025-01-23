@@ -22,7 +22,8 @@ public class TheBlazingBannerRules : TowSpecialRule
     public TheBlazingBannerRules()
         : base(TowSpecialRuleType.TheBlazingBannerRules,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printName: false)
     {
 
     }

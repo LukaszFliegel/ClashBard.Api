@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ClashBard.Tow.Models;
-public class TowArmy
+public class TowArmy: TowObject
 {
     public string Name { get; set; }
     public int Points { get; set; }

@@ -15,13 +15,14 @@ public class DawnstoneTowTalisman : TowTalisman
 
 public class DawnstoneRules : TowSpecialRule
 {
-    private static new string ShortDescription = "xxx";
-    private static new string LongDescription = "xxx";
+    private static string ShortDescription = "xxx";
+    private static string LongDescription = "xxx";
 
     public DawnstoneRules()
         : base(TowSpecialRuleType.DawnstoneRules,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printName: false)
     {
 
     }

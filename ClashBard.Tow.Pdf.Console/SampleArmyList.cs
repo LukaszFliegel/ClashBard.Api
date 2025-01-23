@@ -32,33 +32,33 @@ public class SampleArmyList
 
         var dreadlord = new DarkElfDreadlordTowCharacter();
 
-        dreadlord.SetArmor(new FullPlateArmourTowArmour());
-        dreadlord.SetArmor(new ShieldTowArmour());
-        dreadlord.SetArmor(new SeaDragonCloakTowArmour());
+        //dreadlord.SetArmor(new FullPlateArmourTowArmour());
+        //dreadlord.SetArmor(new ShieldTowArmour());
+        //dreadlord.SetArmor(new SeaDragonCloakTowArmour());
 
-        dreadlord.SetMount(new BlackDragonTowMount());
+        //dreadlord.SetMount(new BlackDragonTowMount());
 
-        dreadlord.SetMagicItem(new OgreBladeTowMagicWeapon());
+        //dreadlord.SetMagicItem(new OgreBladeTowMagicWeapon());
         dreadlord.SetMagicItem(new TalismanOfProtectionTowTalisman());
 
-        var deWarriors = new TowUnit(
-                    new DarkElfWarriorTowModel(), 37, faction, true, true, true
-                    );
+        //var deWarriors = new TowUnit(
+        //            new DarkElfWarriorTowModel(), 37, faction, true, true, true
+        //            );
         
-        deWarriors.SetMagicBanner(new WarBannerTowMagicBanner()); // for test
-        deWarriors.SetWeapon(new ThrustingSpearTowWeapon());
+        //deWarriors.SetMagicBanner(new WarBannerTowMagicBanner()); // for test
+        //deWarriors.SetWeapon(new ThrustingSpearTowWeapon());
 
-        var deCrossbowmen = new TowUnit(
-                    new RepeaterCrossbowmanTowModel(), 12, faction, false, true, true
-                    );
+        //var deCrossbowmen = new TowUnit(
+        //            new RepeaterCrossbowmanTowModel(), 12, faction, false, true, true
+        //            );
 
-        deCrossbowmen.SetArmor(new ShieldTowArmour());
+        //deCrossbowmen.SetArmor(new ShieldTowArmour());
 
-        var blackGuards = new TowUnit(
-            new BlackGuardOfNaggarondTowModel(), 20, faction, true, false, true
-            );
+        //var blackGuards = new TowUnit(
+        //    new BlackGuardOfNaggarondTowModel(), 20, faction, true, false, true
+        //    );
 
-        blackGuards.SetSpecialRule(new Drilled());
+        //blackGuards.SetSpecialRule(new Drilled());
 
         return new TowArmy
         {
@@ -72,9 +72,9 @@ public class SampleArmyList
             },
             Units = new List<TowUnit>
             {
-                deWarriors,
-                deCrossbowmen,
-                blackGuards,
+                //deWarriors,
+                //deCrossbowmen,
+                //blackGuards,
             }
         };
     }

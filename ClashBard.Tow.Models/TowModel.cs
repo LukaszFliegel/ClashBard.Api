@@ -1,4 +1,5 @@
-﻿using ClashBard.Tow.Models.TowTypes;
+﻿using ClashBard.Tow.Models.Armors.Interfaces;
+using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.Models.Weapons;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace ClashBard.Tow.Models;
 
-public class TowModel: TowObjectWithSpecialRules
+public class TowModel: TowObjectWithSpecialRules//, IWardSaveBearer
 {   
     public TowModel(Enum modelType, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction,
         int minUnitSize = 1, int? maxUnitSize = null, int? armorValue = null)
@@ -116,6 +117,13 @@ public class TowModel: TowObjectWithSpecialRules
 
     public virtual ICollection<TowMagicItem> MagicItems { get; set; } = new HashSet<TowMagicItem>();
 
+    //public ICollection<IWardSaveImprover> WardSaveImprovers { get; set; } = new HashSet<IWardSaveImprover>();
+
+    //void IWardSaveBearer.RegisterWardSaveImprover(IWardSaveImprover wardSaveImprover)
+    //{
+    //    WardSaveImprovers.Add(wardSaveImprover);
+    //}
+
     public string GetSaveString()
     {
         if (GetMeleeSave().HasValue)
@@ -128,6 +136,16 @@ public class TowModel: TowObjectWithSpecialRules
         else
             return string.Empty;
     }
+
+    //public int? GetMeleeWardSave()
+    //{
+    //    return ((IWardSaveBearer)this).GetMeleeWardSave();
+    //}
+
+    //public int? GetRangedWardSave()
+    //{
+    //    return ((IWardSaveBearer)this).GetRangedWardSave();
+    //}
 
     public string GetWardSaveString()
     {
@@ -392,7 +410,7 @@ public class TowModel: TowObjectWithSpecialRules
             default:
                 throw new Exception("Unknown model type");
         }
-    }
+    }    
 }
 
 //public enum TowModelSlotType

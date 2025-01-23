@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ClashBard.Tow.Models;
 
-public class TowSpecialRule
+public class TowSpecialRule: TowObject
 {
     
 

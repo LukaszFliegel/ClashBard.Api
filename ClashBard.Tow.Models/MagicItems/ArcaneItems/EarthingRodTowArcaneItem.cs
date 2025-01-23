@@ -15,13 +15,14 @@ public class EarthingRodTowArcaneItem : TowArcaneItem
 
 public class EarthingRodRules : TowSpecialRule
 {
-    private static new string ShortDescription = "xxx";
-    private static new string LongDescription = "xxx";
+    private static string ShortDescription = "xxx";
+    private static string LongDescription = "xxx";
 
     public EarthingRodRules()
         : base(TowSpecialRuleType.EarthingRodRules,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printName: false)
     {
 
     }

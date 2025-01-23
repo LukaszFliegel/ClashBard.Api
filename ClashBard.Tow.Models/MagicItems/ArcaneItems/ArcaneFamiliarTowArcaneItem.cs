@@ -15,13 +15,14 @@ public class ArcaneFamiliarTowArcaneItem : TowArcaneItem
 
 public class ArcaneFamiliarRules : TowSpecialRule
 {
-    private static new string ShortDescription = "xxx";
-    private static new string LongDescription = "xxx";
+    private static string ShortDescription = "xxx";
+    private static string LongDescription = "xxx";
 
     public ArcaneFamiliarRules()
         : base(TowSpecialRuleType.ArcaneFamiliarRules,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printName: false)
     {
 
     }

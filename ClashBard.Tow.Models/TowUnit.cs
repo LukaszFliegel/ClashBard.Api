@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ClashBard.Tow.Models;
 
-public class TowUnit
+public class TowUnit: TowObject
 {
     public readonly TowModel Model;
     private readonly int amount;
@@ -64,6 +64,11 @@ public class TowUnit
         foreach (var rule in Model.SpecialRules.Where(p => p.PrintInSummary))
         {
             shortDescriptionSb.Append(rule.GetShortDescription() + separator);
+        }
+
+        if(standard)
+        {
+            shortDescriptionSb.Append($"Standard: +1 CR" + separator);
         }
 
         if (musician)

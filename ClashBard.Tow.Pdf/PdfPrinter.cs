@@ -110,12 +110,14 @@ public class PdfPrinter
                         PrintMountRow(table, fontSize, RowIterator, 1, character.Mount);
 
                         table.Cell().Row(RowIterator).Column(15).Element(UnitContainer).Text(character.Mount.PointCost).FontSize(fontSize).Italic();
-                    }
 
+                        //RowIterator++;
+                        PrintMountRules(table, fontSize, RowIterator, character.Mount);
+                    }
                     foreach (var magicItem in character.MagicItems)
                     {
                         RowIterator++;
-                        PrintMagicItemRow(table, fontSize, RowIterator, magicItem);                        
+                        PrintMagicItemRow(table, fontSize, RowIterator, magicItem);
                     }
 
                     PrintCharacterRules(table, fontSize, RowIterator + 1, character);
@@ -196,8 +198,8 @@ public class PdfPrinter
                     table.Cell().Row(rowNumber).Column(4).Element(UnitContainer).Text(model.WeaponSkill).FontSize(fontSize);
                     table.Cell().Row(rowNumber).Column(5).Element(UnitContainer).Text(model.BallisticSkill).FontSize(fontSize);
                     table.Cell().Row(rowNumber).Column(6).Element(UnitContainer).Text(model.Strength).FontSize(fontSize);
-                    table.Cell().Row(rowNumber).Column(7).Element(UnitContainer).Text(model.Toughness).FontSize(fontSize);
-                    table.Cell().Row(rowNumber).Column(8).Element(UnitContainer).Text(model.Wounds).FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(7).Element(UnitContainer).Text($"+{model.ToughnessAdded}").FontSize(fontSize);
+                    table.Cell().Row(rowNumber).Column(8).Element(UnitContainer).Text($"+{model.WoundsAdded}").FontSize(fontSize);
                     table.Cell().Row(rowNumber).Column(9).Element(UnitContainer).Text(model.Initiative).FontSize(fontSize);
                     table.Cell().Row(rowNumber).Column(10).Element(UnitContainer).Text(model.Attacks).FontSize(fontSize);
                     table.Cell().Row(rowNumber).Column(11).Element(UnitContainer).Text(model.Leadership).FontSize(fontSize);
@@ -214,6 +216,16 @@ public class PdfPrinter
                 {
                     table.Cell().Row(rowNumber).Column(2).ColumnSpan(14).Element(UnitContainer).Text(character.GetRulesShortDescription()).FontSize(fontSize);
                 }
+
+                static void PrintMountRules(TableDescriptor table, float fontSize, uint rowNumber, TowModelMount mount)
+                {
+                    //foreach (var item in collection)
+                    //{
+
+                    //}
+                    //table.Cell().Row(rowNumber).Column(2).ColumnSpan(14).Element(UnitContainer).Text(mount.GetRulesShortDescription()).FontSize(fontSize);
+                }
+                
 
                 static void PrintChampionModelRow(TableDescriptor table, float fontSize, uint rowNumber, TowModel model)
                 {

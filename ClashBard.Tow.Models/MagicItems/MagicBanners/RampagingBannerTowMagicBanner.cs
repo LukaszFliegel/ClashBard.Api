@@ -22,7 +22,8 @@ public class RampagingBannerRules : TowSpecialRule
     public RampagingBannerRules()
         : base(TowSpecialRuleType.RampagingBannerRules,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printName: false)
     {
 
     }

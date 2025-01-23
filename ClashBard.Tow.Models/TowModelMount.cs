@@ -15,6 +15,7 @@ public class TowModelMount: TowObjectWithSpecialRules
         BallisticSkill = bs;
         Strength = s;
         Toughness = t;
+        ToughnessAdded = toughnessAdded;
         Wounds = w;
         WoundsAdded = woundsAdded;
         Initiative = i;

@@ -22,7 +22,8 @@ public class RazorStandardRules : TowSpecialRule
     public RazorStandardRules()
         : base(TowSpecialRuleType.RazorStandardRules,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printName: false)
     {
 
     }

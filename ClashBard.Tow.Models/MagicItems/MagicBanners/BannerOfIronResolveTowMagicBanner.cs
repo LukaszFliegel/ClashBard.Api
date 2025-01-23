@@ -22,7 +22,8 @@ public class BannerOfIronResolveRules : TowSpecialRule
     public BannerOfIronResolveRules()
         : base(TowSpecialRuleType.BannerOfIronResolveRules,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printName: false)
     {
 
     }

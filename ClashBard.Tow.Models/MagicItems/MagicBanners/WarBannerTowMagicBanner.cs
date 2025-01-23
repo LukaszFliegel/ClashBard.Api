@@ -22,7 +22,8 @@ public class WarBannerRules : TowSpecialRule
     public WarBannerRules()
         : base(TowSpecialRuleType.WarBannerRules,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printName: false)
     {
 
     }
