@@ -7,7 +7,7 @@ public class PotionOfStrengthTowEnchantedItem : TowEnchantedItem
     private const int points = 25;
     
 
-    public PotionOfStrengthTowEnchantedItem() : base(TowMagicItemEnchantedType.PotionOfStrength, points)
+    public PotionOfStrengthTowEnchantedItem(TowObject owner) : base(owner, TowMagicItemEnchantedType.PotionOfStrength, points)
     {
         SpecialRules.Add(new PotionOfStrengthRules());
         

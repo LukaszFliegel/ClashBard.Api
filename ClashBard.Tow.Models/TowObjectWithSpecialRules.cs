@@ -6,12 +6,17 @@ using System.Text;
 
 namespace ClashBard.Tow.Models;
 
-public abstract class TowObjectWithSpecialRules: TowObject
+public abstract class TowObjectWithSpecialRules: TowObjectWithOwner
 {
     //private ICollection<TowSpecialRule> _specialRules = new HashSet<TowSpecialRule>();    
 
     public ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>();
 
+    protected TowObjectWithSpecialRules(TowObject owner)
+        : base(owner)
+    {
+        
+    }
 
     public string GetSpecialRulesShortDescription()
     {
@@ -26,18 +31,23 @@ public abstract class TowObjectWithSpecialRules: TowObject
         return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());
     }
 
-    //protected void AssignSpecialRule(TowSpecialRule towSpecialRule)
-    //{
-    //    SpecialRules.Add(towSpecialRule);
+    protected void AssignSpecialRule(TowSpecialRule towSpecialRule)
+    {
+        SpecialRules.Add(towSpecialRule);
 
-    //    if(this is IWardSaveBearer && towSpecialRule is IWardSaveImprover)
-    //    {
-    //        (this as IWardSaveBearer).RegisterWardSaveImprover(towSpecialRule as IWardSaveImprover);
-    //    }
-    //}
+        if (Owner is ISavesBearer && towSpecialRule is IWardSaveImprover)
+        {
+            (Owner as ISavesBearer).RegisterWardSaveImprover(towSpecialRule as IWardSaveImprover);
+        }
 
-    //protected ICollection<TowSpecialRule> GetSpecialRules()
-    //{
-    //    return SpecialRules.ToList();
-    //}
+        if (Owner is ISavesBearer && towSpecialRule is ISaveImprover)
+        {
+            (Owner as ISavesBearer).RegisterSaveImprover(towSpecialRule as ISaveImprover);
+        }
+    }
+
+    protected ICollection<TowSpecialRule> GetSpecialRules()
+    {
+        return SpecialRules.ToList();
+    }
 }

@@ -7,7 +7,7 @@ public class DragonSlayingSwordTowMagicWeapon : TowMagicWeapon
 {
     private const int points = 50;
 
-    public DragonSlayingSwordTowMagicWeapon() : base(TowMagicItemWeaponType.DragonSlayingSword, points, 0, TowWeaponStrength.S, 0)
+    public DragonSlayingSwordTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.DragonSlayingSword, points, 0, TowWeaponStrength.S, 0)
     {
         SpecialRules.Add(new MagicalAttacks());
         SpecialRules.Add(new MonsterSlayer());

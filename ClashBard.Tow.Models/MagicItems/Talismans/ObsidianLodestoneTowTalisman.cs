@@ -6,7 +6,7 @@ public class ObsidianLodestoneTowTalisman : TowTalisman
 {
     private const int points = 20;
 
-    public ObsidianLodestoneTowTalisman() : base(TowMagicItemTalismanType.ObsidianLodestone, points)
+    public ObsidianLodestoneTowTalisman(TowObject owner) : base(owner, TowMagicItemTalismanType.ObsidianLodestone, points)
     {
         SpecialRules.Add(new ObsidianLodestoneRules());
     }

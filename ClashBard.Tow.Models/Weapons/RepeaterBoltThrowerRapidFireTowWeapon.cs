@@ -2,7 +2,7 @@
 
 public class RepeaterBoltThrowerRapidFireTowWeapon : TowWeapon
 {
-    public RepeaterBoltThrowerRapidFireTowWeapon() : base(TowTypes.TowWeaponType.RepeaterBoltThrowerRapidFire, 48, TowWeaponStrength.Four, 1)
+    public RepeaterBoltThrowerRapidFireTowWeapon(TowObject owner) : base(owner, TowTypes.TowWeaponType.RepeaterBoltThrowerRapidFire, 48, TowWeaponStrength.Four, 1)
     {
 
     }

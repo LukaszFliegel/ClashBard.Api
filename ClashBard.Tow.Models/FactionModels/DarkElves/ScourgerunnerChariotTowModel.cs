@@ -10,21 +10,21 @@ public class ScourgerunnerChariotTowModel : TowModel
 {
     private static int pointsCost = 85;
 
-    public ScourgerunnerChariotTowModel() : this(m: null, ws: null, bs: null, s: 4, t: 4, w: 4, i: null, a: null, ld: null)
+    public ScourgerunnerChariotTowModel(TowObject owner) : this(owner, m: null, ws: null, bs: null, s: 4, t: 4, w: 4, i: null, a: null, ld: null)
     {
         
     }
 
-    protected ScourgerunnerChariotTowModel(int? m, int? ws, int? bs, int s, int t, int w, int? i, int? a, int? ld) 
-        : base(DarkElfTowModelType.ScourgerunnerChariots, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.LightChariot, new DarkElvesTowFaction(), 50, 100, 1, 3, 5)
+    protected ScourgerunnerChariotTowModel(TowObject owner, int? m, int? ws, int? bs, int s, int t, int w, int? i, int? a, int? ld) 
+        : base(owner, DarkElfTowModelType.ScourgerunnerChariots, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.LightChariot, new DarkElvesTowFaction(), 50, 100, 1, 3, 5)
     {
-        Crew.Add(new DarkSteedTowModelAdditional());
-        Crew.Add(new DarkSteedTowModelAdditional());
+        Crew.Add(new DarkSteedTowModelAdditional(this));
+        Crew.Add(new DarkSteedTowModelAdditional(this));
 
-        Crew.Add(new BeastmasterCrewTowModelAdditional());
-        Crew.Add(new BeastmasterCrewTowModelAdditional());
+        Crew.Add(new BeastmasterCrewTowModelAdditional(this));
+        Crew.Add(new BeastmasterCrewTowModelAdditional(this));
 
-        Weapons.Add(new RavagerHarpoonTowWeapon());
+        Assign(new RavagerHarpoonTowWeapon(this));
 
         SpecialRules.Add(new ElvenReflexes());
         SpecialRules.Add(new HatredHighElves());

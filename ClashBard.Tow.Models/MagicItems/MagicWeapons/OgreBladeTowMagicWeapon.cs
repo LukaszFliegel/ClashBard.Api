@@ -7,7 +7,7 @@ public class OgreBladeTowMagicWeapon : TowMagicWeapon
 {
     private const int points = 65;
 
-    public OgreBladeTowMagicWeapon() : base(TowMagicItemWeaponType.OgreBlade, points, 0, TowWeaponStrength.Splus2, 2)
+    public OgreBladeTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.OgreBlade, points, 0, TowWeaponStrength.Splus2, 2)
     {
         SpecialRules.Add(new ArmourBane1());
         SpecialRules.Add(new MagicalAttacks());

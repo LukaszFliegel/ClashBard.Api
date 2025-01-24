@@ -5,7 +5,7 @@ namespace ClashBard.Tow.Models.Weapons;
 
 public class SerratedMawsTowWeapon : TowWeapon
 {
-    public SerratedMawsTowWeapon() : base(TowTypes.TowWeaponType.SerratedMaw, 0, TowWeaponStrength.S, 0)
+    public SerratedMawsTowWeapon(TowObject owner) : base(owner, TowTypes.TowWeaponType.SerratedMaw, 0, TowWeaponStrength.S, 0)
     {
         SpecialRules.Add(new ArmourBane1());
         SpecialRules.Add(new MultipleWounds2());

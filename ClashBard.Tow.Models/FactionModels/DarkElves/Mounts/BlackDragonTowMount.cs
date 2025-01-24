@@ -20,11 +20,11 @@ public class BlackDragonTowMount : TowModelMount
     private const int maxUnitSize = 1;
     private const int armourValue = 4;
 
-    public BlackDragonTowMount() : this(m: 6, ws: 6, bs: null, s: 7, t: null, toughnessAdded: 3, w: null, woundsAdded: 6, i: 4, a: 6, ld: null)
+    public BlackDragonTowMount(TowObject owner) : this(owner, m: 6, ws: 6, bs: null, s: 7, t: null, toughnessAdded: 3, w: null, woundsAdded: 6, i: 4, a: 6, ld: null)
     {
-        Weapons.Add(new WickedClawsTowWeapon());
-        Weapons.Add(new SerratedMawTowWeapon());
-        Weapons.Add(new NoxiousBreathTowWeapon());
+        Assign(new WickedClawsTowWeapon(this));
+        Assign(new SerratedMawTowWeapon(this));
+        Assign(new NoxiousBreathTowWeapon(this));
 
         SpecialRules.Add(new CloseOrder());
         SpecialRules.Add(new Fly10());
@@ -35,8 +35,8 @@ public class BlackDragonTowMount : TowModelMount
         SpecialRules.Add(new Terror());
     }
 
-    protected BlackDragonTowMount(int? m, int ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int i, int a, int? ld) 
-        : base(modelType, m, ws, bs, s, t, toughnessAdded, w, woundsAdded, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize, armourValue)
+    protected BlackDragonTowMount(TowObject owner, int? m, int ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int i, int a, int? ld) 
+        : base(owner, modelType, m, ws, bs, s, t, toughnessAdded, w, woundsAdded, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize, armourValue)
     {
     }
 }

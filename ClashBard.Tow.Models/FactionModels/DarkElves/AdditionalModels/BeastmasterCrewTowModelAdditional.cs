@@ -8,17 +8,17 @@ namespace ClashBard.Tow.Models.FactionModels.DarkElves;
 
 public class BeastmasterCrewTowModelAdditional : TowModelAdditional
 {
-    public BeastmasterCrewTowModelAdditional() : this(m: null, ws: 4, bs: 4, s: 3, t: null, w: null, i: 4, a: 1, ld: 8)
+    public BeastmasterCrewTowModelAdditional(TowObject owner) : this(owner, m: null, ws: 4, bs: 4, s: 3, t: null, w: null, i: 4, a: 1, ld: 8)
     {
-        Weapons.Add(new CavalrySpearTowWeapon());
-        Weapons.Add(new RepeaterCrossbowTowWeapon());
+        Assign(new CavalrySpearTowWeapon(this));
+        Assign(new RepeaterCrossbowTowWeapon(this));
         
         SpecialRules.Add(new ElvenReflexes());
         SpecialRules.Add(new HatredHighElves());
     }
 
-    protected BeastmasterCrewTowModelAdditional(int? m, int ws, int bs, int s, int? t, int? w, int i, int a, int ld)
-        : base(DarkElfTowModelAdditionalType.BeastmasterCrew, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
+    protected BeastmasterCrewTowModelAdditional(TowObject owner, int? m, int ws, int bs, int s, int? t, int? w, int i, int a, int ld)
+        : base(owner, DarkElfTowModelAdditionalType.BeastmasterCrew, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
     {
     }
 }

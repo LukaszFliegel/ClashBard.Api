@@ -24,27 +24,30 @@ public class SampleArmyList
 
         TowFaction faction = new DarkElvesTowFaction();// _factionsListRepository.GetByName("Dark Elves");
 
+        TowArmy army = new();
+
         //var dreadlord = _darkElvesRepository.GetCharacterByName("Dark Elf Dreadlord");
 
-        //dreadlord.Weapons.Add(_weaponsRepository.GetByName("Repeater Crossbow"));
+        //dreadlord.Assign(_weaponsRepository.GetByName("Repeater Crossbow"));
         //dreadlord.Armors.Add(_armorsRepository.GetArmor(TowArmorType.FullPlateArmour));
 
 
-        var dreadlord = new DarkElfDreadlordTowCharacter();
+        var dreadlord = new DarkElfDreadlordTowCharacter(army);
 
-        //dreadlord.SetArmor(new FullPlateArmourTowArmour());
-        //dreadlord.SetArmor(new ShieldTowArmour());
-        //dreadlord.SetArmor(new SeaDragonCloakTowArmour());
+        dreadlord.Assign(new FullPlateArmourTowArmour(dreadlord));
+        dreadlord.Assign(new ShieldTowArmour(dreadlord));
+        dreadlord.Assign(new SeaDragonCloakTowArmour(dreadlord));
 
-        //dreadlord.SetMount(new BlackDragonTowMount());
+        dreadlord.Assign(new BlackDragonTowMount(dreadlord));
 
         //dreadlord.SetMagicItem(new OgreBladeTowMagicWeapon());
-        dreadlord.SetMagicItem(new TalismanOfProtectionTowTalisman());
+        dreadlord.SetMagicItem(new TalismanOfProtectionTowTalisman(dreadlord));
+        //dreadlord.Assign(new FullPlateArmourTowArmour(dreadlord));
 
         //var deWarriors = new TowUnit(
         //            new DarkElfWarriorTowModel(), 37, faction, true, true, true
         //            );
-        
+
         //deWarriors.SetMagicBanner(new WarBannerTowMagicBanner()); // for test
         //deWarriors.SetWeapon(new ThrustingSpearTowWeapon());
 
@@ -60,22 +63,22 @@ public class SampleArmyList
 
         //blackGuards.SetSpecialRule(new Drilled());
 
-        return new TowArmy
+        army.Faction = faction;
+        army.Name = "Dark Elves default";
+        army.Points = 2000;
+        //army.General = dreadlord;
+        army.Characters = new List<TowCharacter>
         {
-            Faction = faction,
-            Name = "Dark Elves default ",
-            Points = 2000,
-            //General = dreadlord,
-            Characters = new List<TowCharacter>
-            {
-                dreadlord,
-            },
-            Units = new List<TowUnit>
-            {
-                //deWarriors,
-                //deCrossbowmen,
-                //blackGuards,
-            }
+            dreadlord,
         };
+
+        army.Units = new List<TowUnit>
+        {
+            //deWarriors,
+            //deCrossbowmen,
+            //blackGuards,
+        };
+
+        return army;
     }
 }

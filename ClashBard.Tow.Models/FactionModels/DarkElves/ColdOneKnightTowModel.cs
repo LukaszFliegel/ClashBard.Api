@@ -10,20 +10,20 @@ public class ColdOneKnightTowModel : TowModel
 {
     private static int pointsCost = 31;
 
-    public ColdOneKnightTowModel() : this(m: null, ws: 5, bs: 4, s: 4, t: 4, w: 1, i: 5, a: 1, ld: 9)
+    public ColdOneKnightTowModel(TowObject owner) : this(owner, m: null, ws: 5, bs: 4, s: 4, t: 4, w: 1, i: 5, a: 1, ld: 9)
     {
-        SetCommandGroup(new ColdOneKnightChampionTowModel(), 7, 7, 7, 50, "Dread Knight", 50);
+        SetCommandGroup(new ColdOneKnightChampionTowModel(this), 7, 7, 7, 50, "Dread Knight", 50);
     }
 
-    protected ColdOneKnightTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(DarkElfTowModelType.ColdOneKnights, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.HeavyCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
+    protected ColdOneKnightTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
+        : base(owner, DarkElfTowModelType.ColdOneKnights, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.HeavyCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
     {
-        Armours.Add(new HeavyArmourTowArmour());
-        Armours.Add(new ShieldTowArmour());
+        Assign(new HeavyArmourTowArmour(this));
+        Assign(new ShieldTowArmour(this));
 
         AvailableArmours.Add((TowArmourType.FullPlateArmour, 4));
 
-        Weapons.Add(new LanceTowWeapon());
+        Assign(new LanceTowWeapon(this));
 
         SpecialRules.Add(new ArmouredHide1());
         SpecialRules.Add(new CloseOrder());
@@ -36,14 +36,14 @@ public class ColdOneKnightTowModel : TowModel
 
         AvailableSpecialRules.Add((TowSpecialRuleType.Veteran, 1));
 
-        Mount = new ColdOneTowMount();
+        Assign(new ColdOneTowMount(this));
     }
 }
 
 public class ColdOneKnightChampionTowModel : ColdOneKnightTowModel
 {
-    public ColdOneKnightChampionTowModel()
-        : base(m: null, ws: 5, bs: 4, s: 4, t: 4, w: 1, i: 5, a: 2, ld: 9)
+    public ColdOneKnightChampionTowModel(TowObject owner)
+        : base(owner, m: null, ws: 5, bs: 4, s: 4, t: 4, w: 1, i: 5, a: 2, ld: 9)
     {
         
     }

@@ -6,7 +6,7 @@ public class FeedbackScrollTowArcaneItem : TowArcaneItem
 {
     private const int points = 60;
 
-    public FeedbackScrollTowArcaneItem() : base(TowMagicItemArcaneType.FeedbackScroll, points)
+    public FeedbackScrollTowArcaneItem(TowObject owner) : base(owner, TowMagicItemArcaneType.FeedbackScroll, points)
     {
         SpecialRules.Add(new FeedbackScrollRules());
     }

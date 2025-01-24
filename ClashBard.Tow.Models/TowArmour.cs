@@ -1,16 +1,17 @@
-﻿using ClashBard.Tow.Models.TowTypes;
-using System.ComponentModel.DataAnnotations;
+﻿using ClashBard.Tow.Models.Armors.Interfaces;
+using ClashBard.Tow.Models.TowTypes;
 
 namespace ClashBard.Tow.Models;
 
-public class TowArmour: TowObjectWithSpecialRules
+public class TowArmour: TowObjectWithSpecialRules, ISaveImprover, IWardSaveImprover
 {
-    public TowArmour(TowArmourType armorType, 
+    public TowArmour(TowObject owner, TowArmourType armorType, 
         int? meleeSaveBaseline = null, int? rangedSaveBaseline = null, 
         int? meleeWardSaveBaseline = null, int? rangedWardSaveBaseline = null, 
         int meleeSaveImprovement = 0, int rangedSaveImprovement = 0, 
         int meleeWardSaveImprovement = 0, int rangedWardSaveImprovement = 0,
         bool asteriskOnSave = false, bool asteristOnWardSave = false)
+        :base(owner)
     {
         ArmorType = armorType;
         MeleeSaveBaseline = meleeSaveBaseline;

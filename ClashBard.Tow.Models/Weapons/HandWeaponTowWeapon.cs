@@ -9,7 +9,7 @@ namespace ClashBard.Tow.Models.Weapons;
 
 public class HandWeaponTowWeapon : TowWeapon
 {   
-    public HandWeaponTowWeapon() : base(TowTypes.TowWeaponType.HandWeapon, 0, TowWeaponStrength.S, 0)
+    public HandWeaponTowWeapon(TowObject owner) : base(owner, TowTypes.TowWeaponType.HandWeapon, 0, TowWeaponStrength.S, 0)
     {
             
     }

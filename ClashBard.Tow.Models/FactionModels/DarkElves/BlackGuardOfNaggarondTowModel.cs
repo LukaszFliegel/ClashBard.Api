@@ -10,17 +10,17 @@ public class BlackGuardOfNaggarondTowModel : TowModel
 {
     private static int pointsCost = 15;
 
-    public BlackGuardOfNaggarondTowModel() : this(m: 5, ws: 5, bs: 4, s: 3, t: 3, w: 1, i: 5, a: 1, ld: 9)
+    public BlackGuardOfNaggarondTowModel(TowObject owner) : this(owner, m: 5, ws: 5, bs: 5, s: 3, t: 3, w: 1, i: 5, a: 1, ld: 9)
     {
-        SetCommandGroup(new BlackGuardOfNaggarondChampionTowModel(), 7, 7, 7, 100, "Tower Master", 50);
+        SetCommandGroup(new BlackGuardOfNaggarondChampionTowModel(this), 7, 7, 7, 100, "Tower Master", 50);
     }
 
-    protected BlackGuardOfNaggarondTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(DarkElfTowModelType.BlackGuardOfNaggarond, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
+    protected BlackGuardOfNaggarondTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
+        : base(owner, DarkElfTowModelType.BlackGuardOfNaggarond, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
     {
-        Armours.Add(new FullPlateArmourTowArmour());
+        Assign(new FullPlateArmourTowArmour(this));
 
-        Weapons.Add(new DreadHalberdTowWeapon());
+        Assign(new DreadHalberdTowWeapon(this));
 
         SpecialRules.Add(new CloseOrder());
         SpecialRules.Add(new ElvenReflexes());
@@ -36,8 +36,8 @@ public class BlackGuardOfNaggarondTowModel : TowModel
 
 public class BlackGuardOfNaggarondChampionTowModel : BlackGuardOfNaggarondTowModel
 {
-    public BlackGuardOfNaggarondChampionTowModel()
-        : base(m: 5, ws: 5, bs: 4, s: 3, t: 3, w: 1, i: 5, a: 2, ld: 9)
+    public BlackGuardOfNaggarondChampionTowModel(TowObject owner)
+        : base(owner, m: 5, ws: 5, bs: 5, s: 3, t: 3, w: 2, i: 5, a: 2, ld: 9)
     {
         
     }

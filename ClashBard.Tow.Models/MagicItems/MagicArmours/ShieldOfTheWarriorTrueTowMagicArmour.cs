@@ -7,7 +7,7 @@ public class ShieldOfTheWarriorTrueTowMagicArmour : TowMagicArmour
 {
     private const int points = 30;
 
-    public ShieldOfTheWarriorTrueTowMagicArmour() : base(TowMagicItemArmorType.ShieldOfTheWarriorTrue, points, 999)
+    public ShieldOfTheWarriorTrueTowMagicArmour(TowObject owner) : base(owner, TowMagicItemArmorType.ShieldOfTheWarriorTrue, points, 999)
     {
         //SpecialRules.Add(new ArmourBane1());
         //SpecialRules.Add(new MagicalAttacks());

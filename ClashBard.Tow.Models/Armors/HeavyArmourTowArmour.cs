@@ -5,7 +5,7 @@ namespace ClashBard.Tow.Models.Weapons;
 
 public class HeavyArmourTowArmour : TowArmour
 {
-    public HeavyArmourTowArmour() : base(TowArmourType.HeavyArmour, 5, 5)
+    public HeavyArmourTowArmour(TowObject owner) : base(owner, TowArmourType.HeavyArmour, 5, 5)
     {
         
     }

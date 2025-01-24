@@ -9,19 +9,19 @@ public class ColdOneChariotsTowModel : TowModel
 {
     private static int pointsCost = 125;
 
-    public ColdOneChariotsTowModel() : this(m: null, ws: null, bs: null, s: 5, t: 5, w: 4, i: null, a: null, ld: null)
+    public ColdOneChariotsTowModel(TowObject owner) : this(owner, m: null, ws: null, bs: null, s: 5, t: 5, w: 4, i: null, a: null, ld: null)
     {
         
     }
 
-    protected ColdOneChariotsTowModel(int? m, int? ws, int? bs, int s, int t, int w, int? i, int? a, int? ld) 
-        : base(DarkElfTowModelType.ColdOneChariots, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.HeavyCavalry, new DarkElvesTowFaction(), 50, 100, 1, 1, 4)
+    protected ColdOneChariotsTowModel(TowObject owner, int? m, int? ws, int? bs, int s, int t, int w, int? i, int? a, int? ld) 
+        : base(owner, DarkElfTowModelType.ColdOneChariots, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.HeavyCavalry, new DarkElvesTowFaction(), 50, 100, 1, 1, 4)
     {
-        Crew.Add(new ColdOneTowModelAdditional());
-        Crew.Add(new ColdOneTowModelAdditional());
+        Crew.Add(new ColdOneTowModelAdditional(this));
+        Crew.Add(new ColdOneTowModelAdditional(this));
 
-        Crew.Add(new KnightCharioteerTowModelAdditional());
-        Crew.Add(new KnightCharioteerTowModelAdditional());
+        Crew.Add(new KnightCharioteerTowModelAdditional(this));
+        Crew.Add(new KnightCharioteerTowModelAdditional(this));
 
         //SpecialRules.Add(new ArmourBane1()); // cold one only
         SpecialRules.Add(new CloseOrder());

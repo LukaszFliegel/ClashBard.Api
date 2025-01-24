@@ -7,7 +7,7 @@ public class CharmedShieldTowMagicArmour : TowMagicArmour
 {
     private const int points = 5;
 
-    public CharmedShieldTowMagicArmour() : base(TowMagicItemArmorType.CharmedShield, points, 999)
+    public CharmedShieldTowMagicArmour(TowObject owner) : base(owner, TowMagicItemArmorType.CharmedShield, points, 999)
     {
         //SpecialRules.Add(new ArmourBane1());
         //SpecialRules.Add(new MagicalAttacks());

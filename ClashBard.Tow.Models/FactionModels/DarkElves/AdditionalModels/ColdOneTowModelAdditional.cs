@@ -8,7 +8,7 @@ namespace ClashBard.Tow.Models.FactionModels.DarkElves;
 
 public class ColdOneTowModelAdditional : TowModelAdditional
 {
-    public ColdOneTowModelAdditional() : this(m: 7, ws: 3, bs: null, s: 4, t: null, w: null, i: 2, a: 2, ld: null)
+    public ColdOneTowModelAdditional(TowObject owner) : this(owner, m: 7, ws: 3, bs: null, s: 4, t: null, w: null, i: 2, a: 2, ld: null)
     {
         SpecialRules.Add(new ArmourBane1());
         SpecialRules.Add(new ElvenReflexes()); // ?
@@ -17,8 +17,8 @@ public class ColdOneTowModelAdditional : TowModelAdditional
         SpecialRules.Add(new Stupidity());
     }
 
-    protected ColdOneTowModelAdditional(int? m, int ws, int? bs, int s, int? t, int? w, int i, int a, int? ld)
-        : base(DarkElfTowModelAdditionalType.ColdOne, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
+    protected ColdOneTowModelAdditional(TowObject owner, int? m, int ws, int? bs, int s, int? t, int? w, int i, int a, int? ld)
+        : base(owner, DarkElfTowModelAdditionalType.ColdOne, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
     {
     }
 }

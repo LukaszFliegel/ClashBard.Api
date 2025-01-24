@@ -6,7 +6,7 @@ public class LuckstoneTowTalisman : TowTalisman
 {
     private const int points = 15;
 
-    public LuckstoneTowTalisman() : base(TowMagicItemTalismanType.Luckstone, points)
+    public LuckstoneTowTalisman(TowObject owner) : base(owner, TowMagicItemTalismanType.Luckstone, points)
     {
         SpecialRules.Add(new LuckstoneRules());
     }

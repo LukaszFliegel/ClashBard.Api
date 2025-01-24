@@ -7,7 +7,7 @@ public class GlitteringScalesTowMagicArmour : TowMagicArmour
 {
     private const int points = 35;
 
-    public GlitteringScalesTowMagicArmour() : base(TowMagicItemArmorType.GlitteringScales, points, 999)
+    public GlitteringScalesTowMagicArmour(TowObject owner) : base(owner, TowMagicItemArmorType.GlitteringScales, points, 999)
     {
         //SpecialRules.Add(new ArmourBane1());
         //SpecialRules.Add(new MagicalAttacks());

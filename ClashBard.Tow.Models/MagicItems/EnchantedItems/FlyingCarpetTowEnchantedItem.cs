@@ -7,7 +7,7 @@ public class FlyingCarpetTowEnchantedItem : TowEnchantedItem
     private const int points = 40;
     
 
-    public FlyingCarpetTowEnchantedItem() : base(TowMagicItemEnchantedType.FlyingCarpet, points)
+    public FlyingCarpetTowEnchantedItem(TowObject owner) : base(owner, TowMagicItemEnchantedType.FlyingCarpet, points)
     {
         SpecialRules.Add(new FlyingCarpetRules());
         

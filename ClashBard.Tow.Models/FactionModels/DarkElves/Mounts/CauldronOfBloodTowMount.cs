@@ -10,10 +10,10 @@ public class CauldronOfBloodTowMount : TowModelMount
 {
     private static int pointsCost = 150;
 
-    public CauldronOfBloodTowMount() : this(m: 2, ws: null, bs: null, s: 5, t: 5, toughnessAdded: null, w: 5, woundsAdded: null, i: null, a: null, ld: null)
+    public CauldronOfBloodTowMount(TowObject owner) : this(owner, m: 2, ws: null, bs: null, s: 5, t: 5, toughnessAdded: null, w: 5, woundsAdded: null, i: null, a: null, ld: null)
     {        
-        Crew.Add(new WitchElfCrewTowModelAdditional());
-        Crew.Add(new WitchElfCrewTowModelAdditional());
+        Crew.Add(new WitchElfCrewTowModelAdditional(this));
+        Crew.Add(new WitchElfCrewTowModelAdditional(this));
 
         SpecialRules.Add(new CloseOrder());
         SpecialRules.Add(new DraggedAlong());
@@ -29,8 +29,8 @@ public class CauldronOfBloodTowMount : TowModelMount
         SpecialRules.Add(new BlessingsOfKhaine());        
     }
 
-    protected CauldronOfBloodTowMount(int? m, int? ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int? i, int? a, int? ld) 
-        : base(TowModelMountType.CauldronOfBlood, m, ws, bs, s, t, toughnessAdded, w, woundsAdded, i, a, ld, pointCost: pointsCost, TowModelTroopType.HeavyChariot, new DarkElvesTowFaction(), 60, 100, 1, 1, 4)
+    protected CauldronOfBloodTowMount(TowObject owner, int? m, int? ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int? i, int? a, int? ld) 
+        : base(owner, TowModelMountType.CauldronOfBlood, m, ws, bs, s, t, toughnessAdded, w, woundsAdded, i, a, ld, pointCost: pointsCost, TowModelTroopType.HeavyChariot, new DarkElvesTowFaction(), 60, 100, 1, 1, 4)
     {
     }
 }

@@ -7,10 +7,10 @@ public class TalismanOfProtectionTowTalisman : TowTalisman
 {
     private const int points = 30;
 
-    public TalismanOfProtectionTowTalisman() : base(TowMagicItemTalismanType.TalismanOfProtection, points)
+    public TalismanOfProtectionTowTalisman(TowObject owner) : base(owner, TowMagicItemTalismanType.TalismanOfProtection, points)
     {
-        SpecialRules.Add(new TalismanOfProtectionRules());
-        //AssignSpecialRule(new TalismanOfProtectionRules());
+        //SpecialRules.Add(new TalismanOfProtectionRules());
+        AssignSpecialRule(new TalismanOfProtectionRules());
     }
 }
 

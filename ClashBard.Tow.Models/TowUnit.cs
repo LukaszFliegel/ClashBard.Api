@@ -33,7 +33,7 @@ public class TowUnit: TowObject
         StringBuilder shortDescriptionSb = new();
         string separator = ClashBardStatic.Separator;
 
-        foreach (var weapon in Model.Weapons.Where(p => p.WeaponType != TowWeaponType.HandWeapon))
+        foreach (var weapon in Model.GetWeapons().Where(p => p.WeaponType != TowWeaponType.HandWeapon))
         {
             shortDescriptionSb.Append(weapon.WeaponType.ToDescriptionString() + ": ");
             shortDescriptionSb.Append(weapon.GetSpecialRulesShortDescription() + separator);
@@ -44,10 +44,10 @@ public class TowUnit: TowObject
         // for printing take armour with highest MeleeSaveBaseline and all armours that have any improvement
         List<TowArmour> armoursToPrint = new();
         
-        if(Model.Armours.Any(p => p.MeleeSaveBaseline > 0))
-            armoursToPrint.Add(Model.Armours.Where(p => p.MeleeSaveBaseline > 0).OrderBy(p => p.MeleeSaveBaseline).First());
+        if(Model.GetArmours().Any(p => p.MeleeSaveBaseline > 0))
+            armoursToPrint.Add(Model.GetArmours().Where(p => p.MeleeSaveBaseline > 0).OrderBy(p => p.MeleeSaveBaseline).First());
 
-        armoursToPrint.AddRange(Model.Armours.Where(p => 
+        armoursToPrint.AddRange(Model.GetArmours().Where(p => 
             p.MeleeSaveImprovement > 0
             || p.RangedSaveImprovement > 0
             || p.MeleeWardSaveImprovement > 0
@@ -165,14 +165,14 @@ public class TowUnit: TowObject
         // if any of available weapons is assign to Weapons in a model, then add this available weapon cost
         foreach (var availableWeapon in Model.AvailableWeapons)
         {
-            if(Model.Weapons.Any(p => p.WeaponType == availableWeapon.Item1))
+            if(Model.GetWeapons().Any(p => p.WeaponType == availableWeapon.Item1))
                 cost += availableWeapon.Item2 * GetAmount();
         }
 
         // if any available armor is assign to Armors in a model, also add its cost
         foreach (var availableArmor in Model.AvailableArmours)
         {
-            if (Model.Armours.Any(p => p.ArmorType == availableArmor.Item1))
+            if (Model.GetArmours().Any(p => p.ArmorType == availableArmor.Item1))
                 cost += availableArmor.Item2 * GetAmount();
         }
 

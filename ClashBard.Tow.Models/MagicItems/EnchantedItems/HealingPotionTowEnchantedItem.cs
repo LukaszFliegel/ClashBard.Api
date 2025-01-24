@@ -7,7 +7,7 @@ public class HealingPotionTowEnchantedItem : TowEnchantedItem
     private const int points = 35;
     
 
-    public HealingPotionTowEnchantedItem() : base(TowMagicItemEnchantedType.HealingPotion, points)
+    public HealingPotionTowEnchantedItem(TowObject owner) : base(owner, TowMagicItemEnchantedType.HealingPotion, points)
     {
         SpecialRules.Add(new HealingPotionRules());
         

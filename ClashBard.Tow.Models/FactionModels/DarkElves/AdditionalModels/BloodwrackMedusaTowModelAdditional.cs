@@ -8,10 +8,10 @@ namespace ClashBard.Tow.Models.FactionModels.DarkElves;
 
 public class BloodwrackMedusaTowModelAdditional : TowModelAdditional
 {
-    public BloodwrackMedusaTowModelAdditional() : this(m: null, ws: 5, bs: 5, s: 4, t: null, w: null, i: 5, a: 3, ld: null)
+    public BloodwrackMedusaTowModelAdditional(TowObject owner) : this(owner, m: null, ws: 5, bs: 5, s: 4, t: null, w: null, i: 5, a: 3, ld: null)
     {
-        Weapons.Add(new CavalrySpearTowWeapon());
-        Weapons.Add(new PetrifyingGazeTowWeapon());
+        Assign(new CavalrySpearTowWeapon(this));
+        Assign(new PetrifyingGazeTowWeapon(this));
 
         SpecialRules.Add(new CloseOrder());
         SpecialRules.Add(new DraggedAlong());
@@ -26,8 +26,8 @@ public class BloodwrackMedusaTowModelAdditional : TowModelAdditional
         SpecialRules.Add(new Terror());
     }
 
-    protected BloodwrackMedusaTowModelAdditional(int? m, int ws, int bs, int s, int? t, int? w, int i, int a, int? ld)
-        : base(DarkElfTowModelAdditionalType.BloodwrackMedusa, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
+    protected BloodwrackMedusaTowModelAdditional(TowObject owner, int? m, int ws, int bs, int s, int? t, int? w, int i, int a, int? ld)
+        : base(owner, DarkElfTowModelAdditionalType.BloodwrackMedusa, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
     {
     }
 }

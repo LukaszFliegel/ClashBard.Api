@@ -6,7 +6,7 @@ public class PaymastersCoinTowTalisman : TowTalisman
 {
     private const int points = 25;
 
-    public PaymastersCoinTowTalisman() : base(TowMagicItemTalismanType.PaymastersCoin, points)
+    public PaymastersCoinTowTalisman(TowObject owner) : base(owner, TowMagicItemTalismanType.PaymastersCoin, points)
     {
         SpecialRules.Add(new PaymastersCoinRules());
     }

@@ -7,7 +7,7 @@ public class WizardingHatTowEnchantedItem : TowEnchantedItem
     private const int points = 45;
     
 
-    public WizardingHatTowEnchantedItem() : base(TowMagicItemEnchantedType.WizardingHat, points)
+    public WizardingHatTowEnchantedItem(TowObject owner) : base(owner, TowMagicItemEnchantedType.WizardingHat, points)
     {
         SpecialRules.Add(new WizardingHatRules());
         

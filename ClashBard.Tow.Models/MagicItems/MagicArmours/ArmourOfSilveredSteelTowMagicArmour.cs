@@ -7,7 +7,7 @@ public class ArmourOfSilveredSteelTowMagicArmour : TowMagicArmour
 {
     private const int points = 40;
 
-    public ArmourOfSilveredSteelTowMagicArmour() : base(TowMagicItemArmorType.ArmourOfSilveredSteel, points, 999)
+    public ArmourOfSilveredSteelTowMagicArmour(TowObject owner) : base(owner, TowMagicItemArmorType.ArmourOfSilveredSteel, points, 999)
     {
         //SpecialRules.Add(new ArmourBane1());
         //SpecialRules.Add(new MagicalAttacks());

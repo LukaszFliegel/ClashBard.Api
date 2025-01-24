@@ -7,7 +7,7 @@ public class SwordOfBattleTowMagicWeapon : TowMagicWeapon
 {
     private const int points = 60;
 
-    public SwordOfBattleTowMagicWeapon() : base(TowMagicItemWeaponType.SwordOfBattle, points, 0, TowWeaponStrength.Splus1, 1)
+    public SwordOfBattleTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.SwordOfBattle, points, 0, TowWeaponStrength.Splus1, 1)
     {
         SpecialRules.Add(new ArmourBane1());
         SpecialRules.Add(new ExtraAttacksPlus1());

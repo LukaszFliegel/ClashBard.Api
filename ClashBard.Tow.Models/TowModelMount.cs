@@ -1,13 +1,15 @@
-﻿using ClashBard.Tow.Models.TowTypes;
+﻿using ClashBard.Tow.Models.Armors.Interfaces;
+using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.Models.Weapons;
 using System.ComponentModel.DataAnnotations;
 
 namespace ClashBard.Tow.Models;
 
-public class TowModelMount: TowObjectWithSpecialRules
+public class TowModelMount: TowObjectWithSpecialRules, ISaveImprover
 {
-    public TowModelMount(TowModelMountType modelType, int? m, int? ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction,
+    public TowModelMount(TowObject owner, TowModelMountType modelType, int? m, int? ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction,
         int baseSizeWidth, int baseSizeLength, int minUnitSize = 1, int? maxUnitSize = null, int? armorValue = null)
+        :base(owner)
     {
         ModelMountType = modelType;
         Movement = m;
@@ -31,6 +33,8 @@ public class TowModelMount: TowObjectWithSpecialRules
         MinUnitSize = minUnitSize;
         MaxUnitSize = maxUnitSize;
         ArmorValue = armorValue;
+
+        Assign(new HandWeaponTowWeapon(this));
     }
 
     public TowModelMountType ModelMountType { get; set; }
@@ -56,17 +60,32 @@ public class TowModelMount: TowObjectWithSpecialRules
     public int MinUnitSize { get; set; }
     public int? MaxUnitSize { get; set; }
 
-    public virtual ICollection<(TowWeaponType, int)> AvailableWeapons { get; protected set; } = new HashSet<(TowWeaponType, int)>() { };
+    public ICollection<(TowWeaponType, int)> AvailableWeapons { get; protected set; } = new HashSet<(TowWeaponType, int)>() { };
 
-    public virtual ICollection<TowWeapon> Weapons { get; protected set; } = new List<TowWeapon>() { new HandWeaponTowWeapon() };
+    private ICollection<TowWeapon> Weapons { get; set; } = new List<TowWeapon>() { };
 
     public TowModelTroopType ModelTroopType { get; set; }
 
-    public virtual ICollection<TowModelAdditional> Crew { get; set; } = new HashSet<TowModelAdditional>();
+    public ICollection<TowModelAdditional> Crew { get; set; } = new HashSet<TowModelAdditional>();
 
 
     //public virtual required int FactionId { get; set; }
-    public virtual TowFaction Faction { get; set; }
+    public TowFaction Faction { get; set; }
+
+    public int? MeleeSaveBaseline => ArmorValue.HasValue ? ArmorValue.Value : null;
+
+    public int MeleeSaveImprovement => 0;
+
+    public int? RangedSaveBaseline => ArmorValue.HasValue ? ArmorValue.Value : null;
+
+    public int RangedSaveImprovement => 0;
+
+    public bool AsteriskOnSave => false;
+
+    public void Assign(TowWeapon weapon)
+    {
+        Weapons.Add(weapon);
+    }
 
     public int UnitStrength()
     {

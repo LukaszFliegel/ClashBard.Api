@@ -7,7 +7,7 @@ public class RubyRingOfRuinTowEnchantedItem : TowEnchantedItem
     private const int points = 30;
     
 
-    public RubyRingOfRuinTowEnchantedItem() : base(TowMagicItemEnchantedType.RubyRingOfRuin, points)
+    public RubyRingOfRuinTowEnchantedItem(TowObject owner) : base(owner, TowMagicItemEnchantedType.RubyRingOfRuin, points)
     {
         SpecialRules.Add(new RubyRingOfRuinRules());
         

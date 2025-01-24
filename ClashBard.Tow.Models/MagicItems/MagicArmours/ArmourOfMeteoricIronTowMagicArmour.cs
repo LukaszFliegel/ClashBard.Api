@@ -7,7 +7,7 @@ public class ArmourOfMeteoricIronTowMagicArmour : TowMagicArmour
 {
     private const int points = 20;
 
-    public ArmourOfMeteoricIronTowMagicArmour() : base(TowMagicItemArmorType.ArmourOfMeteoricIron, points, 999)
+    public ArmourOfMeteoricIronTowMagicArmour(TowObject owner) : base(owner, TowMagicItemArmorType.ArmourOfMeteoricIron, points, 999)
     {
         //SpecialRules.Add(new ArmourBane1());
         //SpecialRules.Add(new MagicalAttacks());

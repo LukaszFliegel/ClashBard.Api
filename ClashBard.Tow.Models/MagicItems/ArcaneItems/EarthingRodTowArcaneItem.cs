@@ -6,7 +6,7 @@ public class EarthingRodTowArcaneItem : TowArcaneItem
 {
     private const int points = 5;
 
-    public EarthingRodTowArcaneItem() : base(TowMagicItemArcaneType.EarthingRod, points)
+    public EarthingRodTowArcaneItem(TowObject owner) : base(owner, TowMagicItemArcaneType.EarthingRod, points)
     {
         SpecialRules.Add(new EarthingRodRules());
     }

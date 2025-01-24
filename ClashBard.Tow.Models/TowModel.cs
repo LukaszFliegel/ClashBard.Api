@@ -1,6 +1,7 @@
 ﻿using ClashBard.Tow.Models.Armors.Interfaces;
 using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.Models.Weapons;
+using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
@@ -8,10 +9,11 @@ using System.Text;
 
 namespace ClashBard.Tow.Models;
 
-public class TowModel: TowObjectWithSpecialRules//, IWardSaveBearer
+public class TowModel: TowObjectWithSpecialRules, ISavesBearer
 {   
-    public TowModel(Enum modelType, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction,
+    public TowModel(TowObject owner, Enum modelType, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction,
         int minUnitSize = 1, int? maxUnitSize = null, int? armorValue = null)
+        :base(owner)
     {
         ModelType = modelType;
         Movement = m;
@@ -31,12 +33,15 @@ public class TowModel: TowObjectWithSpecialRules//, IWardSaveBearer
         MinUnitSize = minUnitSize;
         MaxUnitSize = maxUnitSize;
         ArmorValue = armorValue;
+
+        // add default hand weapon
+        Assign(new HandWeaponTowWeapon(this));
     }
 
-    public TowModel(Enum modelType, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction, 
+    public TowModel(TowObject owner, Enum modelType, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction, 
         int baseSizeWidth, int baseSizeLength, 
         int minUnitSize = 1, int? maxUnitSize = null, int? armorValue = null)
-        : this(modelType, m, ws, bs, s, t, w, i, a, ld, pointCost, modelTroopType/*, modelSlotType*/, faction, minUnitSize, maxUnitSize, armorValue)
+        : this(owner, modelType, m, ws, bs, s, t, w, i, a, ld, pointCost, modelTroopType/*, modelSlotType*/, faction, minUnitSize, maxUnitSize, armorValue)
     {
         BaseSizeWidth = baseSizeWidth;
         BaseSizeLength = baseSizeLength;
@@ -90,71 +95,139 @@ public class TowModel: TowObjectWithSpecialRules//, IWardSaveBearer
     public int BaseSizeWidth { get; set; }
     public int BaseSizeLength { get; set; }
 
-    public virtual ICollection<(TowWeaponType, int)> AvailableWeapons { get; protected set; } = new HashSet<(TowWeaponType, int)>() { };
-    public virtual ICollection<TowOption<TowWeaponType>> OptionalWeapons { get; protected set; } = new List<TowOption<TowWeaponType>>() { };
+    public ICollection<(TowWeaponType, int)> AvailableWeapons { get; protected set; } = new HashSet<(TowWeaponType, int)>() { };
+    public ICollection<TowOption<TowWeaponType>> OptionalWeapons { get; protected set; } = new List<TowOption<TowWeaponType>>() { };
     //public virtual ICollection<TowOption<TowWeaponType>> AvailableWeapons { get; protected set; } = new HashSet<TowOption<TowWeaponType>>() { };
-    public virtual ICollection<TowWeapon> Weapons { get; protected set; } = new List<TowWeapon>() { new HandWeaponTowWeapon() };
+    private ICollection<TowWeapon> Weapons { get; set; } = new List<TowWeapon>() { };
 
-    public virtual ICollection<(TowArmourType, int)> AvailableArmours { get; protected set; } = new HashSet<(TowArmourType, int)>() { };   
-    public virtual ICollection<TowArmour> Armours { get; protected set; } = new List<TowArmour>() { };
-    
-    //public TowModelSlotType ModelSlotType { get; set; }
+    public ICollection<TowWeapon> GetWeapons()
+    {
+        return Weapons.ToImmutableList();
+    }
+
+    public ICollection<(TowArmourType, int)> AvailableArmours { get; protected set; } = new HashSet<(TowArmourType, int)>() { };   
+    private ICollection<TowArmour> Armours { get; set; } = new List<TowArmour>() { };
+
+    public ICollection<TowArmour> GetArmours()
+    {
+        return Armours.ToImmutableList();
+    }
+
+    public void Assign(TowArmour armour)
+    {
+        if (!AvailableArmours.Select(p => p.Item1).Contains(armour.ArmorType))
+        {
+            throw new Exception($"Armor {armour.ArmorType} not available for {ModelType} model");
+        }
+
+        SaveImprovers.Add(armour);
+        WardSaveImprovers.Add(armour);
+
+        Armours.Add(armour);
+    }
+
+    // overloaded function to assign armor (@see Assign(TowArmourType ArmorType))
+    public void Assign(TowArmourType ArmorType)
+    {
+        if (!AvailableArmours.Select(p => p.Item1).Contains(ArmorType))
+        {
+            throw new Exception($"Armor {ArmorType} not available for {ModelType} model");
+        }
+
+        var armour = (TowArmour)Activator.CreateInstance(Type.GetType($"ClashBard.Tow.Models.Armors.{ArmorType}TowArmour"), this);
+
+        Assign(armour);
+    }
+
+    public void Assign(TowWeapon weapon)
+    {
+        if(!AvailableWeapons.Select(p => p.Item1).Contains(weapon.WeaponType))
+        {
+            throw new Exception($"Weapon {weapon.WeaponType} not available for {ModelType} model");
+        }
+
+        if (weapon is ISaveImprover saveImprover)
+        {
+            SaveImprovers.Add(saveImprover);
+        }
+
+        if (weapon is IWardSaveImprover wardSaveImprover)
+        {
+            WardSaveImprovers.Add(wardSaveImprover);
+        }
+
+        Weapons.Add(weapon);
+    }
+
+    // overloaded function to assign weapon (@see Assign(TowWeaponType weaponType))
+    public void Assign(TowWeaponType weaponType)
+    {
+        if (!AvailableWeapons.Select(p => p.Item1).Contains(weaponType))
+        {
+            throw new Exception($"Weapon {weaponType} not available for {ModelType} model");
+        }
+
+        var weapon = (TowWeapon)Activator.CreateInstance(Type.GetType($"ClashBard.Tow.Models.Weapons.{weaponType}TowWeapon"), this);
+
+        Assign(weapon);
+    }
 
     public TowModelTroopType ModelTroopType { get; set; }
     public int MinUnitSize { get; set; }
     public int? MaxUnitSize { get; set; }
 
-    public virtual TowModelMount? Mount { get; set; }
+    public TowModelMount? Mount { get; private set; }
 
-    public virtual ICollection<(TowModelMountType, int)> AvailableMounts { get; protected set; } = new HashSet<(TowModelMountType, int)>() { };
+    public ICollection<(TowModelMountType, int)> AvailableMounts { get; protected set; } = new HashSet<(TowModelMountType, int)>() { };
 
-    public virtual ICollection<TowModelAdditional> Crew { get; set; } = new HashSet<TowModelAdditional>();
+    public ICollection<TowModelAdditional> Crew { get; set; } = new HashSet<TowModelAdditional>();
 
 
-    public virtual TowFaction Faction { get; set; }
+    public TowFaction Faction { get; set; }
 
-    public virtual ICollection<(TowSpecialRuleType, int)> AvailableSpecialRules { get; set; } = new HashSet<(TowSpecialRuleType, int)>() { };
+    public ICollection<(TowSpecialRuleType, int)> AvailableSpecialRules { get; set; } = new HashSet<(TowSpecialRuleType, int)>() { };
 
-    public virtual ICollection<TowMagicItem> MagicItems { get; set; } = new HashSet<TowMagicItem>();
+    public ICollection<TowMagicItem> MagicItems { get; set; } = new HashSet<TowMagicItem>();
 
-    //public ICollection<IWardSaveImprover> WardSaveImprovers { get; set; } = new HashSet<IWardSaveImprover>();
+    public ICollection<IWardSaveImprover> WardSaveImprovers { get; set; } = new HashSet<IWardSaveImprover>();
 
-    //void IWardSaveBearer.RegisterWardSaveImprover(IWardSaveImprover wardSaveImprover)
-    //{
-    //    WardSaveImprovers.Add(wardSaveImprover);
-    //}
+    public ICollection<ISaveImprover> SaveImprovers { get; set; } = new HashSet<ISaveImprover>();
+
+    void ISavesBearer.RegisterWardSaveImprover(IWardSaveImprover wardSaveImprover)
+    {
+        WardSaveImprovers.Add(wardSaveImprover);
+    }
+
+    void ISavesBearer.RegisterSaveImprover(ISaveImprover saveImprover)
+    {
+        SaveImprovers.Add(saveImprover);
+    }
 
     public string GetSaveString()
     {
-        if (GetMeleeSave().HasValue)
+        var saveBearer = this as ISavesBearer;
+
+        if (saveBearer.GetMeleeSave().HasValue)
         {
-            if (GetRangedSave().HasValue && GetMeleeSave() != GetRangedSave())
-                return $"{GetMeleeSave()}/{GetRangedSave()}{PrintAsteriskfNeededForSave()}";
+            if (saveBearer.GetRangedSave().HasValue && saveBearer.GetMeleeSave() != saveBearer.GetRangedSave())
+                return $"{saveBearer.GetMeleeSave()}/{saveBearer.GetRangedSave()}{PrintAsteriskfNeededForSave()}";
             else
-                return $"{GetMeleeSave()}{PrintAsteriskfNeededForSave()}";
+                return $"{saveBearer.GetMeleeSave()}{PrintAsteriskfNeededForSave()}";
         }
         else
             return string.Empty;
     }
 
-    //public int? GetMeleeWardSave()
-    //{
-    //    return ((IWardSaveBearer)this).GetMeleeWardSave();
-    //}
-
-    //public int? GetRangedWardSave()
-    //{
-    //    return ((IWardSaveBearer)this).GetRangedWardSave();
-    //}
-
     public string GetWardSaveString()
     {
-        if (GetMeleeWardSave().HasValue)
+        var saveBearer = this as ISavesBearer;
+
+        if (saveBearer.GetMeleeWardSave().HasValue)
         {
-            if (GetRangedWardSave().HasValue && GetMeleeWardSave() != GetRangedWardSave())
-                return $"{GetMeleeWardSave()}/{GetRangedWardSave()}{PrintAsteriskfNeededForWardSave()}";
+            if (saveBearer.GetRangedWardSave().HasValue && saveBearer.GetMeleeWardSave() != saveBearer.GetRangedWardSave())
+                return $"{saveBearer.GetMeleeWardSave()}/{saveBearer.GetRangedWardSave()}{PrintAsteriskfNeededForWardSave()}";
             else
-                return $"{GetMeleeWardSave()}{PrintAsteriskfNeededForWardSave()}";
+                return $"{saveBearer.GetMeleeWardSave()}{PrintAsteriskfNeededForWardSave()}";
         }
         else
             return string.Empty;
@@ -162,7 +235,7 @@ public class TowModel: TowObjectWithSpecialRules//, IWardSaveBearer
 
     private string PrintAsteriskfNeededForSave()
     {
-        if (Armours.Any(a => a.AsteriskOnSave))
+        if (SaveImprovers.Any(p => p.AsteriskOnSave))
         {
             return "*";
         }
@@ -172,95 +245,12 @@ public class TowModel: TowObjectWithSpecialRules//, IWardSaveBearer
 
     private string PrintAsteriskfNeededForWardSave()
     {
-        if(Armours.Any(a => a.AsteriskOnWardSave))
+        if(WardSaveImprovers.Any(a => a.AsteriskOnWardSave))
         {
             return "*";
         }
 
         return string.Empty;
-    }
-
-    
-
-    public int? GetMeleeSave()
-    {
-        int? save = null;
-
-        var armorsWithProperSave = new List<TowArmour>();
-
-        if(Armours.Any(a => a.MeleeSaveBaseline.HasValue))
-            armorsWithProperSave = Armours.Where(a => a.MeleeSaveBaseline.HasValue).ToList();
-
-        // take the highest MeleeSaveBaseline from all armors
-        save = armorsWithProperSave.Count > 0 ? armorsWithProperSave.Min(a => a.MeleeSaveBaseline.Value) : null;
-
-        // add all MeleeSaveImprovements from all armors
-        foreach (var armor in Armours)
-        {
-            save -= armor.MeleeSaveImprovement;
-        }
-
-        return save > 0 ? save : null;
-    }
-
-    public int? GetRangedSave()
-    {
-        int? save = 0;
-
-        var armorsWithProperSave = new List<TowArmour>();
-
-        if (Armours.Any(a => a.RangedSaveBaseline.HasValue))
-            armorsWithProperSave = Armours.Where(a => a.RangedSaveBaseline.HasValue).ToList();
-
-        // take the highest RangedSaveBaseline from all armors
-        save = armorsWithProperSave.Count > 0 ? armorsWithProperSave.Min(a => a.RangedSaveBaseline.Value) : null;
-
-        // add all RangedSaveImprovements from all armors
-        foreach (var armor in Armours)
-        {
-            save -= armor.RangedSaveImprovement;
-        }
-        return save > 0 ? save : null;
-    }
-
-    public int? GetMeleeWardSave()
-    {
-        int? save = 0;
-
-        var armorsWithProperSave = new List<TowArmour>();
-
-        if (Armours.Any(a => a.MeleeWardSaveBaseline.HasValue))
-            armorsWithProperSave = Armours.Where(a => a.MeleeWardSaveBaseline.HasValue).ToList();
-
-        // take the highest MagicMeleeSaveBaseline from all armors
-        save = armorsWithProperSave.Count > 0 ? armorsWithProperSave.Min(a => a.MeleeWardSaveBaseline.Value) : null;
-
-        // add all MagicMeleeSaveImprovements from all armors
-        foreach (var armor in Armours)
-        {
-            save -= armor.MeleeWardSaveImprovement;
-        }
-        return save > 0 ? save : null;
-    }
-
-    public int? GetRangedWardSave()
-    {
-        int? save = 0;
-
-        var armorsWithProperSave = new List<TowArmour>();
-
-        if (Armours.Any(a => a.RangedWardSaveBaseline.HasValue))
-            armorsWithProperSave = Armours.Where(a => a.RangedWardSaveBaseline.HasValue).ToList();
-
-        // take the highest MagicRangedSaveBaseline from all armors
-        save = armorsWithProperSave.Count > 0 ? armorsWithProperSave.Min(a => a.RangedWardSaveBaseline.Value) : null;
-
-        // add all MagicRangedSaveImprovements from all armors
-        foreach (var armor in Armours)
-        {
-            save -= armor.RangedWardSaveImprovement;
-        }
-        return save > 0 ? save : null;
     }
 
     public void SetWeapon(TowWeapon weapon)
@@ -270,11 +260,11 @@ public class TowModel: TowObjectWithSpecialRules//, IWardSaveBearer
             throw new Exception($"Weapon {weapon.WeaponType} not available for {ModelType} model");
         }
 
-        Weapons.Add(weapon);
+        Assign(weapon);
 
         if (ChampionModel != null)
         {
-            ChampionModel.Weapons.Add(weapon);
+            ChampionModel.Assign(weapon);
         }
     }
 
@@ -284,11 +274,11 @@ public class TowModel: TowObjectWithSpecialRules//, IWardSaveBearer
         {
             throw new Exception($"Armor {armor.ArmorType} not available for {ModelType} model");
         }
-        Armours.Add(armor);
+        Assign(armor);
 
         if(ChampionModel != null)
         {
-            ChampionModel.Armours.Add(armor);
+            ChampionModel.Assign(armor);
         }
     }
 
@@ -306,12 +296,23 @@ public class TowModel: TowObjectWithSpecialRules//, IWardSaveBearer
         }
     }
 
-    public void SetMount(TowModelMount mount)
+    public void Assign(TowModelMount mount)
     {
         if (!AvailableMounts.Any(m => m.Item1 == mount.ModelMountType))
         {
             throw new Exception($"Mount {mount.ModelMountType} not available for {ModelType} model");
         }
+
+        if (mount is ISaveImprover saveImprover)
+        {
+            SaveImprovers.Add(saveImprover);
+        }
+
+        if (mount is IWardSaveImprover wardSaveImprover)
+        {
+            WardSaveImprovers.Add(wardSaveImprover);
+        }
+
         Mount = mount;
 
         if (ChampionModel != null)

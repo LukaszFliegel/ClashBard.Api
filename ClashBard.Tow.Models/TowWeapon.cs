@@ -6,7 +6,8 @@ namespace ClashBard.Tow.Models;
 
 public class TowWeapon: TowObjectWithSpecialRules
 {
-    public TowWeapon(TowWeaponType weaponType, int? range, TowWeaponStrength strength, int armorPiercing)
+    public TowWeapon(TowObject owner, TowWeaponType weaponType, int? range, TowWeaponStrength strength, int armorPiercing)
+        :base(owner)
     {
         WeaponType = weaponType;
         Range = range;

@@ -6,7 +6,7 @@ public class ScrollOfTransmogrificationTowArcaneItem : TowArcaneItem
 {
     private const int points = 50;
 
-    public ScrollOfTransmogrificationTowArcaneItem() : base(TowMagicItemArcaneType.ScrollOfTransmogrification, points)
+    public ScrollOfTransmogrificationTowArcaneItem(TowObject owner) : base(owner, TowMagicItemArcaneType.ScrollOfTransmogrification, points)
     {
         SpecialRules.Add(new ScrollOfTransmogrificationRules());
     }

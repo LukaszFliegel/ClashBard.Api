@@ -10,16 +10,16 @@ public class DarkElfWarriorTowModel : TowModel
 {
     private static int pointsCost = 8;
 
-    public DarkElfWarriorTowModel() : this(m: 5, ws: 4, bs: 4, s: 3, t: 3, w: 1, i: 4, a: 1, ld: 8)
+    public DarkElfWarriorTowModel(TowObject owner) : this(owner, m: 5, ws: 4, bs: 4, s: 3, t: 3, w: 1, i: 4, a: 1, ld: 8)
     {
-        SetCommandGroup(new DarkElfWarriorChampionTowModel(), 5, 5, 5, 50, "Lordling");
+        SetCommandGroup(new DarkElfWarriorChampionTowModel(this), 5, 5, 5, 50, "Lordling");
     }
 
-    protected DarkElfWarriorTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(DarkElfTowModelType.DarkElfWarriors, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
+    protected DarkElfWarriorTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
+        : base(owner, DarkElfTowModelType.DarkElfWarriors, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
     {        
-        Armours.Add(new LightArmourTowArmour());
-        Armours.Add(new ShieldTowArmour());
+        Assign(new LightArmourTowArmour(this));
+        Assign(new ShieldTowArmour(this));
 
         AvailableWeapons.Add((TowWeaponType.ThrustingSpear, 1));
 
@@ -34,8 +34,8 @@ public class DarkElfWarriorTowModel : TowModel
 
 public class DarkElfWarriorChampionTowModel : DarkElfWarriorTowModel
 {
-    public DarkElfWarriorChampionTowModel()
-        : base(m: 5, ws: 4, bs: 4, s: 3, t: 3, w: 1, i: 4, a: 2, ld: 8)
+    public DarkElfWarriorChampionTowModel(TowObject owner)
+        : base(owner, m: 5, ws: 4, bs: 4, s: 3, t: 3, w: 1, i: 4, a: 2, ld: 8)
     {
         
     }

@@ -6,7 +6,7 @@ public class LoreFamiliarTowArcaneItem : TowArcaneItem
 {
     private const int points = 30;
 
-    public LoreFamiliarTowArcaneItem() : base(TowMagicItemArcaneType.LoreFamiliar, points)
+    public LoreFamiliarTowArcaneItem(TowObject owner) : base(owner, TowMagicItemArcaneType.LoreFamiliar, points)
     {
         SpecialRules.Add(new LoreFamiliarRules());
     }

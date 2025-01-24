@@ -7,7 +7,7 @@ public class RazorStandardTowMagicBanner : TowMagicBanner
     private const int points = 40;
 
 
-    public RazorStandardTowMagicBanner() : base(TowMagicItemBannerType.RazorStandard, points)
+    public RazorStandardTowMagicBanner(TowObject owner) : base(owner, TowMagicItemBannerType.RazorStandard, points)
     {
         SpecialRules.Add(new RazorStandardRules());
     }
@@ -16,8 +16,8 @@ public class RazorStandardTowMagicBanner : TowMagicBanner
 
 public class RazorStandardRules : TowSpecialRule
 {
-    private static new string ShortDescription = "???";
-    private static new string LongDescription = "???";
+    private static string ShortDescription = "???";
+    private static string LongDescription = "???";
 
     public RazorStandardRules()
         : base(TowSpecialRuleType.RazorStandardRules,

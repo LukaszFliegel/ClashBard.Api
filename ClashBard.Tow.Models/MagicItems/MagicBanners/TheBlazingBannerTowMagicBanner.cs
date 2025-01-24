@@ -7,7 +7,7 @@ public class TheBlazingBannerTowMagicBanner : TowMagicBanner
     private const int points = 25;
 
 
-    public TheBlazingBannerTowMagicBanner() : base(TowMagicItemBannerType.TheBlazingBanner, points)
+    public TheBlazingBannerTowMagicBanner(TowObject owner) : base(owner, TowMagicItemBannerType.TheBlazingBanner, points)
     {
         SpecialRules.Add(new TheBlazingBannerRules());
     }
@@ -16,8 +16,8 @@ public class TheBlazingBannerTowMagicBanner : TowMagicBanner
 
 public class TheBlazingBannerRules : TowSpecialRule
 {
-    private static new string ShortDescription = "???";
-    private static new string LongDescription = "???";
+    private static string ShortDescription = "???";
+    private static string LongDescription = "???";
 
     public TheBlazingBannerRules()
         : base(TowSpecialRuleType.TheBlazingBannerRules,

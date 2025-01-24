@@ -5,8 +5,8 @@ namespace ClashBard.Tow.Models.SpecialRules;
 
 public class FlamingAttacks : TowSpecialRule
 {
-    private static new string ShortDescription = "Fire is a fearsome thing on the battlefield, but some creatures are more vulnerable to it than others.";
-    private static new string LongDescription = "Any attack made or hits caused by a model with this special rule, or made using a weapon or spell with this special rule, is a 'Flaming' attack. In addition, a model with this special rule causes Fear in models whose troop type is war beasts or swarms. Unless otherwise stated, a model with this special rule makes Flaming attacks both when shooting and in combat (though any spells cast by the model are unaffected, as are any attacks made with magic weapons they might be wielding).";
+    private static string ShortDescription = "Fire is a fearsome thing on the battlefield, but some creatures are more vulnerable to it than others.";
+    private static string LongDescription = "Any attack made or hits caused by a model with this special rule, or made using a weapon or spell with this special rule, is a 'Flaming' attack. In addition, a model with this special rule causes Fear in models whose troop type is war beasts or swarms. Unless otherwise stated, a model with this special rule makes Flaming attacks both when shooting and in combat (though any spells cast by the model are unaffected, as are any attacks made with magic weapons they might be wielding).";
 
     public FlamingAttacks()
         : base(TowSpecialRuleType.FlamingAttacks,

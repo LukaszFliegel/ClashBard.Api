@@ -7,7 +7,7 @@ public class SpellshieldTowMagicArmour : TowMagicArmour
 {
     private const int points = 25;
 
-    public SpellshieldTowMagicArmour() : base(TowMagicItemArmorType.Spellshield, points, 999)
+    public SpellshieldTowMagicArmour(TowObject owner) : base(owner, TowMagicItemArmorType.Spellshield, points, 999)
     {
         //SpecialRules.Add(new ArmourBane1());
         //SpecialRules.Add(new MagicalAttacks());

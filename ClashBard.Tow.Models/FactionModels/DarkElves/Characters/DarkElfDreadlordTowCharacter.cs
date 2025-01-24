@@ -10,13 +10,14 @@ public class DarkElfDreadlordTowCharacter: TowCharacter
 {
     private static int pointsCost = 130;
 
-    public DarkElfDreadlordTowCharacter()
-        :base(DarkElfTowModelType.DarkElfDreadlord, 5, 7, 7, 4, 3, 3, 6, 4, 10, pointsCost,
+    public DarkElfDreadlordTowCharacter(TowObject owner)
+        :base(owner, DarkElfTowModelType.DarkElfDreadlord, 5, 7, 7, 4, 3, 3, 6, 4, 10, pointsCost,
             TowModelTroopType.RegularInfantryCharacter, new DarkElvesTowFaction(), 25, 25,
             new TowMagicItemCategory[] { TowMagicItemCategory.MagicArmour, TowMagicItemCategory.MagicWeapon, TowMagicItemCategory.Talisman, TowMagicItemCategory.EnchantedItem },
             mayBuyMagicItemsUpToPoints: 100)
     {
-        Armours.Add(new LightArmourTowArmour());
+        //Assign(new LightArmourTowArmour(this));
+        Assign(new LightArmourTowArmour(this));
 
         AvailableArmours.Add((TowArmourType.HeavyArmour, 3));
         AvailableArmours.Add((TowArmourType.FullPlateArmour, 6));

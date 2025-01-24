@@ -5,7 +5,7 @@ namespace ClashBard.Tow.Models.Weapons;
 
 public class LashAndBucklerTowWeapon : TowWeapon
 {
-    public LashAndBucklerTowWeapon() : base(TowTypes.TowWeaponType.LashAndBuckler, 0, TowWeaponStrength.S, 1)
+    public LashAndBucklerTowWeapon(TowObject owner) : base(owner, TowTypes.TowWeaponType.LashAndBuckler, 1, TowWeaponStrength.S, 1)
     {
         SpecialRules.Add(new ArmourBane1());
         SpecialRules.Add(new FightInExtraRank());

@@ -5,7 +5,7 @@ namespace ClashBard.Tow.Models.Weapons;
 
 public class RavagerHarpoonTowWeapon : TowWeapon
 {
-    public RavagerHarpoonTowWeapon() : base(TowTypes.TowWeaponType.DreadHalberd, 24, TowWeaponStrength.Six, 3)
+    public RavagerHarpoonTowWeapon(TowObject owner) : base(owner, TowTypes.TowWeaponType.DreadHalberd, 24, TowWeaponStrength.Six, 3)
     {
         SpecialRules.Add(new Cumbersome());
         SpecialRules.Add(new MultipleWoundsD3());

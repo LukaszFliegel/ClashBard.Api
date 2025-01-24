@@ -20,20 +20,20 @@ public class WarHydraTowModel : TowModel
     private const int maxUnitSize = 1;
     private const int armourValue = 5;
 
-    public WarHydraTowModel() : this(m: 6, ws: 4, bs: 0, s: 5, t: 5, w: 5, i: 3, a: 2, ld: 6)
+    public WarHydraTowModel(TowObject owner) : this(owner, m: 6, ws: 4, bs: 0, s: 5, t: 5, w: 5, i: 3, a: 2, ld: 6)
     {
         
     }
 
-    protected WarHydraTowModel(int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(modelType, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize, armourValue)
+    protected WarHydraTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
+        : base(owner, modelType, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize, armourValue)
     {
-        Crew.Add(new BeastmasterHandlersTowModelAdditional());
-        Crew.Add(new BeastmasterHandlersTowModelAdditional());
+        Crew.Add(new BeastmasterHandlersTowModelAdditional(this));
+        Crew.Add(new BeastmasterHandlersTowModelAdditional(this));
 
-        Weapons.Add(new WickedClawsTowWeapon());
-        Weapons.Add(new SerratedMawsTowWeapon());
-        Weapons.Add(new FieryBreathTowWeapon());
+        Assign(new WickedClawsTowWeapon(this));
+        Assign(new SerratedMawsTowWeapon(this));
+        Assign(new FieryBreathTowWeapon(this));
 
         SpecialRules.Add(new CloseOrder());
         SpecialRules.Add(new ExtraAttacksPlusRemainingWounds());

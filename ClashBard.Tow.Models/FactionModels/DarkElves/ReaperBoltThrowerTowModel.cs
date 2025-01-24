@@ -19,20 +19,20 @@ public class ReaperBoltThrowerTowModel : TowModel
     private const int minUnitSize = 1;
     private const int maxUnitSize = 1;
 
-    public ReaperBoltThrowerTowModel() : this(m: null, ws: null, bs: null, s: null, t: 6, w: 2, i: null, a: null, ld: null)
+    public ReaperBoltThrowerTowModel(TowObject owner) : this(owner, m: null, ws: null, bs: null, s: null, t: 6, w: 2, i: null, a: null, ld: null)
     {
 
     }
 
-    protected ReaperBoltThrowerTowModel(int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld) 
-        : base(modelType, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize)
+    protected ReaperBoltThrowerTowModel(TowObject owner, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld) 
+        : base(owner, modelType, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize)
     {
-        Weapons.Add(new RepeaterBoltThrowerTowWeapon());
-        Weapons.Add(new RepeaterBoltThrowerRapidFireTowWeapon());
+        Assign(new RepeaterBoltThrowerTowWeapon(this));
+        Assign(new RepeaterBoltThrowerRapidFireTowWeapon(this));
 
-        Armours.Add(new LightArmourTowArmour());
+        Assign(new LightArmourTowArmour(this));
 
-        Crew.Add(new DarkElfCrewTowModelAdditional()); // Crew represents 2 crew members (2 attacks and 2 wounds, this is how it's described in the army book)
+        Crew.Add(new DarkElfCrewTowModelAdditional(this)); // Crew represents 2 crew members (2 attacks and 2 wounds, this is how it's described in the army book)
 
         SpecialRules.Add(new ElvenReflexes());
         SpecialRules.Add(new HatredHighElves());

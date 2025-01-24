@@ -6,7 +6,7 @@ public class ArcaneFamiliarTowArcaneItem : TowArcaneItem
 {
     private const int points = 15;
 
-    public ArcaneFamiliarTowArcaneItem() : base(TowMagicItemArcaneType.ArcaneFamiliar, points)
+    public ArcaneFamiliarTowArcaneItem(TowObject owner) : base(owner, TowMagicItemArcaneType.ArcaneFamiliar, points)
     {
         SpecialRules.Add(new ArcaneFamiliarRules());
     }

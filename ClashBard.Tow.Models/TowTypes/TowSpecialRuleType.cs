@@ -375,7 +375,7 @@ public enum TowSpecialRuleType
     [Description("Petrifying Gaze Notes")]
     PetrifyingGazeNotes,
     [Description("Serrated Maw Notes")]
-    SerratedMawBlackDragonNotes,
+    SerratedMawNotes,
     [Description("Serrated Maw Notes")]
     SerratedMawWarHydraNotes,
     [Description("Noxious Breath Notes")]

@@ -7,7 +7,7 @@ public class ArmourOfDestinyTowMagicArmour : TowMagicArmour
 {
     private const int points = 70;
 
-    public ArmourOfDestinyTowMagicArmour() : base(TowMagicItemArmorType.ArmourOfDestiny, points, 999)
+    public ArmourOfDestinyTowMagicArmour(TowObject owner) : base(owner, TowMagicItemArmorType.ArmourOfDestiny, points, 999)
     {
         //SpecialRules.Add(new ArmourBane1());
         //SpecialRules.Add(new MagicalAttacks());

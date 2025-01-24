@@ -9,7 +9,7 @@ namespace ClashBard.Tow.Models.FactionModels.DarkElves;
 public class ManticoreTowMount : TowModelMount
 {
     private static int pointsCost = 130;
-    private static TowModelMountType modelType = TowModelMountType.BlackDragon;
+    private static TowModelMountType modelType = TowModelMountType.Manticore;
 
     private static TowFaction faction = new DarkElvesTowFaction();
 
@@ -20,9 +20,9 @@ public class ManticoreTowMount : TowModelMount
     private const int maxUnitSize = 1;
     private const int armourValue = 5;
 
-    public ManticoreTowMount() : this(m: 6, ws: 5, bs: null, s: 5, t: null, toughnessAdded: 1, w: null, woundsAdded: 4, i: 5, a: 4, ld: null)
+    public ManticoreTowMount(TowObject owner) : this(owner, m: 6, ws: 5, bs: null, s: 5, t: null, toughnessAdded: 1, w: null, woundsAdded: 4, i: 5, a: 4, ld: null)
     {
-        Weapons.Add(new WickedClawsTowWeapon());
+        Assign(new WickedClawsTowWeapon(this));
 
         AvailableWeapons.Add((TowWeaponType.VenomousTail, 15));
 
@@ -35,8 +35,8 @@ public class ManticoreTowMount : TowModelMount
         SpecialRules.Add(new WilfulBeast());
     }
 
-    protected ManticoreTowMount(int? m, int ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int i, int a, int? ld) 
-        : base(modelType, m, ws, bs, s, t, toughnessAdded, w, woundsAdded, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize, armourValue)
+    protected ManticoreTowMount(TowObject owner, int? m, int ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int i, int a, int? ld) 
+        : base(owner, modelType, m, ws, bs, s, t, toughnessAdded, w, woundsAdded, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize, armourValue)
     {
     }
 }

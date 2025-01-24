@@ -5,7 +5,7 @@ namespace ClashBard.Tow.Models.Weapons;
 
 public class ShieldTowArmour : TowArmour
 {
-    public ShieldTowArmour() : base(TowArmourType.Shield, 
+    public ShieldTowArmour(TowObject owner) : base(owner, TowArmourType.Shield, 
         meleeSaveImprovement: 1,
         rangedSaveImprovement: 1)
     {

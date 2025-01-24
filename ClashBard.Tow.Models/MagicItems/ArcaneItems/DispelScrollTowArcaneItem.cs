@@ -6,7 +6,7 @@ public class DispelScrollTowArcaneItem : TowArcaneItem
 {
     private const int points = 20;
 
-    public DispelScrollTowArcaneItem() : base(TowMagicItemArcaneType.DispelScroll, points)
+    public DispelScrollTowArcaneItem(TowObject owner) : base(owner, TowMagicItemArcaneType.DispelScroll, points)
     {
         SpecialRules.Add(new DispelScrollRules());
     }

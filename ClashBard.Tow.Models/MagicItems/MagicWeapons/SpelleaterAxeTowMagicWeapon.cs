@@ -7,7 +7,7 @@ public class SpelleaterAxeTowMagicWeapon : TowMagicWeapon
 {
     private const int points = 35;
 
-    public SpelleaterAxeTowMagicWeapon() : base(TowMagicItemWeaponType.SpelleaterAxe, points, 0, TowWeaponStrength.S, 1)
+    public SpelleaterAxeTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.SpelleaterAxe, points, 0, TowWeaponStrength.S, 1)
     {
         SpecialRules.Add(new MagicalAttacks());
         SpecialRules.Add(new MagicResistance2());

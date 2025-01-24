@@ -9,11 +9,11 @@ namespace ClashBard.Tow.Models;
 
 public class TowCharacter : TowModel
 {
-    public TowCharacter(Enum modelType, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction,
+    public TowCharacter(TowObject owner, Enum modelType, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction,
         int baseSizeWidth, int baseSizeLength,
         TowMagicItemCategory[]? availableMagicItemTypes = null,
         int minUnitSize = 1, int? maxUnitSize = 1, int mayBuyMagicItemsUpToPoints = 0)
-        : base(modelType, m, ws, bs, s, t, w, i, a, ld, pointCost, modelTroopType/*, modelSlotType*/, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize)
+        : base(owner, modelType, m, ws, bs, s, t, w, i, a, ld, pointCost, modelTroopType/*, modelSlotType*/, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize)
     {
         MayBuyMagicItemsUpToPoints = mayBuyMagicItemsUpToPoints;
 
@@ -91,22 +91,22 @@ public class TowCharacter : TowModel
         StringBuilder shortDescriptionSb = new();
         string separator = ClashBardStatic.Separator;
 
-        foreach (var weapon in Weapons.Where(p => p.WeaponType != TowWeaponType.HandWeapon))
+        foreach (var weapon in GetWeapons().Where(p => p.WeaponType != TowWeaponType.HandWeapon))
         {
             shortDescriptionSb.Append(weapon.WeaponType.ToDescriptionString() + separator);
             shortDescriptionSb.Append(weapon.GetSpecialRulesShortDescription() + separator);
         }
 
-        if(Weapons.Where(p => p.WeaponType != TowWeaponType.HandWeapon).Count() != 0)
+        if(GetWeapons().Where(p => p.WeaponType != TowWeaponType.HandWeapon).Count() != 0)
             shortDescriptionSb.AppendLine();
 
         // for printing take armour with highest MeleeSaveBaseline and all armours that have any improvement
         List<TowArmour> armoursToPrint = new();
 
-        if (Armours.Any(p => p.MeleeSaveBaseline > 0))
-            armoursToPrint.Add(Armours.Where(p => p.MeleeSaveBaseline > 0).OrderBy(p => p.MeleeSaveBaseline).First());
+        if (GetArmours().Any(p => p.MeleeSaveBaseline > 0))
+            armoursToPrint.Add(GetArmours().Where(p => p.MeleeSaveBaseline > 0).OrderBy(p => p.MeleeSaveBaseline).First());
 
-        armoursToPrint.AddRange(Armours.Where(p =>
+        armoursToPrint.AddRange(GetArmours().Where(p =>
             p.MeleeSaveImprovement > 0
             || p.RangedSaveImprovement > 0
             || p.MeleeWardSaveImprovement > 0
@@ -120,7 +120,7 @@ public class TowCharacter : TowModel
             shortDescriptionSb.Append(specialRulesShortDesc + (string.IsNullOrEmpty(specialRulesShortDesc) ? string.Empty : separator));
         }
 
-        if(Armours.Count != 0)
+        if(GetArmours().Count != 0)
             shortDescriptionSb.AppendLine();
 
         foreach (var rule in SpecialRules.Where(p => p.PrintInSummary))
@@ -188,13 +188,13 @@ public class TowCharacter : TowModel
 
         foreach (var availableWeapon in AvailableWeapons)
         {
-            if (Weapons.Any(p => p.WeaponType == availableWeapon.Item1))
+            if (GetWeapons().Any(p => p.WeaponType == availableWeapon.Item1))
                 totalCost += availableWeapon.Item2;
         }
 
         foreach (var availableArmor in AvailableArmours)
         {
-            if (Armours.Any(p => p.ArmorType == availableArmor.Item1))
+            if (GetArmours().Any(p => p.ArmorType == availableArmor.Item1))
                 totalCost += availableArmor.Item2;
         }
 

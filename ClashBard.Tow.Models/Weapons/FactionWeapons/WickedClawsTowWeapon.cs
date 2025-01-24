@@ -2,7 +2,7 @@
 
 public class WickedClawsTowWeapon : TowWeapon
 {
-    public WickedClawsTowWeapon() : base(TowTypes.TowWeaponType.WickedClaws, 0, TowWeaponStrength.S, 2)
+    public WickedClawsTowWeapon(TowObject owner) : base(owner, TowTypes.TowWeaponType.WickedClaws, 0, TowWeaponStrength.S, 2)
     {
 
     }

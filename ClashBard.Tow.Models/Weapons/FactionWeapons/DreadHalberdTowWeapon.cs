@@ -4,7 +4,7 @@ namespace ClashBard.Tow.Models.Weapons;
 
 public class DreadHalberdTowWeapon : TowWeapon
 {
-    public DreadHalberdTowWeapon() : base(TowTypes.TowWeaponType.DreadHalberd, 0, TowWeaponStrength.Splus1, 1)
+    public DreadHalberdTowWeapon(TowObject owner) : base(owner, TowTypes.TowWeaponType.DreadHalberd, 0, TowWeaponStrength.Splus1, 1)
     {
         SpecialRules.Add(new ArmourBane1());
         SpecialRules.Add(new FightinExtraRankAnyTurnTheyDidNotCharge());

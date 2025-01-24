@@ -5,7 +5,7 @@ namespace ClashBard.Tow.Models.Weapons;
 
 public class FieryBreathTowWeapon : TowWeapon
 {
-    public FieryBreathTowWeapon() : base(TowTypes.TowWeaponType.FieryBreath, null, TowWeaponStrength.Special, 1)
+    public FieryBreathTowWeapon(TowObject owner) : base(owner, TowTypes.TowWeaponType.FieryBreath, null, TowWeaponStrength.Special, 1)
     {
         SpecialRules.Add(new BreathWeapon());
         SpecialRules.Add(new FlamingAttacks());

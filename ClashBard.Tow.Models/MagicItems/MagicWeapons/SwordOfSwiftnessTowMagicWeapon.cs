@@ -7,7 +7,7 @@ public class SwordOfSwiftnessTowMagicWeapon : TowMagicWeapon
 {
     private const int points = 25;
 
-    public SwordOfSwiftnessTowMagicWeapon() : base(TowMagicItemWeaponType.SwordOfSwiftness, points, 0, TowWeaponStrength.S, 7077)
+    public SwordOfSwiftnessTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.SwordOfSwiftness, points, 0, TowWeaponStrength.S, 7077)
     {
         SpecialRules.Add(new MagicalAttacks());
         SpecialRules.Add(new StrikeFirst());

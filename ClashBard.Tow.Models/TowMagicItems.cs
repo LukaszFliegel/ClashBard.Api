@@ -7,7 +7,8 @@ namespace ClashBard.Tow.Models;
 
 public abstract class TowMagicItem: TowObjectWithSpecialRules
 {    
-    public TowMagicItem(Enum magicItemType, int points, TowMagicItemCategory towMagicItemCategory)
+    public TowMagicItem(TowObject owner, Enum magicItemType, int points, TowMagicItemCategory towMagicItemCategory)
+        :base(owner)
     {
         MagicItemType = magicItemType;
         Points = points;
@@ -34,8 +35,8 @@ public abstract class TowMagicItem: TowObjectWithSpecialRules
 
 public class TowMagicWeapon : TowMagicItem
 {
-    public TowMagicWeapon(TowMagicItemWeaponType magicWeaponType, int points, int? range, TowWeaponStrength strength, int armorPiercing)
-        :base(magicWeaponType, points, TowMagicItemCategory.MagicWeapon)
+    public TowMagicWeapon(TowObject owner, TowMagicItemWeaponType magicWeaponType, int points, int? range, TowWeaponStrength strength, int armorPiercing)
+        :base(owner, magicWeaponType, points, TowMagicItemCategory.MagicWeapon)
     {
         MagicWeaponType = magicWeaponType;
         Range = range;
@@ -54,19 +55,19 @@ public class TowMagicWeapon : TowMagicItem
 
 public class TowMagicArmour : TowMagicItem
 {
-    public TowMagicArmour(TowMagicItemArmorType armorType, int points,
+    public TowMagicArmour(TowObject owner, TowMagicItemArmorType armorType, int points,
         int armoursSaveValue, int wardSaveValue = 0)
-        : this(armorType, points, 
+        : this(owner, armorType, points, 
               armoursSaveValue, armoursSaveValue, armoursSaveValue, armoursSaveValue, armoursSaveValue, armoursSaveValue, armoursSaveValue, armoursSaveValue,
               wardSaveValue, wardSaveValue, wardSaveValue, wardSaveValue, wardSaveValue, wardSaveValue, wardSaveValue, wardSaveValue)
     {
 
     }
 
-    public TowMagicArmour(TowMagicItemArmorType armorType, int points,
+    public TowMagicArmour(TowObject owner, TowMagicItemArmorType armorType, int points,
         int meleeSaveBaseline, int meleeSaveImprovement, int rangedSaveBaseline, int rangedSaveImprovement, int magicMeleeSaveBaseline, int magicMeleeSaveImprovement, int magicRangedSaveBaseline, int magicRangedSaveImprovement, 
         int meleeWardSaveBaseline = 0, int meleeWardSaveImprovement = 0, int rangedWardSaveBaseline = 0, int rangedWardSaveImprovement = 0, int magicWardMeleeSaveBaseline = 0, int magicWardMeleeSaveImprovement = 0, int magicWardRangedSaveBaseline = 0, int magicWardRangedSaveImprovement = 0)
-        : base(armorType, points, TowMagicItemCategory.MagicArmour)
+        : base(owner, armorType, points, TowMagicItemCategory.MagicArmour)
     {
         ArmorType = armorType;
         MeleeSaveBaseline = meleeSaveBaseline;
@@ -120,8 +121,8 @@ public class TowMagicArmour : TowMagicItem
 
 public class TowTalisman : TowMagicItem
 {
-    public TowTalisman(TowMagicItemTalismanType talismanType, int points)
-        : base(talismanType, points, TowMagicItemCategory.Talisman)
+    public TowTalisman(TowObject owner, TowMagicItemTalismanType talismanType, int points)
+        : base(owner, talismanType, points, TowMagicItemCategory.Talisman)
     {
         
     }
@@ -129,8 +130,8 @@ public class TowTalisman : TowMagicItem
 
 public class TowEnchantedItem : TowMagicItem
 {
-    public TowEnchantedItem(TowMagicItemEnchantedType talismanType, int points)
-        : base(talismanType, points, TowMagicItemCategory.EnchantedItem)
+    public TowEnchantedItem(TowObject owner, TowMagicItemEnchantedType talismanType, int points)
+        : base(owner, talismanType, points, TowMagicItemCategory.EnchantedItem)
     {
 
     }
@@ -138,8 +139,8 @@ public class TowEnchantedItem : TowMagicItem
 
 public class TowArcaneItem : TowMagicItem
 {
-    public TowArcaneItem(TowMagicItemArcaneType arcaneType, int points)
-        : base(arcaneType, points, TowMagicItemCategory.Arcane)
+    public TowArcaneItem(TowObject owner, TowMagicItemArcaneType arcaneType, int points)
+        : base(owner, arcaneType, points, TowMagicItemCategory.Arcane)
     {
 
     }
@@ -147,8 +148,8 @@ public class TowArcaneItem : TowMagicItem
 
 public class TowMagicBanner : TowMagicItem
 {
-    public TowMagicBanner(TowMagicItemBannerType magicBannerType, int points)
-        : base(magicBannerType, points, TowMagicItemCategory.MagicBanner)
+    public TowMagicBanner(TowObject owner, TowMagicItemBannerType magicBannerType, int points)
+        : base(owner, magicBannerType, points, TowMagicItemCategory.MagicBanner)
     {
 
     }

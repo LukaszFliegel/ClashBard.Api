@@ -5,8 +5,8 @@ namespace ClashBard.Tow.Models.SpecialRules;
 
 public class FightinExtraRankOnTurnUserCharged : TowSpecialRule
 {
-    private static new string ShortDescription = "Fight in Extra Rank on turn user charged";
-    private static new string LongDescription = "Fight in Extra Rank on turn user charged";
+    private static string ShortDescription = "Fight in Extra Rank on turn user charged";
+    private static string LongDescription = "Fight in Extra Rank on turn user charged";
 
     public FightinExtraRankOnTurnUserCharged()
         : base(TowSpecialRuleType.FightinExtraRankonturnusercharged,

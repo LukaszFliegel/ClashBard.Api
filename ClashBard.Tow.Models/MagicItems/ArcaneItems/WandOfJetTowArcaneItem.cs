@@ -6,7 +6,7 @@ public class WandOfJetTowArcaneItem : TowArcaneItem
 {
     private const int points = 45;
 
-    public WandOfJetTowArcaneItem() : base(TowMagicItemArcaneType.WandOfJet, points)
+    public WandOfJetTowArcaneItem(TowObject owner) : base(owner, TowMagicItemArcaneType.WandOfJet, points)
     {
         SpecialRules.Add(new WandOfJetRules());
     }

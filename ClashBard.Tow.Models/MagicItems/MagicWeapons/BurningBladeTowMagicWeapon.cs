@@ -7,7 +7,7 @@ public class BurningBladeTowMagicWeapon : TowMagicWeapon
 {
     private const int points = 5;
 
-    public BurningBladeTowMagicWeapon() : base(TowMagicItemWeaponType.BurningBlade, points, 0, TowWeaponStrength.S, 0)
+    public BurningBladeTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.BurningBlade, points, 0, TowWeaponStrength.S, 0)
     {
         SpecialRules.Add(new FlamingAttacks());
         SpecialRules.Add(new MagicalAttacks());

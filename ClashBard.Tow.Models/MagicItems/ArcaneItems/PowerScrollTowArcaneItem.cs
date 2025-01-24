@@ -6,7 +6,7 @@ public class PowerScrollTowArcaneItem : TowArcaneItem
 {
     private const int points = 20;
 
-    public PowerScrollTowArcaneItem() : base(TowMagicItemArcaneType.PowerScroll, points)
+    public PowerScrollTowArcaneItem(TowObject owner) : base(owner, TowMagicItemArcaneType.PowerScroll, points)
     {
         SpecialRules.Add(new PowerScrollRules());
     }
