@@ -9,8 +9,8 @@ public class SwordOfBattleTowMagicWeapon : TowMagicWeapon
 
     public SwordOfBattleTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.SwordOfBattle, points, 0, TowWeaponStrength.Splus1, 1)
     {
-        SpecialRules.Add(new ArmourBane1());
-        SpecialRules.Add(new ExtraAttacksPlus1());
-        SpecialRules.Add(new MagicalAttacks());
+        AssignSpecialRule(new ArmourBane1());
+        AssignSpecialRule(new ExtraAttacksPlus1());
+        AssignSpecialRule(new MagicalAttacks());
     }
 }

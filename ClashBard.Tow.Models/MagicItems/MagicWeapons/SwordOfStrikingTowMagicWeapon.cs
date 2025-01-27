@@ -9,9 +9,9 @@ public class SwordOfStrikingTowMagicWeapon : TowMagicWeapon
 
     public SwordOfStrikingTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.SwordOfStriking, points, 0, TowWeaponStrength.S, 0)
     {
-        SpecialRules.Add(new MagicalAttacks());
-        SpecialRules.Add(new ExtremelyCommon());
-        SpecialRules.Add(new SwordOfStrikingRules());
+        AssignSpecialRule(new MagicalAttacks());
+        AssignSpecialRule(new ExtremelyCommon());
+        AssignSpecialRule(new SwordOfStrikingRules());
     }
 }
 

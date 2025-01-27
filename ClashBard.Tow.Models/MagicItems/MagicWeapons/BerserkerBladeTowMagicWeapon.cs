@@ -9,8 +9,8 @@ public class BerserkerBladeTowMagicWeapon : TowMagicWeapon
 
     public BerserkerBladeTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.BerserkerBlade, points, 0, TowWeaponStrength.Splus1, 0)
     {
-        SpecialRules.Add(new ExtraAttacksPlus1());
-        SpecialRules.Add(new Impetuous());
-        SpecialRules.Add(new MagicalAttacks());
+        AssignSpecialRule(new ExtraAttacksPlus1());
+        AssignSpecialRule(new Impetuous());
+        AssignSpecialRule(new MagicalAttacks());
     }
 }

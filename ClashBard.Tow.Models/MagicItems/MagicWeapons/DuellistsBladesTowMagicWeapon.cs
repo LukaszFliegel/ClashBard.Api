@@ -9,8 +9,8 @@ public class DuellistsBladesTowMagicWeapon : TowMagicWeapon
 
     public DuellistsBladesTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.DuellistsBlades, points, 0, TowWeaponStrength.S, 1)
     {
-        SpecialRules.Add(new ExtraAttacksPlus2());
-        SpecialRules.Add(new MagicalAttacks());
-        SpecialRules.Add(new RequiresTwoHands());
+        AssignSpecialRule(new ExtraAttacksPlus2());
+        AssignSpecialRule(new MagicalAttacks());
+        AssignSpecialRule(new RequiresTwoHands());
     }
 }

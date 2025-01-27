@@ -17,8 +17,8 @@ public enum DarkElfTowModelAdditionalType
     ColdOne,
     [Description("Witch Elf Crew")]
     WitchElfCrew,
-    [Description("Beastmaster Crew")]
-    BeastmasterCrew,
+    [Description("Beastmaster Handlers")]
+    BeastmasterHandlers,
     [Description("Knight Charioteer")]
     KnightCharioteer,
     [Description("Bloodwrack Medusa")]

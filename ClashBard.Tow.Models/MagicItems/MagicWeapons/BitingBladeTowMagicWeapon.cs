@@ -9,7 +9,7 @@ public class BitingBladeTowMagicWeapon : TowMagicWeapon
 
     public BitingBladeTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.BitingBlade, points, 0, TowWeaponStrength.S, 2)
     {
-        SpecialRules.Add(new ArmourBane1());
-        SpecialRules.Add(new MagicalAttacks());
+        AssignSpecialRule(new ArmourBane1());
+        AssignSpecialRule(new MagicalAttacks());
     }
 }

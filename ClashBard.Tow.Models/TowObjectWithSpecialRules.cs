@@ -18,7 +18,7 @@ public abstract class TowObjectWithSpecialRules: TowObjectWithOwner
         
     }
 
-    public string GetSpecialRulesShortDescription()
+    public virtual string GetSpecialRulesShortDescription()
     {
         StringBuilder shortDescriptionSb = new();
         string separator = ClashBardStatic.Separator;
@@ -35,14 +35,30 @@ public abstract class TowObjectWithSpecialRules: TowObjectWithOwner
     {
         SpecialRules.Add(towSpecialRule);
 
-        if (Owner is ISavesBearer && towSpecialRule is IWardSaveImprover)
+        if (this is ISavesBearer savesBearer)
         {
-            (Owner as ISavesBearer).RegisterWardSaveImprover(towSpecialRule as IWardSaveImprover);
+            if (towSpecialRule is ISaveImprover saveImprover)
+            {
+                savesBearer.RegisterSaveImprover(saveImprover);
+            }
+
+            if (towSpecialRule is IWardSaveImprover wardSaveImprover)
+            {
+                savesBearer.RegisterWardSaveImprover(wardSaveImprover);
+            }
         }
 
-        if (Owner is ISavesBearer && towSpecialRule is ISaveImprover)
+        if (Owner is ISavesBearer ownerSavesBearer)
         {
-            (Owner as ISavesBearer).RegisterSaveImprover(towSpecialRule as ISaveImprover);
+            if (towSpecialRule is ISaveImprover saveImprover)
+            {
+                ownerSavesBearer.RegisterSaveImprover(saveImprover);
+            }
+
+            if (towSpecialRule is IWardSaveImprover wardSaveImprover)
+            {
+                ownerSavesBearer.RegisterWardSaveImprover(wardSaveImprover);
+            }
         }
     }
 

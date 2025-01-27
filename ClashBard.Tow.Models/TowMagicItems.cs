@@ -19,18 +19,18 @@ public abstract class TowMagicItem: TowObjectWithSpecialRules
     public Enum MagicItemType { get; set; }
     public int Points { get; }
 
-    public string GetMagicItemRulesShortDescription()
-    {
-        StringBuilder shortDescriptionSb = new();
-        string separator = ClashBardStatic.Separator;
+    //public virtual string GetMagicItemRulesShortDescription()
+    //{
+    //    StringBuilder shortDescriptionSb = new();
+    //    string separator = ClashBardStatic.Separator;
 
-        foreach (var rule in SpecialRules.Where(p => p.PrintInSummary))
-        {
-            shortDescriptionSb.Append(rule.GetShortDescription() + separator);
-        }
+    //    foreach (var rule in SpecialRules.Where(p => p.PrintInSummary))
+    //    {
+    //        shortDescriptionSb.Append(rule.GetShortDescription() + separator);
+    //    }
 
-        return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());
-    }
+    //    return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());
+    //}
 }
 
 public class TowMagicWeapon : TowMagicItem
@@ -50,7 +50,29 @@ public class TowMagicWeapon : TowMagicItem
 
     public TowWeaponStrength Strength { get; set; }
 
-    public int ArmorPiercing { get; set; }    
+    public int ArmorPiercing { get; set; }
+
+    public override string GetSpecialRulesShortDescription()
+    {
+        StringBuilder shortDescriptionSb = new();
+        string separator = ClashBardStatic.Separator;
+
+        if (Range.HasValue && Range.Value > 0)
+        {
+            shortDescriptionSb.Append($"{Range}\"{separator}");
+        }
+
+        shortDescriptionSb.Append($"{Strength.ToDescriptionString()}{separator}");
+
+        if (ArmorPiercing > 0)
+        {
+            shortDescriptionSb.Append($"AP -{ArmorPiercing}{separator}");
+        }
+
+        shortDescriptionSb.Append(base.GetSpecialRulesShortDescription());
+
+        return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());
+    }
 }
 
 public class TowMagicArmour : TowMagicItem

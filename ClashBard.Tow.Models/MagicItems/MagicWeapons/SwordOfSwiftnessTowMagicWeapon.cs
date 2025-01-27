@@ -9,7 +9,7 @@ public class SwordOfSwiftnessTowMagicWeapon : TowMagicWeapon
 
     public SwordOfSwiftnessTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.SwordOfSwiftness, points, 0, TowWeaponStrength.S, 7077)
     {
-        SpecialRules.Add(new MagicalAttacks());
-        SpecialRules.Add(new StrikeFirst());
+        AssignSpecialRule(new MagicalAttacks());
+        AssignSpecialRule(new StrikeFirst());
     }
 }

@@ -9,8 +9,8 @@ public class BurningBladeTowMagicWeapon : TowMagicWeapon
 
     public BurningBladeTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.BurningBlade, points, 0, TowWeaponStrength.S, 0)
     {
-        SpecialRules.Add(new FlamingAttacks());
-        SpecialRules.Add(new MagicalAttacks());
-        SpecialRules.Add(new ExtremelyCommon());
+        AssignSpecialRule(new FlamingAttacks());
+        AssignSpecialRule(new MagicalAttacks());
+        AssignSpecialRule(new ExtremelyCommon());
     }
 }

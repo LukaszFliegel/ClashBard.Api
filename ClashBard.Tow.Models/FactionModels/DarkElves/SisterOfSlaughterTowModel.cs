@@ -19,15 +19,17 @@ public class SisterOfSlaughterTowModel : TowModel
     protected SisterOfSlaughterTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
         : base(owner, DarkElfTowModelType.SistersOfSlaughter, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
     {
-        Assign(new LashAndBucklerTowWeapon(this));
+        // special rules
+        AssignSpecialRule(new DanceOfDeath());
+        AssignSpecialRule(new ElvenReflexes());
+        AssignSpecialRule(new HatredHighElves());
+        AssignSpecialRule(new Impetuous());
+        AssignSpecialRule(new Loner());
+        AssignSpecialRule(new Murderous());
+        AssignSpecialRule(new OpenOrder());
 
-        SpecialRules.Add(new DanceOfDeath());
-        SpecialRules.Add(new ElvenReflexes());
-        SpecialRules.Add(new HatredHighElves());
-        SpecialRules.Add(new Impetuous());
-        SpecialRules.Add(new Loner());
-        SpecialRules.Add(new Murderous());
-        SpecialRules.Add(new OpenOrder());
+        // weapons
+        AssignDefault(new LashAndBucklerTowWeapon(this));
     }
 }
 

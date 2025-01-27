@@ -9,7 +9,7 @@ public class RampagingBannerTowMagicBanner : TowMagicBanner
 
     public RampagingBannerTowMagicBanner(TowObject owner) : base(owner, TowMagicItemBannerType.RampagingBanner, points)
     {
-        SpecialRules.Add(new RampagingBannerRules());
+        AssignSpecialRule(new RampagingBannerRules());
     }
 }
 

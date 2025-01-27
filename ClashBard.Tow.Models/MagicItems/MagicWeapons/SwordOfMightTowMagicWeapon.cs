@@ -9,7 +9,7 @@ public class SwordOfMightTowMagicWeapon : TowMagicWeapon
 
     public SwordOfMightTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.SwordOfMight, points, 0, TowWeaponStrength.Splus1, 1)
     {
-        SpecialRules.Add(new MagicalAttacks());
-        SpecialRules.Add(new ExtremelyCommon());
+        AssignSpecialRule(new MagicalAttacks());
+        AssignSpecialRule(new ExtremelyCommon());
     }
 }

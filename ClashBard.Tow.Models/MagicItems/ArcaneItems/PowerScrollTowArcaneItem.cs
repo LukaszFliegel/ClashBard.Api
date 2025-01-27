@@ -8,7 +8,7 @@ public class PowerScrollTowArcaneItem : TowArcaneItem
 
     public PowerScrollTowArcaneItem(TowObject owner) : base(owner, TowMagicItemArcaneType.PowerScroll, points)
     {
-        SpecialRules.Add(new PowerScrollRules());
+        AssignSpecialRule(new PowerScrollRules());
     }
 }
 

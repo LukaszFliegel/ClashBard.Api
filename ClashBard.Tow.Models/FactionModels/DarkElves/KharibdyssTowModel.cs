@@ -27,18 +27,21 @@ public class KharibdyssTowModel : TowModel
     protected KharibdyssTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
         : base(owner, modelType, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize, armourValue)
     {
+        // special rules
+        AssignSpecialRule(new AbyssalHowl());
+        AssignSpecialRule(new CloseOrder());
+        AssignSpecialRule(new ImmuneToPsychology());
+        AssignSpecialRule(new LargeTarget());
+        AssignSpecialRule(new MonsterHandlers());
+        AssignSpecialRule(new StompAttacksD3Plus1());
+        AssignSpecialRule(new Terror());
+
+        // weapons
+        AssignDefault(new CavernousMawTowWeapon(this));
+        AssignDefault(new WrithingTentaclesTowWeapon(this));
+
+        // crew
         Crew.Add(new BeastmasterHandlersTowModelAdditional(this));
         Crew.Add(new BeastmasterHandlersTowModelAdditional(this));
-
-        Assign(new CavernousMawTowWeapon(this));
-        Assign(new WrithingTentaclesTowWeapon(this));
-
-        SpecialRules.Add(new AbyssalHowl());
-        SpecialRules.Add(new CloseOrder());
-        SpecialRules.Add(new ImmuneToPsychology());
-        SpecialRules.Add(new LargeTarget());
-        SpecialRules.Add(new MonsterHandlers());
-        SpecialRules.Add(new StompAttacksD3Plus1());
-        SpecialRules.Add(new Terror());
     }
 }

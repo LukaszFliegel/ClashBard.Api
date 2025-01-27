@@ -20,25 +20,29 @@ public class DarkRiderTowModel : TowModel
     protected DarkRiderTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
         : base(owner, DarkElfTowModelType.DarkRiders, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.LightCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
     {
-        Assign(new LightArmourTowArmour(this));
-
-        AvailableArmours.Add((TowArmourType.Shield, 1));
-
-        Assign(new CavalrySpearTowWeapon(this));
-
-        AvailableWeapons.Add((TowWeaponType.RepeaterCrossbow, 2));
-
-        SpecialRules.Add(new ElvenReflexes());
-        SpecialRules.Add(new FastCavalry());
-        SpecialRules.Add(new HatredHighElves());
-        SpecialRules.Add(new OpenOrder());
-        SpecialRules.Add(new Skirmishers());
-        SpecialRules.Add(new Swiftstride());
+        // special rules
+        AssignSpecialRule(new ElvenReflexes());
+        AssignSpecialRule(new FastCavalry());
+        AssignSpecialRule(new HatredHighElves());
+        AssignSpecialRule(new OpenOrder());
+        AssignSpecialRule(new Skirmishers());
+        AssignSpecialRule(new Swiftstride());
 
         AvailableSpecialRules.Add((TowSpecialRuleType.FireAndFlee, 1));
         AvailableSpecialRules.Add((TowSpecialRuleType.Scouts, 1));
 
-        Assign(new DarkSteedTowMount(this));
+        // weapons
+        AssignDefault(new CavalrySpearTowWeapon(this));
+
+        AvailableWeapons.Add((TowWeaponType.RepeaterCrossbow, 2));
+
+        // armorus
+        AssignDefault(new LightArmourTowArmour(this));
+
+        AvailableArmours.Add((TowArmourType.Shield, 1));
+
+        // mounts
+        AssignDefault(new DarkSteedTowMount(this));
     }
 }
 

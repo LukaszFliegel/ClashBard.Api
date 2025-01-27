@@ -7,8 +7,8 @@ public class VenomousTailTowWeapon : TowWeapon
 {
     public VenomousTailTowWeapon(TowObject owner) : base(owner, TowTypes.TowWeaponType.VenomousTail, 0, TowWeaponStrength.S, 0)
     {
-        SpecialRules.Add(new PoisonedAttacks());
-        SpecialRules.Add(new StrikeFirst());
-        SpecialRules.Add(new VenomousTailNotes());
+        AssignSpecialRule(new PoisonedAttacks());
+        AssignSpecialRule(new StrikeFirst());
+        AssignSpecialRule(new VenomousTailNotes());
     }
 }

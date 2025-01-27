@@ -8,7 +8,7 @@ public class DawnstoneTowTalisman : TowTalisman
 
     public DawnstoneTowTalisman(TowObject owner) : base(owner, TowMagicItemTalismanType.Dawnstone, points)
     {
-        SpecialRules.Add(new DawnstoneRules());
+        AssignSpecialRule(new DawnstoneRules());
     }
 }
 

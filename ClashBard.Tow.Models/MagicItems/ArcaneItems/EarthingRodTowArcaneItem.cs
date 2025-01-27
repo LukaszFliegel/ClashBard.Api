@@ -8,7 +8,7 @@ public class EarthingRodTowArcaneItem : TowArcaneItem
 
     public EarthingRodTowArcaneItem(TowObject owner) : base(owner, TowMagicItemArcaneType.EarthingRod, points)
     {
-        SpecialRules.Add(new EarthingRodRules());
+        AssignSpecialRule(new EarthingRodRules());
     }
 }
 

@@ -8,7 +8,7 @@ public class ScrollOfTransmogrificationTowArcaneItem : TowArcaneItem
 
     public ScrollOfTransmogrificationTowArcaneItem(TowObject owner) : base(owner, TowMagicItemArcaneType.ScrollOfTransmogrification, points)
     {
-        SpecialRules.Add(new ScrollOfTransmogrificationRules());
+        AssignSpecialRule(new ScrollOfTransmogrificationRules());
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using ClashBard.Tow.Models.Armors.Interfaces;
+using ClashBard.Tow.Models.SpecialRules.Interfaces;
 using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.Models.Weapons;
 using System.Collections.Immutable;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace ClashBard.Tow.Models;
 
-public class TowModel: TowObjectWithSpecialRules, ISavesBearer
+public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
 {   
     public TowModel(TowObject owner, Enum modelType, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction,
         int minUnitSize = 1, int? maxUnitSize = null, int? armorValue = null)
@@ -32,10 +33,21 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer
         SetDefaultBaseSize();
         MinUnitSize = minUnitSize;
         MaxUnitSize = maxUnitSize;
-        ArmorValue = armorValue;
+        this.armorValue = armorValue;
 
         // add default hand weapon
+        AvailableWeapons.Add((TowWeaponType.HandWeapon, 0));
         Assign(new HandWeaponTowWeapon(this));
+
+        if(this is ISaveImprover saveImprover)
+        {
+            SaveImprovers.Add(saveImprover);
+        }
+
+        if (this is IWardSaveImprover wardSaveImprover)
+        {
+            WardSaveImprovers.Add(wardSaveImprover);
+        }
     }
 
     public TowModel(TowObject owner, Enum modelType, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction, 
@@ -66,7 +78,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer
 
     public int PointCost { get; private set; }
 
-    public int? ArmorValue { get; private set; }
+    private int? armorValue { get; set; }
 
     public TowModel? ChampionModel { get; private set; }
     public string? ChampionName { get; private set; }
@@ -81,8 +93,11 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer
         ChampionModel = championModel;
         ChampionUpgradeCost = championUpgradeCost;
         ChampionName = championName;
-        championModel.ChampionName = championName;
-        championModel.PointCost = championUpgradeCost.Value;
+        if (ChampionModel != null)
+        {
+            ChampionModel.ChampionName = championName;
+            ChampionModel.PointCost = championUpgradeCost.Value;
+        }
         ChampionMagicItemsUpToPoints = championMagicItemsUpToPoints;
 
         StandardBearerUpgradeCost = standardBearerUpgradeCost;
@@ -97,12 +112,11 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer
 
     public ICollection<(TowWeaponType, int)> AvailableWeapons { get; protected set; } = new HashSet<(TowWeaponType, int)>() { };
     public ICollection<TowOption<TowWeaponType>> OptionalWeapons { get; protected set; } = new List<TowOption<TowWeaponType>>() { };
-    //public virtual ICollection<TowOption<TowWeaponType>> AvailableWeapons { get; protected set; } = new HashSet<TowOption<TowWeaponType>>() { };
     private ICollection<TowWeapon> Weapons { get; set; } = new List<TowWeapon>() { };
 
-    public ICollection<TowWeapon> GetWeapons()
+    public ICollection<TowWeapon> GetWeapons(bool excludeHandWeapon = true)
     {
-        return Weapons.ToImmutableList();
+        return Weapons.Where(p => excludeHandWeapon ? p.WeaponType != TowWeaponType.HandWeapon : true).ToImmutableList();
     }
 
     public ICollection<(TowArmourType, int)> AvailableArmours { get; protected set; } = new HashSet<(TowArmourType, int)>() { };   
@@ -126,18 +140,31 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer
         Armours.Add(armour);
     }
 
-    // overloaded function to assign armor (@see Assign(TowArmourType ArmorType))
-    public void Assign(TowArmourType ArmorType)
+    public void AssignDefault(TowArmour armour)
     {
-        if (!AvailableArmours.Select(p => p.Item1).Contains(ArmorType))
+        if (!AvailableArmours.Select(p => p.Item1).Contains(armour.ArmorType))
         {
-            throw new Exception($"Armor {ArmorType} not available for {ModelType} model");
+            AvailableArmours.Add((armour.ArmorType, 0));
         }
 
-        var armour = (TowArmour)Activator.CreateInstance(Type.GetType($"ClashBard.Tow.Models.Armors.{ArmorType}TowArmour"), this);
+        SaveImprovers.Add(armour);
+        WardSaveImprovers.Add(armour);
 
-        Assign(armour);
+        Armours.Add(armour);
     }
+
+    // overloaded function to assign armor (@see Assign(TowArmourType ArmorType))
+    //public void Assign(TowArmourType ArmorType)
+    //{
+    //    if (!AvailableArmours.Select(p => p.Item1).Contains(ArmorType))
+    //    {
+    //        throw new Exception($"Armor {ArmorType} not available for {ModelType} model");
+    //    }
+
+    //    var armour = (TowArmour)Activator.CreateInstance(Type.GetType($"ClashBard.Tow.Models.Armors.{ArmorType}TowArmour"), this);
+
+    //    Assign(armour);
+    //}
 
     public void Assign(TowWeapon weapon)
     {
@@ -159,18 +186,38 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer
         Weapons.Add(weapon);
     }
 
-    // overloaded function to assign weapon (@see Assign(TowWeaponType weaponType))
-    public void Assign(TowWeaponType weaponType)
+    public void AssignDefault(TowWeapon weapon)
     {
-        if (!AvailableWeapons.Select(p => p.Item1).Contains(weaponType))
+        if (!AvailableWeapons.Select(p => p.Item1).Contains(weapon.WeaponType))
         {
-            throw new Exception($"Weapon {weaponType} not available for {ModelType} model");
+            AvailableWeapons.Add((weapon.WeaponType, 0));
         }
 
-        var weapon = (TowWeapon)Activator.CreateInstance(Type.GetType($"ClashBard.Tow.Models.Weapons.{weaponType}TowWeapon"), this);
+        if (weapon is ISaveImprover saveImprover)
+        {
+            SaveImprovers.Add(saveImprover);
+        }
 
-        Assign(weapon);
+        if (weapon is IWardSaveImprover wardSaveImprover)
+        {
+            WardSaveImprovers.Add(wardSaveImprover);
+        }
+
+        Weapons.Add(weapon);
     }
+
+    // overloaded function to assign weapon (@see Assign(TowWeaponType weaponType))
+    //public void Assign(TowWeaponType weaponType)
+    //{
+    //    if (!AvailableWeapons.Select(p => p.Item1).Contains(weaponType))
+    //    {
+    //        throw new Exception($"Weapon {weaponType} not available for {ModelType} model");
+    //    }
+
+    //    var weapon = (TowWeapon)Activator.CreateInstance(Type.GetType($"ClashBard.Tow.Models.Weapons.{weaponType}TowWeapon"), this);
+
+    //    Assign(weapon);
+    //}
 
     public TowModelTroopType ModelTroopType { get; set; }
     public int MinUnitSize { get; set; }
@@ -192,6 +239,16 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer
     public ICollection<IWardSaveImprover> WardSaveImprovers { get; set; } = new HashSet<IWardSaveImprover>();
 
     public ICollection<ISaveImprover> SaveImprovers { get; set; } = new HashSet<ISaveImprover>();
+
+    public int? MeleeSaveBaseline => armorValue;
+
+    public int MeleeSaveImprovement => 0;
+
+    public int? RangedSaveBaseline => armorValue;
+
+    public int RangedSaveImprovement => 0;
+
+    public bool AsteriskOnSave => false;
 
     void ISavesBearer.RegisterWardSaveImprover(IWardSaveImprover wardSaveImprover)
     {
@@ -319,6 +376,46 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer
         {
             ChampionModel.Mount = mount;
         }
+    }
+
+    public void AssignDefault(TowModelMount mount)
+    {
+        if (!AvailableMounts.Any(m => m.Item1 == mount.ModelMountType))
+        {
+            AvailableMounts.Add((mount.ModelMountType, 0));
+        }
+
+        if (mount is ISaveImprover saveImprover)
+        {
+            SaveImprovers.Add(saveImprover);
+        }
+
+        if (mount is IWardSaveImprover wardSaveImprover)
+        {
+            WardSaveImprovers.Add(wardSaveImprover);
+        }
+
+        Mount = mount;
+
+        if (ChampionModel != null)
+        {
+            ChampionModel.Assign(mount);
+        }
+    }
+
+    internal bool IsScout()
+    {
+        return SpecialRules.Any(rule => rule is IScouts);
+    }
+
+    internal bool IsVanguard()
+    {
+        return SpecialRules.Any(rule => rule is IVanguard);
+    }
+
+    internal bool IsAmbusher()
+    {
+        return SpecialRules.Any(rule => rule is IAmbushers);
     }
 
     public int UnitStrength()

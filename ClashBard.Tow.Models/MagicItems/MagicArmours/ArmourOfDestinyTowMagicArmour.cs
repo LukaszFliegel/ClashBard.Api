@@ -9,8 +9,8 @@ public class ArmourOfDestinyTowMagicArmour : TowMagicArmour
 
     public ArmourOfDestinyTowMagicArmour(TowObject owner) : base(owner, TowMagicItemArmorType.ArmourOfDestiny, points, 999)
     {
-        //SpecialRules.Add(new ArmourBane1());
-        //SpecialRules.Add(new MagicalAttacks());
-        //SpecialRules.Add(new MultipleWoundsD3());
+        //AssignSpecialRule(new ArmourBane1());
+        //AssignSpecialRule(new MagicalAttacks());
+        //AssignSpecialRule(new MultipleWoundsD3());
     }
 }

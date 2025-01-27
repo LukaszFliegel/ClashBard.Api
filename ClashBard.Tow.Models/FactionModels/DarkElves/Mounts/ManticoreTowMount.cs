@@ -22,17 +22,19 @@ public class ManticoreTowMount : TowModelMount
 
     public ManticoreTowMount(TowObject owner) : this(owner, m: 6, ws: 5, bs: null, s: 5, t: null, toughnessAdded: 1, w: null, woundsAdded: 4, i: 5, a: 4, ld: null)
     {
-        Assign(new WickedClawsTowWeapon(this));
+        // special rules
+        AssignSpecialRule(new CloseOrder());
+        AssignSpecialRule(new Fly9());
+        AssignSpecialRule(new LargeTarget());
+        AssignSpecialRule(new StompAttacksD3());
+        AssignSpecialRule(new Swiftstride());
+        AssignSpecialRule(new Terror());
+        AssignSpecialRule(new WilfulBeast());
+
+        // weapons
+        AssignDefault(new WickedClawsTowWeapon(this));
 
         AvailableWeapons.Add((TowWeaponType.VenomousTail, 15));
-
-        SpecialRules.Add(new CloseOrder());
-        SpecialRules.Add(new Fly9());
-        SpecialRules.Add(new LargeTarget());
-        SpecialRules.Add(new StompAttacksD3());
-        SpecialRules.Add(new Swiftstride());
-        SpecialRules.Add(new Terror());
-        SpecialRules.Add(new WilfulBeast());
     }
 
     protected ManticoreTowMount(TowObject owner, int? m, int ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int i, int a, int? ld) 

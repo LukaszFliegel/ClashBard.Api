@@ -9,7 +9,7 @@ public class WarBannerTowMagicBanner : TowMagicBanner
 
     public WarBannerTowMagicBanner(TowObject owner) : base(owner, TowMagicItemBannerType.WarBanner, points)
     {
-        SpecialRules.Add(new WarBannerRules());
+        AssignSpecialRule(new WarBannerRules());
     }
 }
 

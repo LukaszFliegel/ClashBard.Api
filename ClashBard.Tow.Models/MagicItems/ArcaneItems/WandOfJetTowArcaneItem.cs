@@ -8,7 +8,7 @@ public class WandOfJetTowArcaneItem : TowArcaneItem
 
     public WandOfJetTowArcaneItem(TowObject owner) : base(owner, TowMagicItemArcaneType.WandOfJet, points)
     {
-        SpecialRules.Add(new WandOfJetRules());
+        AssignSpecialRule(new WandOfJetRules());
     }
 }
 

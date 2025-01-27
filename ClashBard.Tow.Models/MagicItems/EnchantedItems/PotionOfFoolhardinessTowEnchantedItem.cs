@@ -9,7 +9,7 @@ public class PotionOfFoolhardinessTowEnchantedItem : TowEnchantedItem
 
     public PotionOfFoolhardinessTowEnchantedItem(TowObject owner) : base(owner, TowMagicItemEnchantedType.PotionOfFoolhardiness, points)
     {
-        SpecialRules.Add(new PotionOfFoolhardinessRules());
+        AssignSpecialRule(new PotionOfFoolhardinessRules());
         
     }
 }

@@ -8,7 +8,7 @@ public class FeedbackScrollTowArcaneItem : TowArcaneItem
 
     public FeedbackScrollTowArcaneItem(TowObject owner) : base(owner, TowMagicItemArcaneType.FeedbackScroll, points)
     {
-        SpecialRules.Add(new FeedbackScrollRules());
+        AssignSpecialRule(new FeedbackScrollRules());
     }
 }
 

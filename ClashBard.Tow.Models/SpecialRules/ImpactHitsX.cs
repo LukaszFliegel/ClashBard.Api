@@ -11,7 +11,8 @@ public class ImpactHitsX : TowSpecialRule
     public ImpactHitsX()
         : base(TowSpecialRuleType.ImpactHitsX,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printShortDescription: false)
     {
 
     }

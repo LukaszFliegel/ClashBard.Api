@@ -8,7 +8,7 @@ public class DispelScrollTowArcaneItem : TowArcaneItem
 
     public DispelScrollTowArcaneItem(TowObject owner) : base(owner, TowMagicItemArcaneType.DispelScroll, points)
     {
-        SpecialRules.Add(new DispelScrollRules());
+        AssignSpecialRule(new DispelScrollRules());
     }
 }
 

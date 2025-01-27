@@ -10,7 +10,8 @@ public class FieryBreathNotes : TowSpecialRule
     public FieryBreathNotes()
         : base(TowSpecialRuleType.FieryBreathNotes,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printName: false)
     {
 
     }

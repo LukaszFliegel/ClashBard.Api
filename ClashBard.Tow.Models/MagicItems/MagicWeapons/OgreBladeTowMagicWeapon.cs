@@ -9,8 +9,8 @@ public class OgreBladeTowMagicWeapon : TowMagicWeapon
 
     public OgreBladeTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.OgreBlade, points, 0, TowWeaponStrength.Splus2, 2)
     {
-        SpecialRules.Add(new ArmourBane1());
-        SpecialRules.Add(new MagicalAttacks());
-        SpecialRules.Add(new MultipleWoundsD3());
+        AssignSpecialRule(new ArmourBane1());
+        AssignSpecialRule(new MagicalAttacks());
+        AssignSpecialRule(new MultipleWoundsD3());
     }
 }

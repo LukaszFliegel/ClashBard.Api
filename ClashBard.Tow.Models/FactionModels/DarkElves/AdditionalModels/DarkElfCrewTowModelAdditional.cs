@@ -15,9 +15,9 @@ public class DarkElfCrewTowModelAdditional : TowModelAdditional
     {
         Assign(new LightArmourTowArmour(this));
 
-        SpecialRules.Add(new ElvenReflexes());
-        SpecialRules.Add(new HatredHighElves());
-        SpecialRules.Add(new Skirmishers());
+        AssignSpecialRule(new ElvenReflexes());
+        AssignSpecialRule(new HatredHighElves());
+        AssignSpecialRule(new Skirmishers());
     }
 
     protected DarkElfCrewTowModelAdditional(TowObject owner, int? m, int ws, int bs, int s, int? t, int? w, int i, int a, int ld)

@@ -12,17 +12,17 @@ public class WitchElfCrewTowModelAdditional : TowModelAdditional
     {
         Assign(new AdditionalHandWeaponTowWeapon(this));
 
-        SpecialRules.Add(new CloseOrder());
-        SpecialRules.Add(new DraggedAlong());
-        SpecialRules.Add(new ElvenReflexes());
-        SpecialRules.Add(new Frenzy());
-        SpecialRules.Add(new HatredHighElves());
-        SpecialRules.Add(new ImpactHitsD6Plus1());
-        SpecialRules.Add(new LargeTarget());
-        SpecialRules.Add(new MagicResistance1());
-        SpecialRules.Add(new Murderous());
-        SpecialRules.Add(new PoisonedAttacks());
-        SpecialRules.Add(new Terror());
+        AssignSpecialRule(new CloseOrder());
+        AssignSpecialRule(new DraggedAlong());
+        AssignSpecialRule(new ElvenReflexes());
+        AssignSpecialRule(new Frenzy());
+        AssignSpecialRule(new HatredHighElves());
+        AssignSpecialRule(new ImpactHitsD6Plus1());
+        AssignSpecialRule(new LargeTarget());
+        AssignSpecialRule(new MagicResistance1());
+        AssignSpecialRule(new Murderous());
+        AssignSpecialRule(new PoisonedAttacks());
+        AssignSpecialRule(new Terror());
     }
 
     protected WitchElfCrewTowModelAdditional(TowObject owner, int? m, int ws, int bs, int s, int? t, int? w, int i, int a, int ld)

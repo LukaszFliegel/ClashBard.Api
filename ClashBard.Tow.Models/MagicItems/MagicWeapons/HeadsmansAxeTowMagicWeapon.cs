@@ -9,8 +9,8 @@ public class HeadsmansAxeTowMagicWeapon : TowMagicWeapon
 
     public HeadsmansAxeTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.HeadsmansAxe, points, 0, TowWeaponStrength.Splus1, 1)
     {
-        SpecialRules.Add(new KillingBlow());
-        SpecialRules.Add(new MagicalAttacks());
-        SpecialRules.Add(new RequiresTwoHands());
+        AssignSpecialRule(new KillingBlow());
+        AssignSpecialRule(new MagicalAttacks());
+        AssignSpecialRule(new RequiresTwoHands());
     }
 }

@@ -8,7 +8,7 @@ public class LuckstoneTowTalisman : TowTalisman
 
     public LuckstoneTowTalisman(TowObject owner) : base(owner, TowMagicItemTalismanType.Luckstone, points)
     {
-        SpecialRules.Add(new LuckstoneRules());
+        AssignSpecialRule(new LuckstoneRules());
     }
 }
 

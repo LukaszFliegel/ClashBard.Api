@@ -91,14 +91,14 @@ public class TowCharacter : TowModel
         StringBuilder shortDescriptionSb = new();
         string separator = ClashBardStatic.Separator;
 
-        foreach (var weapon in GetWeapons().Where(p => p.WeaponType != TowWeaponType.HandWeapon))
-        {
-            shortDescriptionSb.Append(weapon.WeaponType.ToDescriptionString() + separator);
-            shortDescriptionSb.Append(weapon.GetSpecialRulesShortDescription() + separator);
-        }
+        //foreach (var weapon in GetWeapons().Where(p => p.WeaponType != TowWeaponType.HandWeapon))
+        //{
+        //    shortDescriptionSb.Append(weapon.WeaponType.ToDescriptionString() + separator);
+        //    shortDescriptionSb.Append(weapon.GetSpecialRulesShortDescription() + separator);
+        //}
 
-        if(GetWeapons().Where(p => p.WeaponType != TowWeaponType.HandWeapon).Count() != 0)
-            shortDescriptionSb.AppendLine();
+        //if(GetWeapons().Where(p => p.WeaponType != TowWeaponType.HandWeapon).Count() != 0)
+        //    shortDescriptionSb.AppendLine();
 
         // for printing take armour with highest MeleeSaveBaseline and all armours that have any improvement
         List<TowArmour> armoursToPrint = new();
@@ -133,10 +133,10 @@ public class TowCharacter : TowModel
 
         //foreach (var magicItem in MagicItems)
         //{
-        //    shortDescriptionSb.Append(magicItem.GetMagicItemRulesShortDescription() + separator);
+        //    shortDescriptionSb.Append(magicItem.GetSpecialRulesShortDescription() + separator);
         //}
 
-        if(Mount != null)
+        if (Mount != null)
             shortDescriptionSb.Append(Mount.GetSpecialRulesShortDescription() + separator);
 
         return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());

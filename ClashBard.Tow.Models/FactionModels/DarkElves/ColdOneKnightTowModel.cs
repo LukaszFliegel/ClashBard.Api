@@ -18,25 +18,29 @@ public class ColdOneKnightTowModel : TowModel
     protected ColdOneKnightTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
         : base(owner, DarkElfTowModelType.ColdOneKnights, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.HeavyCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
     {
-        Assign(new HeavyArmourTowArmour(this));
-        Assign(new ShieldTowArmour(this));
+        // special rules        
+        AssignSpecialRule(new ArmouredHide1());
+        AssignSpecialRule(new CloseOrder());
+        AssignSpecialRule(new ElvenReflexes());
+        AssignSpecialRule(new Fear());
+        AssignSpecialRule(new FirstCharge());
+        AssignSpecialRule(new HatredHighElves());
+        AssignSpecialRule(new Stupidity());
+        AssignSpecialRule(new Swiftstride()); 
+        
+        AvailableSpecialRules.Add((TowSpecialRuleType.Veteran, 1));
+
+        // weapons
+        AssignDefault(new LanceTowWeapon(this));
+
+        // armours       
+        AssignDefault(new HeavyArmourTowArmour(this));
+        AssignDefault(new ShieldTowArmour(this));
 
         AvailableArmours.Add((TowArmourType.FullPlateArmour, 4));
 
-        Assign(new LanceTowWeapon(this));
-
-        SpecialRules.Add(new ArmouredHide1());
-        SpecialRules.Add(new CloseOrder());
-        SpecialRules.Add(new ElvenReflexes());
-        SpecialRules.Add(new Fear());
-        SpecialRules.Add(new FirstCharge());
-        SpecialRules.Add(new HatredHighElves());
-        SpecialRules.Add(new Stupidity());
-        SpecialRules.Add(new Swiftstride());
-
-        AvailableSpecialRules.Add((TowSpecialRuleType.Veteran, 1));
-
-        Assign(new ColdOneTowMount(this));
+        // mounts
+        AssignDefault(new ColdOneTowMount(this));
     }
 }
 

@@ -18,14 +18,23 @@ public class TowUnit: TowObject
 
     private TowMagicBanner? magicBanner = null;
 
-    public TowUnit(TowModel model, int amount, TowFaction faction, bool standard, bool musician, bool champion)
+    public TowUnit(TowModel model, int amount, TowFaction faction, bool standard = false, bool musician = false, bool champion = false)
     {
-        this.Model = model;
+        Model = model;
         this.amount = amount;
         this.faction = faction;
         this.standard = standard;
         this.musician = musician;
         this.champion = champion;
+
+        if(standard && !Model.StandardBearerUpgradeCost.HasValue)
+            throw new ArgumentException($"{Model.ModelType} does not have standard bearer upgrade");
+
+        if (musician && !Model.MusicianUpgradeCost.HasValue)
+            throw new ArgumentException($"{Model.ModelType} does not have musician upgrade");
+
+        if (champion && !Model.ChampionUpgradeCost.HasValue)
+            throw new ArgumentException($"{Model.ModelType} does not have champion upgrade");
     }
     
     public string GetRulesShortDescription()
@@ -33,13 +42,13 @@ public class TowUnit: TowObject
         StringBuilder shortDescriptionSb = new();
         string separator = ClashBardStatic.Separator;
 
-        foreach (var weapon in Model.GetWeapons().Where(p => p.WeaponType != TowWeaponType.HandWeapon))
-        {
-            shortDescriptionSb.Append(weapon.WeaponType.ToDescriptionString() + ": ");
-            shortDescriptionSb.Append(weapon.GetSpecialRulesShortDescription() + separator);
-        }
+        //foreach (var weapon in Model.GetWeapons().Where(p => p.WeaponType != TowWeaponType.HandWeapon))
+        //{
+        //    shortDescriptionSb.Append(weapon.WeaponType.ToDescriptionString() + ": ");
+        //    shortDescriptionSb.Append(weapon.GetSpecialRulesShortDescription() + separator);
+        //}
 
-        shortDescriptionSb.AppendLine();
+        //shortDescriptionSb.AppendLine();
 
         // for printing take armour with highest MeleeSaveBaseline and all armours that have any improvement
         List<TowArmour> armoursToPrint = new();
@@ -54,12 +63,15 @@ public class TowUnit: TowObject
             || p.RangedWardSaveImprovement > 0
             ));
 
+        bool atLeastOneArmorPrinted = false;
         foreach (var armor in armoursToPrint)
         {
             shortDescriptionSb.Append(armor.ArmorType.ToDescriptionString() + separator);
+            atLeastOneArmorPrinted = true;
         }
 
-        shortDescriptionSb.AppendLine();
+        if(atLeastOneArmorPrinted)
+            shortDescriptionSb.AppendLine();
 
         foreach (var rule in Model.SpecialRules.Where(p => p.PrintInSummary))
         {

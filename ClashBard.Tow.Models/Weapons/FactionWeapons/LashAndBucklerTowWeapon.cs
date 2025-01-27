@@ -7,9 +7,9 @@ public class LashAndBucklerTowWeapon : TowWeapon
 {
     public LashAndBucklerTowWeapon(TowObject owner) : base(owner, TowTypes.TowWeaponType.LashAndBuckler, 1, TowWeaponStrength.S, 1)
     {
-        SpecialRules.Add(new ArmourBane1());
-        SpecialRules.Add(new FightInExtraRank());
-        SpecialRules.Add(new RequiresTwoHands());
-        SpecialRules.Add(new LashAndBucklerArmor());
+        AssignSpecialRule(new ArmourBane1());
+        AssignSpecialRule(new FightInExtraRank());
+        AssignSpecialRule(new RequiresTwoHands());
+        AssignSpecialRule(new LashAndBucklerArmor());
     }
 }

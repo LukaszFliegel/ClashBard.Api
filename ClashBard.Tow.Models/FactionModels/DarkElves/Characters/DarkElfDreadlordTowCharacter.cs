@@ -16,9 +16,7 @@ public class DarkElfDreadlordTowCharacter: TowCharacter
             new TowMagicItemCategory[] { TowMagicItemCategory.MagicArmour, TowMagicItemCategory.MagicWeapon, TowMagicItemCategory.Talisman, TowMagicItemCategory.EnchantedItem },
             mayBuyMagicItemsUpToPoints: 100)
     {
-        //Assign(new LightArmourTowArmour(this));
-        Assign(new LightArmourTowArmour(this));
-
+        AvailableArmours.Add((TowArmourType.LightArmour, 0));
         AvailableArmours.Add((TowArmourType.HeavyArmour, 3));
         AvailableArmours.Add((TowArmourType.FullPlateArmour, 6));
         AvailableArmours.Add((TowArmourType.Shield, 2));
@@ -33,15 +31,17 @@ public class DarkElfDreadlordTowCharacter: TowCharacter
         AvailableWeapons.Add((TowWeaponType.Halberd, 3));
         AvailableWeapons.Add((TowWeaponType.Lance, 4));
 
-        SpecialRules.Add(new EternalHatred());
-        SpecialRules.Add(new HatredHighElves());
-        SpecialRules.Add(new Murderous());
-        SpecialRules.Add(new StrikeFirst());
+        AssignSpecialRule(new EternalHatred());
+        AssignSpecialRule(new HatredHighElves());
+        AssignSpecialRule(new Murderous());
+        AssignSpecialRule(new StrikeFirst());
 
         AvailableMounts.Add((TowModelMountType.DarkSteed, 14));
         AvailableMounts.Add((TowModelMountType.ColdOne, 18));
         AvailableMounts.Add((TowModelMountType.ColdOneChariot, 125));
         AvailableMounts.Add((TowModelMountType.BlackDragon, 280));
         AvailableMounts.Add((TowModelMountType.Manticore, 130));
+
+        Assign(new LightArmourTowArmour(this));
     }
 }

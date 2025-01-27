@@ -9,8 +9,8 @@ public class CharmedShieldTowMagicArmour : TowMagicArmour
 
     public CharmedShieldTowMagicArmour(TowObject owner) : base(owner, TowMagicItemArmorType.CharmedShield, points, 999)
     {
-        //SpecialRules.Add(new ArmourBane1());
-        //SpecialRules.Add(new MagicalAttacks());
-        //SpecialRules.Add(new MultipleWoundsD3());
+        //AssignSpecialRule(new ArmourBane1());
+        //AssignSpecialRule(new MagicalAttacks());
+        //AssignSpecialRule(new MultipleWoundsD3());
     }
 }

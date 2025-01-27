@@ -8,9 +8,10 @@ public class SerratedMawsNotes : TowSpecialRule
     private static string LongDescription = "In combat, this model must make each attack granted by the Extra Attacks (+remaining Wounds) special rule with this weapon.";
 
     public SerratedMawsNotes()
-        : base(TowSpecialRuleType.SerratedMawWarHydraNotes,
+        : base(TowSpecialRuleType.SerratedMawsNotes,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printName: false)
     {
 
     }

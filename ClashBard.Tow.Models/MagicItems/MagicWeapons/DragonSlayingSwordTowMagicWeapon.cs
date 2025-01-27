@@ -9,7 +9,7 @@ public class DragonSlayingSwordTowMagicWeapon : TowMagicWeapon
 
     public DragonSlayingSwordTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.DragonSlayingSword, points, 0, TowWeaponStrength.S, 0)
     {
-        SpecialRules.Add(new MagicalAttacks());
-        SpecialRules.Add(new MonsterSlayer());
+        AssignSpecialRule(new MagicalAttacks());
+        AssignSpecialRule(new MonsterSlayer());
     }
 }

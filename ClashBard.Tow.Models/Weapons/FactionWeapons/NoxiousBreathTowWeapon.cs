@@ -7,7 +7,7 @@ public class NoxiousBreathTowWeapon : TowWeapon
 {
     public NoxiousBreathTowWeapon(TowObject owner) : base(owner, TowTypes.TowWeaponType.NoxiousBreath, null, TowWeaponStrength.Four, 0)
     {
-        SpecialRules.Add(new BreathWeapon());
-        SpecialRules.Add(new NoxiousBreathNotes());
+        AssignSpecialRule(new BreathWeapon());
+        AssignSpecialRule(new NoxiousBreathNotes());
     }
 }

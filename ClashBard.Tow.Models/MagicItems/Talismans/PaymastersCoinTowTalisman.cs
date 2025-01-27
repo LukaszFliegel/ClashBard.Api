@@ -8,7 +8,7 @@ public class PaymastersCoinTowTalisman : TowTalisman
 
     public PaymastersCoinTowTalisman(TowObject owner) : base(owner, TowMagicItemTalismanType.PaymastersCoin, points)
     {
-        SpecialRules.Add(new PaymastersCoinRules());
+        AssignSpecialRule(new PaymastersCoinRules());
     }
 }
 

@@ -28,20 +28,23 @@ public class WarHydraTowModel : TowModel
     protected WarHydraTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
         : base(owner, modelType, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, troopType, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize, armourValue)
     {
+        // special rules
+        AssignSpecialRule(new CloseOrder());
+        AssignSpecialRule(new ExtraAttacksPlusRemainingWounds());
+        AssignSpecialRule(new ImmuneToPsychology());
+        AssignSpecialRule(new LargeTarget());
+        AssignSpecialRule(new MonsterHandlers());
+        AssignSpecialRule(new Regeneration5Plus());
+        AssignSpecialRule(new StompAttacksD3());
+        AssignSpecialRule(new Terror());
+
+        // weapons
+        AssignDefault(new WickedClawsTowWeapon(this));
+        AssignDefault(new SerratedMawsTowWeapon(this));
+        AssignDefault(new FieryBreathTowWeapon(this));
+
+        // crew
         Crew.Add(new BeastmasterHandlersTowModelAdditional(this));
         Crew.Add(new BeastmasterHandlersTowModelAdditional(this));
-
-        Assign(new WickedClawsTowWeapon(this));
-        Assign(new SerratedMawsTowWeapon(this));
-        Assign(new FieryBreathTowWeapon(this));
-
-        SpecialRules.Add(new CloseOrder());
-        SpecialRules.Add(new ExtraAttacksPlusRemainingWounds());
-        SpecialRules.Add(new ImmuneToPsychology());
-        SpecialRules.Add(new LargeTarget());
-        SpecialRules.Add(new MonsterHandlers());
-        SpecialRules.Add(new Regeneration5Plus());
-        SpecialRules.Add(new StompAttacksD3());
-        SpecialRules.Add(new Terror());
     }
 }

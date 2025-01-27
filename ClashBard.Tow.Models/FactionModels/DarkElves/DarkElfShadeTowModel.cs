@@ -18,21 +18,24 @@ public class DarkElfShadeTowModel : TowModel
     protected DarkElfShadeTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
         : base(owner, DarkElfTowModelType.DarkElfShades, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 5)
     {
-        AvailableArmours.Add((TowArmourType.LightArmour, 1));
-
-        Assign(new RepeaterCrossbowTowWeapon(this));
-        OptionalWeapons.Add(new TowOptionalOneOfTwoOption<TowWeaponType>(this, TowWeaponType.AdditionalHandWeapon, 1, TowWeaponType.GreatWeapon, 2));
-
-        SpecialRules.Add(new ElvenReflexes());
-        SpecialRules.Add(new Evasive());
-        SpecialRules.Add(new HatredHighElves());
-        SpecialRules.Add(new MoveThroughCover());
-        SpecialRules.Add(new Scouts());
-        SpecialRules.Add(new Skirmishers());
+        // special rules
+        AssignSpecialRule(new ElvenReflexes());
+        AssignSpecialRule(new Evasive());
+        AssignSpecialRule(new HatredHighElves());
+        AssignSpecialRule(new MoveThroughCover());
+        AssignSpecialRule(new Scouts());
+        AssignSpecialRule(new Skirmishers());
 
         AvailableSpecialRules.Add((TowSpecialRuleType.Ambushers, 1));
         AvailableSpecialRules.Add((TowSpecialRuleType.ChariotRunners, 1));
         AvailableSpecialRules.Add((TowSpecialRuleType.Veteran, 1));
+
+        // weapons
+        AssignDefault(new RepeaterCrossbowTowWeapon(this));
+        OptionalWeapons.Add(new TowOptionalOneOfTwoOption<TowWeaponType>(this, TowWeaponType.AdditionalHandWeapon, 1, TowWeaponType.GreatWeapon, 2));
+
+        // armours
+        AvailableArmours.Add((TowArmourType.LightArmour, 1));
     }
 }
 

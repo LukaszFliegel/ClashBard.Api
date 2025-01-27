@@ -18,19 +18,22 @@ public class BlackGuardOfNaggarondTowModel : TowModel
     protected BlackGuardOfNaggarondTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
         : base(owner, DarkElfTowModelType.BlackGuardOfNaggarond, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
     {
-        Assign(new FullPlateArmourTowArmour(this));
-
-        Assign(new DreadHalberdTowWeapon(this));
-
-        SpecialRules.Add(new CloseOrder());
-        SpecialRules.Add(new ElvenReflexes());
-        SpecialRules.Add(new HatredHighElves());
-        SpecialRules.Add(new EternalHatred());
-        SpecialRules.Add(new ImmuneToPsychology());
-        SpecialRules.Add(new MartialProwess());
-        SpecialRules.Add(new Stubborn());
+        // special rules
+        AssignSpecialRule(new CloseOrder());
+        AssignSpecialRule(new ElvenReflexes());
+        AssignSpecialRule(new HatredHighElves());
+        AssignSpecialRule(new EternalHatred());
+        AssignSpecialRule(new ImmuneToPsychology());
+        AssignSpecialRule(new MartialProwess());
+        AssignSpecialRule(new Stubborn());
 
         AvailableSpecialRules.Add((TowSpecialRuleType.Drilled, 1));
+
+        // weapons
+        AssignDefault(new DreadHalberdTowWeapon(this));
+
+        // armours
+        AssignDefault(new FullPlateArmourTowArmour(this));
     }
 }
 

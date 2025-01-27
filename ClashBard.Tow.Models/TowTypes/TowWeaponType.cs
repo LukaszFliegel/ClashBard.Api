@@ -105,4 +105,6 @@ public enum TowWeaponType
     FieryBreath,
     [Description("Cavernous Maw")]
     CavernousMaw,
+    [Description("Ravager Harpoon")]
+    RavagerHarpoon,
 }

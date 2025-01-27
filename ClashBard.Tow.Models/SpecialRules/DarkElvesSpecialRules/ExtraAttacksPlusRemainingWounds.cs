@@ -11,7 +11,8 @@ public class ExtraAttacksPlusRemainingWounds : TowSpecialRule
     public ExtraAttacksPlusRemainingWounds()
         : base(TowSpecialRuleType.ExtraAttacksPlusRemainingWounds,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printShortDescription: false)
     {
 
     }

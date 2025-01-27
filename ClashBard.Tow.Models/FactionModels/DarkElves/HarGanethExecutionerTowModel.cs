@@ -19,17 +19,20 @@ public class HarGanethExecutionerTowModel : TowModel
     protected HarGanethExecutionerTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
         : base(owner, DarkElfTowModelType.HarGanethExecutioners, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
     {
-        Assign(new HeavyArmourTowArmour(this));
-
-        Assign(new HarGanethGreatswordTowWeapon(this));
-
-        SpecialRules.Add(new CloseOrder());
-        SpecialRules.Add(new ElvenReflexes());
-        SpecialRules.Add(new HatredHighElves());
-        SpecialRules.Add(new Murderous());
-        SpecialRules.Add(new Veteran());
+        // special rules
+        AssignSpecialRule(new CloseOrder());
+        AssignSpecialRule(new ElvenReflexes());
+        AssignSpecialRule(new HatredHighElves());
+        AssignSpecialRule(new Murderous());
+        AssignSpecialRule(new Veteran());
 
         AvailableSpecialRules.Add((TowSpecialRuleType.Drilled, 2));
+
+        // wepons
+        AssignDefault(new HarGanethGreatswordTowWeapon(this));
+
+        // armours
+        AssignDefault(new HeavyArmourTowArmour(this));
     }
 }
 

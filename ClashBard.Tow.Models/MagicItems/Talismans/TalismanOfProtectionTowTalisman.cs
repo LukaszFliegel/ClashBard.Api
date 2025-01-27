@@ -9,7 +9,7 @@ public class TalismanOfProtectionTowTalisman : TowTalisman
 
     public TalismanOfProtectionTowTalisman(TowObject owner) : base(owner, TowMagicItemTalismanType.TalismanOfProtection, points)
     {
-        //SpecialRules.Add(new TalismanOfProtectionRules());
+        //AssignSpecialRule(new TalismanOfProtectionRules());
         AssignSpecialRule(new TalismanOfProtectionRules());
     }
 }

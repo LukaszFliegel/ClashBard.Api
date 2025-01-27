@@ -18,16 +18,18 @@ public class DoomfireWarlockTowModel : TowModel
     protected DoomfireWarlockTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
         : base(owner, DarkElfTowModelType.DoomfireWarlocks, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.LightCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
     {
-        SpecialRules.Add(new CursedCoven());
-        SpecialRules.Add(new DarkRunes());
-        SpecialRules.Add(new ElvenReflexes());
-        SpecialRules.Add(new FastCavalry());
-        SpecialRules.Add(new HatredHighElves());
-        SpecialRules.Add(new OpenOrder());
-        SpecialRules.Add(new PoisonedAttacks());
-        SpecialRules.Add(new Swiftstride());
+        // special rules
+        AssignSpecialRule(new CursedCoven());
+        AssignSpecialRule(new DarkRunes());
+        AssignSpecialRule(new ElvenReflexes());
+        AssignSpecialRule(new FastCavalry());
+        AssignSpecialRule(new HatredHighElves());
+        AssignSpecialRule(new OpenOrder());
+        AssignSpecialRule(new PoisonedAttacks());
+        AssignSpecialRule(new Swiftstride());
 
-        Assign(new DarkSteedTowMount(this));
+        // mounts
+        AssignDefault(new DarkSteedTowMount(this));
     }
 }
 

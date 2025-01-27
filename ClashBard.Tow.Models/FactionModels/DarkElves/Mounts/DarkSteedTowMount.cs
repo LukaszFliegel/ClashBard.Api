@@ -12,8 +12,9 @@ public class DarkSteedTowMount : TowModelMount
 
     public DarkSteedTowMount(TowObject owner) : this(owner, m: 9, ws: 3, bs: null, s: 3, t: null, toughnessAdded: null, w: null, woundsAdded: null, i: 4, a: 1, ld: null)
     {
-        SpecialRules.Add(new FastCavalry());
-        SpecialRules.Add(new Swiftstride());        
+        // special rules
+        AssignSpecialRule(new FastCavalry());
+        AssignSpecialRule(new Swiftstride());        
     }
 
     protected DarkSteedTowMount(TowObject owner, int? m, int ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int i, int a, int? ld) 

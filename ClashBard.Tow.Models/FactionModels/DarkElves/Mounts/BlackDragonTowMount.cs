@@ -22,17 +22,19 @@ public class BlackDragonTowMount : TowModelMount
 
     public BlackDragonTowMount(TowObject owner) : this(owner, m: 6, ws: 6, bs: null, s: 7, t: null, toughnessAdded: 3, w: null, woundsAdded: 6, i: 4, a: 6, ld: null)
     {
-        Assign(new WickedClawsTowWeapon(this));
-        Assign(new SerratedMawTowWeapon(this));
-        Assign(new NoxiousBreathTowWeapon(this));
+        // special rules
+        AssignSpecialRule(new CloseOrder());
+        AssignSpecialRule(new Fly10());
+        AssignSpecialRule(new HatredHighElves());
+        AssignSpecialRule(new LargeTarget());
+        AssignSpecialRule(new StompAttacksD6());
+        AssignSpecialRule(new Swiftstride());
+        AssignSpecialRule(new Terror());
 
-        SpecialRules.Add(new CloseOrder());
-        SpecialRules.Add(new Fly10());
-        SpecialRules.Add(new HatredHighElves());
-        SpecialRules.Add(new LargeTarget());
-        SpecialRules.Add(new StompAttacksD6());
-        SpecialRules.Add(new Swiftstride());
-        SpecialRules.Add(new Terror());
+        // wespons
+        AssignDefault(new WickedClawsTowWeapon(this));
+        AssignDefault(new SerratedMawTowWeapon(this));
+        AssignDefault(new NoxiousBreathTowWeapon(this));
     }
 
     protected BlackDragonTowMount(TowObject owner, int? m, int ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int i, int a, int? ld) 

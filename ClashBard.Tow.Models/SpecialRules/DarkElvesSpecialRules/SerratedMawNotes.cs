@@ -10,7 +10,8 @@ public class SerratedMawNotes : TowSpecialRule
     public SerratedMawNotes()
         : base(TowSpecialRuleType.SerratedMawNotes,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printName: false)
     {
 
     }

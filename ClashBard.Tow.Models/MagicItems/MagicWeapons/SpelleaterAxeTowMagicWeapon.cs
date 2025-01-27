@@ -9,7 +9,7 @@ public class SpelleaterAxeTowMagicWeapon : TowMagicWeapon
 
     public SpelleaterAxeTowMagicWeapon(TowObject owner) : base(owner, TowMagicItemWeaponType.SpelleaterAxe, points, 0, TowWeaponStrength.S, 1)
     {
-        SpecialRules.Add(new MagicalAttacks());
-        SpecialRules.Add(new MagicResistance2());
+        AssignSpecialRule(new MagicalAttacks());
+        AssignSpecialRule(new MagicResistance2());
     }
 }

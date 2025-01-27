@@ -11,22 +11,24 @@ public class CauldronOfBloodTowMount : TowModelMount
     private static int pointsCost = 150;
 
     public CauldronOfBloodTowMount(TowObject owner) : this(owner, m: 2, ws: null, bs: null, s: 5, t: 5, toughnessAdded: null, w: 5, woundsAdded: null, i: null, a: null, ld: null)
-    {        
-        Crew.Add(new WitchElfCrewTowModelAdditional(this));
-        Crew.Add(new WitchElfCrewTowModelAdditional(this));
+    {
+        // special rules
+        AssignSpecialRule(new CloseOrder());
+        AssignSpecialRule(new DraggedAlong());
+        AssignSpecialRule(new ElvenReflexes());
+        AssignSpecialRule(new Frenzy());
+        AssignSpecialRule(new HatredHighElves());
+        AssignSpecialRule(new ImpactHitsD6Plus1());
+        AssignSpecialRule(new LargeTarget());
+        AssignSpecialRule(new MagicResistance1());
+        AssignSpecialRule(new Murderous());
+        AssignSpecialRule(new PoisonedAttacks());
+        AssignSpecialRule(new Terror());
+        AssignSpecialRule(new BlessingsOfKhaine());
 
-        SpecialRules.Add(new CloseOrder());
-        SpecialRules.Add(new DraggedAlong());
-        SpecialRules.Add(new ElvenReflexes());
-        SpecialRules.Add(new Frenzy());
-        SpecialRules.Add(new HatredHighElves());
-        SpecialRules.Add(new ImpactHitsD6Plus1());
-        SpecialRules.Add(new LargeTarget());
-        SpecialRules.Add(new MagicResistance1());
-        SpecialRules.Add(new Murderous());
-        SpecialRules.Add(new PoisonedAttacks());
-        SpecialRules.Add(new Terror());
-        SpecialRules.Add(new BlessingsOfKhaine());        
+        // crew
+        Crew.Add(new WitchElfCrewTowModelAdditional(this));
+        Crew.Add(new WitchElfCrewTowModelAdditional(this));
     }
 
     protected CauldronOfBloodTowMount(TowObject owner, int? m, int? ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int? i, int? a, int? ld) 

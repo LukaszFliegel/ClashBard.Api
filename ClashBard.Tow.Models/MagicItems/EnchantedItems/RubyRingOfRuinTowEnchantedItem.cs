@@ -9,7 +9,7 @@ public class RubyRingOfRuinTowEnchantedItem : TowEnchantedItem
 
     public RubyRingOfRuinTowEnchantedItem(TowObject owner) : base(owner, TowMagicItemEnchantedType.RubyRingOfRuin, points)
     {
-        SpecialRules.Add(new RubyRingOfRuinRules());
+        AssignSpecialRule(new RubyRingOfRuinRules());
         
     }
 }

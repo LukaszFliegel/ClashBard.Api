@@ -7,8 +7,8 @@ public class SerratedMawTowWeapon : TowWeapon
 {
     public SerratedMawTowWeapon(TowObject owner) : base(owner, TowTypes.TowWeaponType.SerratedMaw, 0, TowWeaponStrength.S, 0)
     {
-        SpecialRules.Add(new ArmourBane2());
-        SpecialRules.Add(new MultipleWounds2());
-        SpecialRules.Add(new SerratedMawNotes());
+        AssignSpecialRule(new ArmourBane2());
+        AssignSpecialRule(new MultipleWounds2());
+        AssignSpecialRule(new SerratedMawNotes());
     }
 }

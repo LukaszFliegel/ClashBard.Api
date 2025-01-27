@@ -11,7 +11,8 @@ public class Regeneration5Plus : TowSpecialRule
     public Regeneration5Plus()
         : base(TowSpecialRuleType.Regeneration5Plus,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printShortDescription: false)
     {
 
     }

@@ -1,15 +1,15 @@
 ﻿using ClashBard.Tow.Models.SpecialRules;
 using ClashBard.Tow.Models.TowTypes;
 
-namespace ClashBard.Tow.Models.Weapons;
+namespace ClashBard.Tow.Models.Armors.DarkElvesArmors;
 
 public class SeaDragonCloakTowArmour : TowArmour
 {
-    public SeaDragonCloakTowArmour(TowObject owner) : base(owner, TowArmourType.SeaDragonCloak, 
+    public SeaDragonCloakTowArmour(TowObject owner) : base(owner, TowArmourType.SeaDragonCloak,
         rangedSaveImprovement: 1,
         asteriskOnSave: true)
     {
-        SpecialRules.Add(new SeaDragonCloakTowArmourRules());
+        AssignSpecialRule(new SeaDragonCloakTowArmourRules());
     }
 }
 

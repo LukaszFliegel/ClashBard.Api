@@ -9,7 +9,7 @@ public class RazorStandardTowMagicBanner : TowMagicBanner
 
     public RazorStandardTowMagicBanner(TowObject owner) : base(owner, TowMagicItemBannerType.RazorStandard, points)
     {
-        SpecialRules.Add(new RazorStandardRules());
+        AssignSpecialRule(new RazorStandardRules());
     }
 }
 

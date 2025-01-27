@@ -6,7 +6,7 @@ public class LanceTowWeapon : TowWeapon
 {
     public LanceTowWeapon(TowObject owner) : base(owner, TowTypes.TowWeaponType.Lance, 0, TowWeaponStrength.Splus2, 2)
     {
-        SpecialRules.Add(new ArmourBane1());
-        SpecialRules.Add(new TurnUserCharged());
+        AssignSpecialRule(new ArmourBane1());
+        AssignSpecialRule(new TurnUserCharged());
     }
 }

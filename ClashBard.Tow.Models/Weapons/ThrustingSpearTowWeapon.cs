@@ -6,6 +6,6 @@ public class ThrustingSpearTowWeapon : TowWeapon
 {
     public ThrustingSpearTowWeapon(TowObject owner) : base(owner, TowTypes.TowWeaponType.ThrustingSpear, 0, TowWeaponStrength.S, 0)
     {
-        SpecialRules.Add(new FightinExtraRankAnyTurnTheyDidNotCharge());
+        AssignSpecialRule(new FightinExtraRankAnyTurnTheyDidNotCharge());
     }
 }

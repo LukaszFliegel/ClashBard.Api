@@ -9,7 +9,7 @@ public class HealingPotionTowEnchantedItem : TowEnchantedItem
 
     public HealingPotionTowEnchantedItem(TowObject owner) : base(owner, TowMagicItemEnchantedType.HealingPotion, points)
     {
-        SpecialRules.Add(new HealingPotionRules());
+        AssignSpecialRule(new HealingPotionRules());
         
     }
 }

@@ -8,7 +8,7 @@ public class ArcaneFamiliarTowArcaneItem : TowArcaneItem
 
     public ArcaneFamiliarTowArcaneItem(TowObject owner) : base(owner, TowMagicItemArcaneType.ArcaneFamiliar, points)
     {
-        SpecialRules.Add(new ArcaneFamiliarRules());
+        AssignSpecialRule(new ArcaneFamiliarRules());
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.Models.Weapons;
+using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 
 namespace ClashBard.Tow.Models;
@@ -49,6 +50,11 @@ public class TowModelAdditional: TowObjectWithSpecialRules
     public void Assign(TowArmour armour)
     {
         Armours.Add(armour);
+    }
+
+    public ICollection<TowWeapon> GetWeapons(bool excludeHandWeapon = true)
+    {
+        return Weapons.Where(p => excludeHandWeapon ? p.WeaponType != TowWeaponType.HandWeapon : true).ToImmutableList();
     }
 
     public Enum ModelType { get; set; }

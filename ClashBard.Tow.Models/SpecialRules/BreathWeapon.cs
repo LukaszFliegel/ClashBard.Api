@@ -11,7 +11,8 @@ public class BreathWeapon : TowSpecialRule
     public BreathWeapon()
         : base(TowSpecialRuleType.BreathWeapon,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printShortDescription: false)
     {
 
     }

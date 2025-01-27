@@ -11,7 +11,8 @@ public class ImpactHitsD6 : TowSpecialRule
     public ImpactHitsD6()
         : base(TowSpecialRuleType.ImpactHitsD6,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printShortDescription: false)
     {
 
     }

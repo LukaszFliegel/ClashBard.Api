@@ -9,7 +9,7 @@ public class PotionOfSpeedTowEnchantedItem : TowEnchantedItem
 
     public PotionOfSpeedTowEnchantedItem(TowObject owner) : base(owner, TowMagicItemEnchantedType.PotionOfSpeed, points)
     {
-        SpecialRules.Add(new PotionOfSpeedRules());
+        AssignSpecialRule(new PotionOfSpeedRules());
         
     }
 }

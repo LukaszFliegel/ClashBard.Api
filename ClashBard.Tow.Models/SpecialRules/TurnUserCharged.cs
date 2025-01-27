@@ -11,7 +11,8 @@ public class TurnUserCharged : TowSpecialRule
     public TurnUserCharged()
         : base(TowSpecialRuleType.TurnUserCharged,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printShortDescription: false)
     {
 
     }

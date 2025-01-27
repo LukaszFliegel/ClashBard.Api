@@ -9,7 +9,7 @@ public class TheBlazingBannerTowMagicBanner : TowMagicBanner
 
     public TheBlazingBannerTowMagicBanner(TowObject owner) : base(owner, TowMagicItemBannerType.TheBlazingBanner, points)
     {
-        SpecialRules.Add(new TheBlazingBannerRules());
+        AssignSpecialRule(new TheBlazingBannerRules());
     }
 }
 

@@ -8,7 +8,7 @@ public class ObsidianLodestoneTowTalisman : TowTalisman
 
     public ObsidianLodestoneTowTalisman(TowObject owner) : base(owner, TowMagicItemTalismanType.ObsidianLodestone, points)
     {
-        SpecialRules.Add(new ObsidianLodestoneRules());
+        AssignSpecialRule(new ObsidianLodestoneRules());
     }
 }
 

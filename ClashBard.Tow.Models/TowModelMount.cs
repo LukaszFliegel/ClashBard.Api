@@ -1,6 +1,7 @@
 ﻿using ClashBard.Tow.Models.Armors.Interfaces;
 using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.Models.Weapons;
+using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 
 namespace ClashBard.Tow.Models;
@@ -34,7 +35,7 @@ public class TowModelMount: TowObjectWithSpecialRules, ISaveImprover
         MaxUnitSize = maxUnitSize;
         ArmorValue = armorValue;
 
-        Assign(new HandWeaponTowWeapon(this));
+        AssignDefault(new HandWeaponTowWeapon(this));
     }
 
     public TowModelMountType ModelMountType { get; set; }
@@ -64,6 +65,11 @@ public class TowModelMount: TowObjectWithSpecialRules, ISaveImprover
 
     private ICollection<TowWeapon> Weapons { get; set; } = new List<TowWeapon>() { };
 
+    public ICollection<TowWeapon> GetWeapons(bool excludeHandWeapon = true)
+    {
+        return Weapons.Where(p => excludeHandWeapon ? p.WeaponType != TowWeaponType.HandWeapon : true).ToImmutableList();
+    }
+
     public TowModelTroopType ModelTroopType { get; set; }
 
     public ICollection<TowModelAdditional> Crew { get; set; } = new HashSet<TowModelAdditional>();
@@ -82,8 +88,46 @@ public class TowModelMount: TowObjectWithSpecialRules, ISaveImprover
 
     public bool AsteriskOnSave => false;
 
+    // needed?
     public void Assign(TowWeapon weapon)
     {
+        if (!AvailableWeapons.Select(p => p.Item1).Contains(weapon.WeaponType))
+        {
+            throw new Exception($"Weapon {weapon.WeaponType} not available for {ModelMountType} mount");
+        }
+
+        // TTA: does mount weapons can have save improvers?
+        //if (weapon is ISaveImprover saveImprover)
+        //{
+        //    SaveImprovers.Add(saveImprover);
+        //}
+
+        //if (weapon is IWardSaveImprover wardSaveImprover)
+        //{
+        //    WardSaveImprovers.Add(wardSaveImprover);
+        //}
+
+        Weapons.Add(weapon);
+    }
+
+    public void AssignDefault(TowWeapon weapon)
+    {
+        if (!AvailableWeapons.Select(p => p.Item1).Contains(weapon.WeaponType))
+        {
+            AvailableWeapons.Add((weapon.WeaponType, 0));
+        }
+
+        // TTA: does mount weapons can have save improvers?
+        //if (weapon is ISaveImprover saveImprover)
+        //{
+        //    SaveImprovers.Add(saveImprover);
+        //}
+
+        //if (weapon is IWardSaveImprover wardSaveImprover)
+        //{
+        //    WardSaveImprovers.Add(wardSaveImprover);
+        //}
+
         Weapons.Add(weapon);
     }
 

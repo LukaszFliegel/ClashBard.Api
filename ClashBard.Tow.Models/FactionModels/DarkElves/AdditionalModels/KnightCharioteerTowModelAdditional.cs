@@ -13,13 +13,13 @@ public class KnightCharioteerTowModelAdditional : TowModelAdditional
         Assign(new CavalrySpearTowWeapon(this));
         Assign(new RepeaterCrossbowTowWeapon(this));
 
-        SpecialRules.Add(new CloseOrder());
-        SpecialRules.Add(new ElvenReflexes());
-        SpecialRules.Add(new Fear());
-        SpecialRules.Add(new FirstCharge());
-        SpecialRules.Add(new HatredHighElves());
-        SpecialRules.Add(new ImpactHitsD6Plus1());
-        SpecialRules.Add(new Stupidity());
+        AssignSpecialRule(new CloseOrder());
+        AssignSpecialRule(new ElvenReflexes());
+        AssignSpecialRule(new Fear());
+        AssignSpecialRule(new FirstCharge());
+        AssignSpecialRule(new HatredHighElves());
+        AssignSpecialRule(new ImpactHitsD6Plus1());
+        AssignSpecialRule(new Stupidity());
     }
 
     protected KnightCharioteerTowModelAdditional(TowObject owner, int? m, int ws, int bs, int s, int? t, int? w, int i, int a, int ld)

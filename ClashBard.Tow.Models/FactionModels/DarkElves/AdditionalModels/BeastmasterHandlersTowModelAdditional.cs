@@ -13,13 +13,13 @@ public class BeastmasterHandlersTowModelAdditional : TowModelAdditional
     {
         Assign(new WhipTowWeapon(this));
         
-        SpecialRules.Add(new CloseOrder());
-        SpecialRules.Add(new ImmuneToPsychology());
-        SpecialRules.Add(new MonsterHandlers());
+        AssignSpecialRule(new CloseOrder());
+        AssignSpecialRule(new ImmuneToPsychology());
+        AssignSpecialRule(new MonsterHandlers());
     }
 
     protected BeastmasterHandlersTowModelAdditional(TowObject owner, int? m, int ws, int? bs, int s, int? t, int? w, int i, int a, int ld)
-        : base(owner, DarkElfTowModelAdditionalType.BeastmasterCrew, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
+        : base(owner, DarkElfTowModelAdditionalType.BeastmasterHandlers, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
     {
     }
 }

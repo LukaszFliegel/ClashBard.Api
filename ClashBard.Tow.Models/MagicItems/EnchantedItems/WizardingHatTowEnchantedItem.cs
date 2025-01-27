@@ -9,7 +9,7 @@ public class WizardingHatTowEnchantedItem : TowEnchantedItem
 
     public WizardingHatTowEnchantedItem(TowObject owner) : base(owner, TowMagicItemEnchantedType.WizardingHat, points)
     {
-        SpecialRules.Add(new WizardingHatRules());
+        AssignSpecialRule(new WizardingHatRules());
         
     }
 }

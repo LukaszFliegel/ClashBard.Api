@@ -55,9 +55,9 @@ public class {magicItem.name_en.ToLegalClassName()}TowMagicWeapon : TowMagicWeap
 
     public {magicItem.name_en.ToLegalClassName()}() : base(TowMagicItemWeaponType.{magicItem.name_en.ToLegalClassName()}, points, 999, TowWeaponStrength.Unknown, 777)
     {{
-        //SpecialRules.Add(new ArmourBane1());
-        //SpecialRules.Add(new MagicalAttacks());
-        //SpecialRules.Add(new MultipleWoundsD3());
+        //AssignSpecialRule(new ArmourBane1());
+        //AssignSpecialRule(new MagicalAttacks());
+        //AssignSpecialRule(new MultipleWoundsD3());
     }}
 }}
 "
@@ -80,9 +80,9 @@ public class {magicItem.name_en.ToLegalClassName()}TowMagicArmour : TowMagicArmo
 
     public {magicItem.name_en.ToLegalClassName()}() : base(TowMagicItemArmorType.{magicItem.name_en.ToLegalClassName()}, points, 999)
     {{
-        //SpecialRules.Add(new ArmourBane1());
-        //SpecialRules.Add(new MagicalAttacks());
-        //SpecialRules.Add(new MultipleWoundsD3());
+        //AssignSpecialRule(new ArmourBane1());
+        //AssignSpecialRule(new MagicalAttacks());
+        //AssignSpecialRule(new MultipleWoundsD3());
     }}
 }}
 "
@@ -104,7 +104,7 @@ public class {magicItem.name_en.ToLegalClassName()}TowTalisman : TowTalisman
 
     public {magicItem.name_en.ToLegalClassName()}() : base(TowMagicItemTalismanType.{magicItem.name_en.ToLegalClassName()}, points)
     {{
-        SpecialRules.Add(new {magicItem.name_en.ToLegalClassName()}Rules());
+        AssignSpecialRule(new {magicItem.name_en.ToLegalClassName()}Rules());
     }}
 }}
 
@@ -143,7 +143,7 @@ public class {magicItem.name_en.ToLegalClassName()}TowMagicBanner : TowMagicBann
 
     public {magicItem.name_en.ToLegalClassName()}() : base(TowMagicItemBannerType.{magicItem.name_en.ToLegalClassName()}, points)
     {{
-        SpecialRules.Add(new {magicItem.name_en.ToLegalClassName()}Rules());
+        AssignSpecialRule(new {magicItem.name_en.ToLegalClassName()}Rules());
     }}
 }}
 
@@ -181,7 +181,7 @@ public class {magicItem.name_en.ToLegalClassName()}TowEnchantedItem : TowEnchant
 
     public {magicItem.name_en.ToLegalClassName()}() : base(TowMagicItemEnchantedType.{magicItem.name_en.ToLegalClassName()}, points)
     {{
-        SpecialRules.Add(new {magicItem.name_en.ToLegalClassName()}Rules());
+        AssignSpecialRule(new {magicItem.name_en.ToLegalClassName()}Rules());
         
     }}
 }}
@@ -217,7 +217,7 @@ public class {magicItem.name_en.ToLegalClassName()}TowArcaneItem : TowArcaneItem
 
     public {magicItem.name_en.ToLegalClassName()}() : base(TowMagicItemArcaneType.{magicItem.name_en.ToLegalClassName()}, points)
     {{
-        SpecialRules.Add(new {magicItem.name_en.ToLegalClassName()}Rules());
+        AssignSpecialRule(new {magicItem.name_en.ToLegalClassName()}Rules());
     }}
 }}
 

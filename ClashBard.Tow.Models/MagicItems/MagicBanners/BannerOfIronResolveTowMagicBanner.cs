@@ -9,7 +9,7 @@ public class BannerOfIronResolveTowMagicBanner : TowMagicBanner
 
     public BannerOfIronResolveTowMagicBanner(TowObject owner) : base(owner, TowMagicItemBannerType.BannerOfIronResolve, points)
     {
-        SpecialRules.Add(new BannerOfIronResolveRules());
+        AssignSpecialRule(new BannerOfIronResolveRules());
     }
 }
 

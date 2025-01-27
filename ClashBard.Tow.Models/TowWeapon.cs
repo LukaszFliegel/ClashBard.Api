@@ -1,6 +1,9 @@
 ﻿using ClashBard.Tow.Models.TowTypes;
+using ClashBard.Tow.StaticData;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Text;
 
 namespace ClashBard.Tow.Models;
 
@@ -23,6 +26,28 @@ public class TowWeapon: TowObjectWithSpecialRules
 
     public int ArmorPiercing { get; set; }
 
+    public override string GetSpecialRulesShortDescription()
+    {
+        StringBuilder shortDescriptionSb = new();
+        string separator = ClashBardStatic.Separator;
+
+        if(Range.HasValue && Range.Value > 0)
+        {
+            shortDescriptionSb.Append($"{Range}\"{separator}");
+        }
+
+        shortDescriptionSb.Append($"{Strength.ToDescriptionString()}{separator}");
+
+        if(ArmorPiercing > 0)
+        {
+            shortDescriptionSb.Append($"AP -{ArmorPiercing}{separator}");
+        }
+
+        shortDescriptionSb.Append(base.GetSpecialRulesShortDescription());
+
+        return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());
+    }
+
 }
 
 public enum TowWeaponStrength
@@ -35,18 +60,18 @@ public enum TowWeaponStrength
     Splus2,
     [Description("S+3")]
     Splus3,
-    [Description("2")]
+    [Description("S:2")]
     Two,
-    [Description("3")]
+    [Description("S:3")]
     Three,
-    [Description("4")]
+    [Description("S:4")]
     Four,
-    [Description("5")]
+    [Description("S:5")]
     Five,
-    [Description("6")]
+    [Description("S:6")]
     Six,
-    [Description("10")]
+    [Description("S:10")]
     Ten,
-    [Description("*")]
+    [Description("S:*")]
     Special,
 }

@@ -12,7 +12,7 @@ public class CloseOrder : TowSpecialRule
         : base(TowSpecialRuleType.CloseOrder,
             ShortDescription,
             LongDescription, 
-            false)
+            printShortDescription: false)
     {
 
     }

@@ -11,7 +11,8 @@ public class OpenOrder : TowSpecialRule
     public OpenOrder()
         : base(TowSpecialRuleType.OpenOrder,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printShortDescription: false)
     {
 
     }

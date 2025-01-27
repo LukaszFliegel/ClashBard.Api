@@ -13,12 +13,12 @@ public class BeastmasterCrewTowModelAdditional : TowModelAdditional
         Assign(new CavalrySpearTowWeapon(this));
         Assign(new RepeaterCrossbowTowWeapon(this));
         
-        SpecialRules.Add(new ElvenReflexes());
-        SpecialRules.Add(new HatredHighElves());
+        AssignSpecialRule(new ElvenReflexes());
+        AssignSpecialRule(new HatredHighElves());
     }
 
     protected BeastmasterCrewTowModelAdditional(TowObject owner, int? m, int ws, int bs, int s, int? t, int? w, int i, int a, int ld)
-        : base(owner, DarkElfTowModelAdditionalType.BeastmasterCrew, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
+        : base(owner, DarkElfTowModelAdditionalType.BeastmasterHandlers, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
     {
     }
 }

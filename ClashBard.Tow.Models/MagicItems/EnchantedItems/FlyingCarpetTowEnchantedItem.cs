@@ -9,7 +9,7 @@ public class FlyingCarpetTowEnchantedItem : TowEnchantedItem
 
     public FlyingCarpetTowEnchantedItem(TowObject owner) : base(owner, TowMagicItemEnchantedType.FlyingCarpet, points)
     {
-        SpecialRules.Add(new FlyingCarpetRules());
+        AssignSpecialRule(new FlyingCarpetRules());
         
     }
 }

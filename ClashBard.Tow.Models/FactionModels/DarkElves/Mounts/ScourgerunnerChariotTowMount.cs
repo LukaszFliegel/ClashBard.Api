@@ -20,12 +20,12 @@ public class ScourgerunnerChariotTowMount : TowModelMount
 
         Assign(new RavagerHarpoonTowWeapon(this));
 
-        SpecialRules.Add(new ElvenReflexes());
-        SpecialRules.Add(new HatredHighElves());
-        SpecialRules.Add(new ImpactHitsD6());
-        SpecialRules.Add(new OpenOrder());
-        SpecialRules.Add(new SeaDragonCloak());
-        SpecialRules.Add(new Swiftstride());
+        AssignSpecialRule(new OpenOrder());
+        AssignSpecialRule(new ElvenReflexes());
+        AssignSpecialRule(new HatredHighElves());
+        AssignSpecialRule(new ImpactHitsD6());        
+        AssignSpecialRule(new SeaDragonCloak());
+        AssignSpecialRule(new Swiftstride());
     }
 
     protected ScourgerunnerChariotTowMount(TowObject owner, int? m, int? ws, int? bs, int s, int? t, int? toughnessAdded, int? w, int? woundsAdded, int? i, int? a, int? ld) 

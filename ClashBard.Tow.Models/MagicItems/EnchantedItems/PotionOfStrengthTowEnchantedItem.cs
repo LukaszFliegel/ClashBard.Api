@@ -9,7 +9,7 @@ public class PotionOfStrengthTowEnchantedItem : TowEnchantedItem
 
     public PotionOfStrengthTowEnchantedItem(TowObject owner) : base(owner, TowMagicItemEnchantedType.PotionOfStrength, points)
     {
-        SpecialRules.Add(new PotionOfStrengthRules());
+        AssignSpecialRule(new PotionOfStrengthRules());
         
     }
 }

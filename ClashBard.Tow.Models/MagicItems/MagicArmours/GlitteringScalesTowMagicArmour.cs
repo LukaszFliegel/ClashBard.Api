@@ -9,8 +9,8 @@ public class GlitteringScalesTowMagicArmour : TowMagicArmour
 
     public GlitteringScalesTowMagicArmour(TowObject owner) : base(owner, TowMagicItemArmorType.GlitteringScales, points, 999)
     {
-        //SpecialRules.Add(new ArmourBane1());
-        //SpecialRules.Add(new MagicalAttacks());
-        //SpecialRules.Add(new MultipleWoundsD3());
+        //AssignSpecialRule(new ArmourBane1());
+        //AssignSpecialRule(new MagicalAttacks());
+        //AssignSpecialRule(new MultipleWoundsD3());
     }
 }
