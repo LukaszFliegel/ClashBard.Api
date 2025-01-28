@@ -2,7 +2,7 @@
 
 public abstract class TowObjectWithOwner: TowObject
 {
-    protected TowObject Owner;
+    public TowObject Owner { get; protected set; }
 
     public TowObjectWithOwner(TowObject owner)
     {

@@ -1,8 +1,6 @@
-﻿using ClashBard.Tow.Models.TowTypes;
+﻿using ClashBard.Tow.Models.Interfaces;
+using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.StaticData;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Reflection;
 using System.Text;
 
 namespace ClashBard.Tow.Models;
@@ -10,7 +8,7 @@ namespace ClashBard.Tow.Models;
 public class TowCharacter : TowModel
 {
     public TowCharacter(TowObject owner, Enum modelType, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction,
-        int baseSizeWidth, int baseSizeLength,
+        int? baseSizeWidth, int? baseSizeLength,
         TowMagicItemCategory[]? availableMagicItemTypes = null,
         int minUnitSize = 1, int? maxUnitSize = 1, int mayBuyMagicItemsUpToPoints = 0)
         : base(owner, modelType, m, ws, bs, s, t, w, i, a, ld, pointCost, modelTroopType/*, modelSlotType*/, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize)
@@ -28,18 +26,22 @@ public class TowCharacter : TowModel
 
     public int MayBuyMagicItemsUpToPoints { get; private set; }
 
-    public ICollection<TowMagicItemCategory> AvailableMagicItemTypes = new HashSet<TowMagicItemCategory>() { };
+    protected ICollection<TowMagicItemCategory> AvailableMagicItemTypes = new HashSet<TowMagicItemCategory>() { };
 
-    public int CalculateTotalWounds()
-    {
-        if (Mount != null)
-            return Wounds + Mount.WoundsAdded ?? 0;
 
-        return Wounds;
-    }
+    //public override IEnumerable<ValidationError> Validate()
+    //{
+    //    return base.Validate();
+    //}
+
 
     public void SetMagicItem(TowMagicItem magicItem)
     {
+        if (magicItem.Owner != this)
+        {
+            throw new ArgumentException("Magic item must belong to the same owner");
+        }
+
         if (AvailableMagicItemTypes.Contains(magicItem.TowMagicItemCategory))
         {
             MagicItems.Add(magicItem);
@@ -48,22 +50,32 @@ public class TowCharacter : TowModel
 
     public void SetMagicArmor(TowMagicArmour magicArmour)
     {
+        if(magicArmour.Owner != this)
+        {
+            throw new ArgumentException("Magic armour must belong to the same owner");
+        }
+
         if (AvailableMagicItemTypes.Contains(TowMagicItemCategory.MagicArmour))
         {
             MagicItems.Add(magicArmour);
         }
     }
 
-    public void SetMagicBanner(TowMagicBanner magicBanner)
-    {
-        if (AvailableMagicItemTypes.Contains(TowMagicItemCategory.MagicBanner))
-        {
-            MagicItems.Add(magicBanner);
-        }
-    }
+    //public void SetMagicStandard(TowMagicStandard magicBanner)
+    //{
+    //    if (AvailableMagicItemTypes.Contains(TowMagicItemCategory.MagicStandard))
+    //    {
+    //        MagicItems.Add(magicBanner);
+    //    }
+    //}
 
     public void SetEnchantedItem(TowEnchantedItem enchantedItem)
     {
+        if (enchantedItem.Owner != this)
+        {
+            throw new ArgumentException("Enchanted tem item must belong to the same owner");
+        }
+
         if (AvailableMagicItemTypes.Contains(TowMagicItemCategory.EnchantedItem))
         {
             MagicItems.Add(enchantedItem);
@@ -72,6 +84,11 @@ public class TowCharacter : TowModel
 
     public void SetTalisman(TowTalisman talisman)
     {
+        if (talisman.Owner != this)
+        {
+            throw new ArgumentException("Talisman item must belong to the same owner");
+        }
+
         if (AvailableMagicItemTypes.Contains(TowMagicItemCategory.Talisman))
         {
             MagicItems.Add(talisman);
@@ -80,6 +97,11 @@ public class TowCharacter : TowModel
 
     public void SetArcaneItem(TowArcaneItem arcaneItem)
     {
+        if(arcaneItem.Owner != this)
+        {
+            throw new ArgumentException("Arcane item must belong to the same owner");
+        }
+
         if (AvailableMagicItemTypes.Contains(TowMagicItemCategory.Arcane))
         {
             MagicItems.Add(arcaneItem);
@@ -115,7 +137,7 @@ public class TowCharacter : TowModel
 
         foreach (var armor in armoursToPrint)
         {
-            shortDescriptionSb.Append(armor.ArmorType.ToDescriptionString() + separator);
+            shortDescriptionSb.Append(armor.ArmorType.ToNameString() + separator);
             string specialRulesShortDesc = armor.GetSpecialRulesShortDescription();
             shortDescriptionSb.Append(specialRulesShortDesc + (string.IsNullOrEmpty(specialRulesShortDesc) ? string.Empty : separator));
         }
@@ -142,41 +164,41 @@ public class TowCharacter : TowModel
         return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());
     }
 
-    public int UnitStrength()
-    {
-        var modelTroopType = Mount != null ? Mount.ModelTroopType : ModelTroopType;
+    //public int UnitStrength()
+    //{
+    //    var modelTroopType = Mount != null ? Mount.ModelTroopType : ModelTroopType;
 
-        switch (modelTroopType)
-        {
-            case TowModelTroopType.RegularInfantry:
-            case TowModelTroopType.RegularInfantryCharacter:
-                return 1;
-            case TowModelTroopType.MonstrousInfantry:
-                return 3;
-            case TowModelTroopType.LightCavalry:
-                return 2;
-            case TowModelTroopType.HeavyCavalry:
-                return 2;
-            case TowModelTroopType.MonstrousCavalry:
-                return 3;
-            case TowModelTroopType.MonstrousCreature: // as starting wounds
-                return CalculateTotalWounds();
-            case TowModelTroopType.WarMachine: // as starting wounds
-                return CalculateTotalWounds();
-            case TowModelTroopType.HeavyChariot:
-                return 5;
-            case TowModelTroopType.LightChariot:
-                return 3;
-            case TowModelTroopType.Behemoth: // as starting wounds
-                return CalculateTotalWounds();
-            case TowModelTroopType.WarBeast:
-                return 1;
-            case TowModelTroopType.Swarm:
-                return 3;
-            default:
-                throw new Exception("Unknown model type");
-        }
-    }
+    //    switch (modelTroopType)
+    //    {
+    //        case TowModelTroopType.RegularInfantry:
+    //        case TowModelTroopType.RegularInfantryCharacter:
+    //            return 1;
+    //        case TowModelTroopType.MonstrousInfantry:
+    //            return 3;
+    //        case TowModelTroopType.LightCavalry:
+    //            return 2;
+    //        case TowModelTroopType.HeavyCavalry:
+    //            return 2;
+    //        case TowModelTroopType.MonstrousCavalry:
+    //            return 3;
+    //        case TowModelTroopType.MonstrousCreature: // as starting wounds
+    //            return CalculateTotalWounds();
+    //        case TowModelTroopType.WarMachine: // as starting wounds
+    //            return CalculateTotalWounds();
+    //        case TowModelTroopType.HeavyChariot:
+    //            return 5;
+    //        case TowModelTroopType.LightChariot:
+    //            return 3;
+    //        case TowModelTroopType.Behemoth: // as starting wounds
+    //            return CalculateTotalWounds();
+    //        case TowModelTroopType.WarBeast:
+    //            return 1;
+    //        case TowModelTroopType.Swarm:
+    //            return 3;
+    //        default:
+    //            throw new Exception("Unknown model type");
+    //    }
+    //}
 
     public int CalculateTotalCost()
     {

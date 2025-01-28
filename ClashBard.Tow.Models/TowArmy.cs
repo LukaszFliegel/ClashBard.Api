@@ -1,4 +1,6 @@
-﻿using ClashBard.Tow.StaticData;
+﻿using ClashBard.Tow.Models.Interfaces;
+using ClashBard.Tow.Models.SpecialRules.Interfaces;
+using ClashBard.Tow.StaticData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,27 +10,31 @@ using System.Threading.Tasks;
 namespace ClashBard.Tow.Models;
 public class TowArmy: TowObject
 {
-    public string Name { get; set; }
+    public required string Name { get; set; }
     public int Points { get; set; }
-    public TowFaction Faction { get; set; }
+    public required TowFaction Faction { get; set; }
     //public ICollection<TowModel> Models { get; set; }
 
     public List<TowCharacter> Characters { get; set; } = new List<TowCharacter>();
 
     public List<TowUnit> Units { get; set; } = new List<TowUnit>();
 
-    public TowCharacter General { get; set; }
+    public required TowCharacter General { get; set; }
 
-    public void Validate()
-    {
-        // check if lances are only in cavalry units/properly mounted characters
+    private TowCharacterBsb? _battleStandardBearer;
+    public TowCharacterBsb? BattleStandardBearer { get => _battleStandardBearer; set
+        {
+            if (_battleStandardBearer != null)
+            {
+                _battleStandardBearer.SetAsArmyBattleStandardBearer(false);
+            }
 
-        // check if army has general
-
-        // check for army compoistion rules (grand army/arcane journal)
+            value?.SetAsArmyBattleStandardBearer(true);
+            _battleStandardBearer = value;
+        }
     }
 
-    public string FactionName => Faction.FactionType.ToDescriptionString();
+    public string FactionName => Faction.FactionType.ToNameString();
 
     public int GetTotalPoints()
     {
@@ -81,11 +87,68 @@ public class TowArmy: TowObject
 
     public string GetMagicLvlString()
     {
-        return $"9 (4 + 3 + 2)";
+        int totalMagicLevel = 0;
+        StringBuilder magicLevelsStringBuilder = new();
+        int numberOfMages = 0;
+
+        foreach (var mage in Characters.OfType<IMagicUser>())
+        {
+            totalMagicLevel += mage.MagicLevel;
+            magicLevelsStringBuilder.Append($"{mage.MagicLevel} + ");
+            numberOfMages++;
+        }
+
+        if(numberOfMages == 0)
+        {
+            return "0";
+        }
+        else if(numberOfMages == 1)
+        {
+            return $"{totalMagicLevel}";
+        }
+
+        var allMagicLevels = magicLevelsStringBuilder.ToString().TrimEnd(" + ".ToCharArray());
+
+        return $"{totalMagicLevel} ({allMagicLevels})";
     }
 
     public int GetTotalUnitStrength()
     {
-        return 999;
+        int totalUnitStrength = 0;
+        foreach (var character in Characters)
+        {
+            totalUnitStrength += character.UnitStrength();
+        }
+
+        foreach (var unit in Units)
+        {
+            totalUnitStrength += unit.UnitStrength();
+        }
+
+        return totalUnitStrength;
+    }
+
+    public IEnumerable<ValidationError> Validate()
+    {
+        foreach (var character in Characters)
+        {
+            foreach (var error in character.Validate())
+            {
+                yield return error;
+            }
+        }
+        foreach (var unit in Units)
+        {
+            foreach (var error in unit.Model.Validate())
+            {
+                yield return error;
+            }
+        }
+
+        // check if lances are only in cavalry units/properly mounted characters
+
+        // check if army has general
+
+        // check for army compoistion rules (grand army/arcane journal)
     }
 }

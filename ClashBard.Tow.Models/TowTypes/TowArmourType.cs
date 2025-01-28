@@ -13,6 +13,6 @@ public enum TowArmourType
     FullPlateArmour = 3,
     [Description("Shield")]
     Shield = 4,
-    [Description("Sea Dragon Cloak")]
-    SeaDragonCloak = 5
+    //[Description("Sea Dragon Cloak")] // not armor, it's a special rule
+    //SeaDragonCloak = 5
 }

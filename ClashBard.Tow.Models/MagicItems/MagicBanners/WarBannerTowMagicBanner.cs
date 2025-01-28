@@ -2,7 +2,7 @@ using ClashBard.Tow.Models.TowTypes;
 
 namespace ClashBard.Tow.Models.MagicItems.MagicBanners;
 
-public class WarBannerTowMagicBanner : TowMagicBanner
+public class WarBannerTowMagicBanner : TowMagicStandard
 {
     private const int points = 25;
 

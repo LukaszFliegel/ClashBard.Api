@@ -1,20 +1,22 @@
 ﻿using ClashBard.Tow.Models.Factions;
 using ClashBard.Tow.Models.SpecialRules;
 using ClashBard.Tow.Models.SpecialRules.DarkElvesSpecialRules;
+using ClashBard.Tow.Models.SpecialRules.Interfaces;
 using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.Models.Weapons;
+using ClashBard.Tow.StaticData;
 
 namespace ClashBard.Tow.Models.FactionModels.DarkElves.Characters;
 
-public class DarkElfDreadlordTowCharacter: TowCharacter
+public class DarkElfMasterTowCharacter : TowCharacterBsb
 {
-    private static int pointsCost = 130;
+    private static int pointsCost = 70;
 
-    public DarkElfDreadlordTowCharacter(TowObject owner)
-        :base(owner, DarkElfTowModelType.DarkElfDreadlord, 5, 7, 7, 4, 3, 3, 6, 4, 10, pointsCost,
-            TowModelTroopType.RegularInfantryCharacter, new DarkElvesTowFaction(), 25, 25,
+    public DarkElfMasterTowCharacter(TowObject owner)
+        :base(owner, DarkElfTowModelType.DarkElfMaster, 5, 6, 6, 4, 3, 2, 5, 3, 9, pointsCost,
+            TowModelTroopType.RegularInfantryCharacter, new DarkElvesTowFaction(), 25, 25, 50,
             new TowMagicItemCategory[] { TowMagicItemCategory.MagicArmour, TowMagicItemCategory.MagicWeapon, TowMagicItemCategory.Talisman, TowMagicItemCategory.EnchantedItem },
-            mayBuyMagicItemsUpToPoints: 100)
+            mayBuyMagicItemsUpToPoints: 50)
     {
         // special rules
         AssignSpecialRule(new EternalHatred());
@@ -23,7 +25,7 @@ public class DarkElfDreadlordTowCharacter: TowCharacter
         AssignSpecialRule(new StrikeFirst());
 
         AvailableSpecialRules.Add((TowSpecialRuleType.SeaDragonCloak, 4));
-
+        
         // weapons
         AvailableWeapons.Add((TowWeaponType.RepeaterCrossbow, 6));
         AvailableWeapons.Add((TowWeaponType.RepeaterHandbow, 5));
@@ -39,15 +41,11 @@ public class DarkElfDreadlordTowCharacter: TowCharacter
 
         AvailableArmours.Add((TowArmourType.HeavyArmour, 3));
         AvailableArmours.Add((TowArmourType.FullPlateArmour, 6));
-        AvailableArmours.Add((TowArmourType.Shield, 2));        
+        AvailableArmours.Add((TowArmourType.Shield, 2));
 
         // mounts
         AvailableMounts.Add((TowModelMountType.DarkSteed, 14));
         AvailableMounts.Add((TowModelMountType.ColdOne, 18));
         AvailableMounts.Add((TowModelMountType.ColdOneChariot, 125));
-        AvailableMounts.Add((TowModelMountType.BlackDragon, 280));
-        AvailableMounts.Add((TowModelMountType.Manticore, 130));
-
-        
     }
 }

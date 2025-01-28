@@ -62,7 +62,7 @@ public class TowMagicWeapon : TowMagicItem
             shortDescriptionSb.Append($"{Range}\"{separator}");
         }
 
-        shortDescriptionSb.Append($"{Strength.ToDescriptionString()}{separator}");
+        shortDescriptionSb.Append($"{Strength.ToNameString()}{separator}");
 
         if (ArmorPiercing > 0)
         {
@@ -168,10 +168,10 @@ public class TowArcaneItem : TowMagicItem
     }
 }
 
-public class TowMagicBanner : TowMagicItem
+public class TowMagicStandard : TowMagicItem
 {
-    public TowMagicBanner(TowObject owner, TowMagicItemBannerType magicBannerType, int points)
-        : base(owner, magicBannerType, points, TowMagicItemCategory.MagicBanner)
+    public TowMagicStandard(TowObject owner, TowMagicItemBannerType magicStandardType, int points)
+        : base(owner, magicStandardType, points, TowMagicItemCategory.MagicStandard)
     {
 
     }

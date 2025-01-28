@@ -4,7 +4,7 @@ namespace ClashBard.Tow.Models;
 
 public abstract class TowOption<TTowType> : TowObject, ITowValidatable where TTowType : Enum
 {
-    public abstract ICollection<ValidationError> Validate();
+    public abstract IEnumerable<ValidationError> Validate();
 }
 
 public class TowMandatoryOneOfTwoOption<TTowType> : TowOption<TTowType>, ITowValidatable where TTowType : Enum
@@ -37,7 +37,7 @@ public class TowMandatoryOneOfTwoOption<TTowType> : TowOption<TTowType>, ITowVal
         _selectedOption = _secondOption;
     }
 
-    public override ICollection<ValidationError> Validate()
+    public override IEnumerable<ValidationError> Validate()
     {
         throw new NotImplementedException(); // goblin
     }

@@ -5,7 +5,7 @@ namespace ClashBard.Tow.StaticData;
 
 public static class EnumTypeExtensions
 {
-    public static string ToDescriptionString(this Enum enumvalue)
+    public static string ToNameString(this Enum enumvalue)
     {
         FieldInfo fi = enumvalue.GetType().GetField(enumvalue.ToString());
 

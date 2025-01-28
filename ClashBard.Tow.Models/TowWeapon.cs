@@ -36,7 +36,7 @@ public class TowWeapon: TowObjectWithSpecialRules
             shortDescriptionSb.Append($"{Range}\"{separator}");
         }
 
-        shortDescriptionSb.Append($"{Strength.ToDescriptionString()}{separator}");
+        shortDescriptionSb.Append($"{Strength.ToNameString()}{separator}");
 
         if(ArmorPiercing > 0)
         {

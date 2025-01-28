@@ -1,7 +1,9 @@
 ﻿using ClashBard.Tow.Models.Armors.Interfaces;
+using ClashBard.Tow.Models.Interfaces;
 using ClashBard.Tow.Models.SpecialRules.Interfaces;
 using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.Models.Weapons;
+using ClashBard.Tow.StaticData;
 using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
@@ -51,7 +53,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
     }
 
     public TowModel(TowObject owner, Enum modelType, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction, 
-        int baseSizeWidth, int baseSizeLength, 
+        int? baseSizeWidth, int? baseSizeLength, 
         int minUnitSize = 1, int? maxUnitSize = null, int? armorValue = null)
         : this(owner, modelType, m, ws, bs, s, t, w, i, a, ld, pointCost, modelTroopType/*, modelSlotType*/, faction, minUnitSize, maxUnitSize, armorValue)
     {
@@ -107,8 +109,8 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         
     }    
 
-    public int BaseSizeWidth { get; set; }
-    public int BaseSizeLength { get; set; }
+    public int? BaseSizeWidth { get; set; }
+    public int? BaseSizeLength { get; set; }
 
     public ICollection<(TowWeaponType, int)> AvailableWeapons { get; protected set; } = new HashSet<(TowWeaponType, int)>() { };
     public ICollection<TowOption<TowWeaponType>> OptionalWeapons { get; protected set; } = new List<TowOption<TowWeaponType>>() { };
@@ -312,9 +314,14 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
 
     public void SetWeapon(TowWeapon weapon)
     {
+        //if(weapon.Owner != this && weapon.Owner != Owner) // TODO: how to validate, that the owner of a weapon is the model?
+        //{
+        //    throw new ArgumentException("Weapon must belong to the same owner");
+        //}
+
         if (!AvailableWeapons.Any(w => w.Item1 == weapon.WeaponType))
         {
-            throw new Exception($"Weapon {weapon.WeaponType} not available for {ModelType} model");
+            throw new ArgumentException($"Weapon {weapon.WeaponType} not available for {ModelType} model");
         }
 
         Assign(weapon);
@@ -327,9 +334,14 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
 
     public void SetArmor(TowArmour armor)
     {
+        //if (armor.Owner != this && armor.Owner != Owner)
+        //{
+        //    throw new ArgumentException("Armor must belong to the same owner");
+        //}
+
         if (!AvailableArmours.Any(a => a.Item1 == armor.ArmorType))
         {
-            throw new Exception($"Armor {armor.ArmorType} not available for {ModelType} model");
+            throw new ArgumentException($"Armor {armor.ArmorType} not available for {ModelType} model");
         }
         Assign(armor);
 
@@ -343,7 +355,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
     {
         if (!AvailableSpecialRules.Any(sr => sr.Item1 == specialRule.RuleType))
         {
-            throw new Exception($"Special rule {specialRule.RuleType} not available for {ModelType} model");
+            throw new ArgumentException($"Special rule {specialRule.RuleType} not available for {ModelType} model");
         }
         SpecialRules.Add(specialRule);
 
@@ -355,9 +367,14 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
 
     public void Assign(TowModelMount mount)
     {
+        //if (mount.Owner != this && mount.Owner != Owner)
+        //{
+        //    throw new ArgumentException("Mount must belong to the same owner");
+        //}
+
         if (!AvailableMounts.Any(m => m.Item1 == mount.ModelMountType))
         {
-            throw new Exception($"Mount {mount.ModelMountType} not available for {ModelType} model");
+            throw new ArgumentException($"Mount {mount.ModelMountType} not available for {ModelType} model");
         }
 
         if (mount is ISaveImprover saveImprover)
@@ -403,6 +420,21 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         }
     }
 
+    public override IEnumerable<ValidationError> Validate()
+    {
+        Console.WriteLine($"Validate of {ModelType.ToNameString()}");
+        // check if there is a weapon of type cavarly spear or lance and there is no mount assigned
+        if (Weapons.Any(w => w.WeaponType == TowWeaponType.CavalrySpear || w.WeaponType == TowWeaponType.Lance) && Mount == null)
+        {
+            yield return new ValidationError("Cavalry spear or lance requires a mount", ModelType.ToNameString());
+        }
+
+        foreach (var error in base.Validate())
+        {
+            yield return error;
+        }
+    }
+
     internal bool IsScout()
     {
         return SpecialRules.Any(rule => rule is IScouts);
@@ -418,9 +450,45 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         return SpecialRules.Any(rule => rule is IAmbushers);
     }
 
+    //public int UnitStrength()
+    //{
+    //    switch (ModelTroopType)
+    //    {
+    //        case TowModelTroopType.RegularInfantry:
+    //        case TowModelTroopType.RegularInfantryCharacter:
+    //            return 1;
+    //        case TowModelTroopType.MonstrousInfantry:
+    //            return 3;
+    //        case TowModelTroopType.LightCavalry:
+    //            return 2;
+    //        case TowModelTroopType.HeavyCavalry:
+    //            return 2;
+    //        case TowModelTroopType.MonstrousCavalry:
+    //            return 3;
+    //        case TowModelTroopType.MonstrousCreature: // as starting wounds
+    //            return Wounds;
+    //        case TowModelTroopType.WarMachine: // as starting wounds
+    //            return Wounds;
+    //        case TowModelTroopType.HeavyChariot:
+    //            return 5;
+    //        case TowModelTroopType.LightChariot:
+    //            return 3;
+    //        case TowModelTroopType.Behemoth: // as starting wounds
+    //            return Wounds;
+    //        case TowModelTroopType.WarBeast:
+    //            return 1;
+    //        case TowModelTroopType.Swarm:
+    //            return 3;
+    //        default:
+    //            throw new Exception("Unknown model type");
+    //    }
+    //}
+
     public int UnitStrength()
     {
-        switch (ModelTroopType)
+        var modelTroopType = Mount != null ? Mount.ModelTroopType : ModelTroopType;
+
+        switch (modelTroopType)
         {
             case TowModelTroopType.RegularInfantry:
             case TowModelTroopType.RegularInfantryCharacter:
@@ -434,15 +502,15 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
             case TowModelTroopType.MonstrousCavalry:
                 return 3;
             case TowModelTroopType.MonstrousCreature: // as starting wounds
-                return Wounds;
+                return CalculateTotalWounds();
             case TowModelTroopType.WarMachine: // as starting wounds
-                return Wounds;
+                return CalculateTotalWounds();
             case TowModelTroopType.HeavyChariot:
                 return 5;
             case TowModelTroopType.LightChariot:
                 return 3;
             case TowModelTroopType.Behemoth: // as starting wounds
-                return Wounds;
+                return CalculateTotalWounds();
             case TowModelTroopType.WarBeast:
                 return 1;
             case TowModelTroopType.Swarm:
@@ -450,6 +518,14 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
             default:
                 throw new Exception("Unknown model type");
         }
+    }
+
+    public int CalculateTotalWounds()
+    {
+        if (Mount != null)
+            return Wounds + Mount.WoundsAdded ?? 0;
+
+        return Wounds;
     }
 
     private void SetDefaultBaseSize()
@@ -508,7 +584,9 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
             default:
                 throw new Exception("Unknown model type");
         }
-    }    
+    }
+
+    
 }
 
 //public enum TowModelSlotType

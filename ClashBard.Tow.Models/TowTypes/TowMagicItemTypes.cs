@@ -9,7 +9,7 @@ public enum TowMagicItemCategory
     [Description("Magic Armor")]
     MagicArmour,
     [Description("Magic Banner")]
-    MagicBanner,
+    MagicStandard,
     [Description("Enchanted Ttem")]
     EnchantedItem,
     [Description("Talisman")]

@@ -15,6 +15,8 @@ public enum TowModelMountType
     ColdOne,
     [Description("Dark Steed")]
     DarkSteed,
+    [Description("Dark Pegasus")]
+    DarkPegasus,
     [Description("Cauldron Of Blood")]
     CauldronOfBlood,
     [Description("Scourgerunner Chariot")]

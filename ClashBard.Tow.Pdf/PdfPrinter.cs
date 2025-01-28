@@ -35,15 +35,6 @@ public class PdfPrinter
 
                 page.Header().Border(0).Table(table =>
                 {
-                    //table.ColumnsDefinition(columns =>
-                    //{
-                    //    columns.RelativeColumn();
-                    //    columns.RelativeColumn();
-                    //});
-
-                    //table.Cell().Row(1).Column(1).Padding(4).AlignRight().Text($"{army.Points} Pts");
-                    //table.Cell().Row(1).Column(2).Padding(4).AlignLeft().Text($"{army.Faction.FactionType} Roster");
-
                     table.ColumnsDefinition(columns =>
                     {
                         columns.RelativeColumn(1);
@@ -112,6 +103,53 @@ public class PdfPrinter
                         });
                     }
 
+                    column.Item().ShowEntire().Table(table =>
+                    {
+                        RowIterator = 1;
+                        RowIterator = PrintSeparatorLine(table, RowIterator);
+                        RowIterator = PrintSeparatorLine(table, RowIterator);
+                        RowIterator = PrintSeparatorLine(table, RowIterator);
+
+                        table.ColumnsDefinition(columns =>
+                        {
+                            columns.RelativeColumn(1);
+                        });
+
+                        table.Cell().Row(RowIterator).Column(1).Element(Block).Text("Army validation").FontSize(fontSize);
+                    });
+
+                    column.Item().ShowEntire().Table(table =>
+                    {
+                        RowIterator = 1;
+                        table.ColumnsDefinition(columns =>
+                        {
+                            columns.RelativeColumn(1);
+                            columns.RelativeColumn(2);
+                        });
+
+                        table.Cell().Row(RowIterator).Column(1).Element(Block).Text("Unit").FontSize(fontSize);
+                        table.Cell().Row(RowIterator).Column(2).Element(Block).Text($"Validation error").FontSize(fontSize);
+                        RowIterator++;
+
+                        //PrintSeparatorLine(table, 1);
+
+                        foreach (var validationError in army.Validate().ToList())
+                        {
+                            
+                            //column.Item().ShowEntire().Table(table =>
+                            //{
+                            //    table.ColumnsDefinition(columns =>
+                            //    {
+                            //        columns.RelativeColumn(1);
+                            //    });
+                            //    table.Cell().Row(RowIterator).Column(1).Element(DefaultCellContainer).Text(validationError.ValidationErrorMessage).FontSize(fontSize).Italic();
+                            //});
+                            table.Cell().Row(RowIterator).Column(1).Element(DefaultCellContainer).Text(validationError.Owner).FontSize(fontSize);
+                            table.Cell().Row(RowIterator).Column(2).Element(DefaultCellContainer).Text(validationError.ValidationErrorMessage).FontSize(fontSize);
+                            RowIterator++;
+                        }
+                    });
+                    
                     
                 });
 
@@ -229,7 +267,7 @@ public class PdfPrinter
 
         if (unit.HasMagicBanner())
         {
-            PrintMagicItemRow(table, fontSize, RowIterator + 1, unit.GetMagicBanner());
+            PrintMagicItemRow(table, fontSize, RowIterator + 1, unit.GetMagicStandard());
             RowIterator++;
         }
 
@@ -303,10 +341,10 @@ public class PdfPrinter
         return container
             .Border(1)
             .Background(Colors.Grey.Lighten4)
+            .Padding(1)
             .ShowOnce()
             .AlignCenter()
-            .AlignMiddle()
-            .ShowEntire();
+            .AlignMiddle();
     }
 
     const int indentation = 16;
@@ -316,6 +354,7 @@ public class PdfPrinter
         return container
             .Border(1)
             .Background(Colors.Grey.Lighten4)
+            .Padding(1)
             .ShowOnce()
             .AlignLeft()
             .PaddingLeft(indentation, Unit.Point)
@@ -335,11 +374,12 @@ public class PdfPrinter
             .ShowEntire();
     }
 
-    static IContainer UnitName(IContainer container)
+    static IContainer DefaultCellContainerLeftAligned(IContainer container)
     {
         return container
             .Border(1)
             .Background(Colors.Grey.Lighten4)
+            .Padding(1)
             .ShowOnce()
             .AlignLeft()
             .AlignMiddle()
@@ -357,7 +397,7 @@ public class PdfPrinter
 
     static void PrintModelRow(TableDescriptor table, float fontSize, uint rowNumber, int? unitAmount, TowModel model)
     {
-        table.Cell().Row(rowNumber).Column(1).Element(UnitName).Text(model.ModelType.ToDescriptionString()).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(1).Element(DefaultCellContainerLeftAligned).Text(model.ModelType.ToNameString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(2).Element(DefaultCellContainer).Text(unitAmount.HasValue ? unitAmount.ToString() : string.Empty).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(3).Element(DefaultCellContainer).Text(model.Movement.ToString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(4).Element(DefaultCellContainer).Text(model.WeaponSkill.ToString()).FontSize(fontSize);
@@ -374,7 +414,7 @@ public class PdfPrinter
 
     static void PrintAdditialModelRow(TableDescriptor table, float fontSize, uint rowNumber, int? unitAmount, TowModelAdditional model)
     {
-        table.Cell().Row(rowNumber).Column(1).Element(DefaultCellWithIndentationContainer).Text(model.ModelType.ToDescriptionString()).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(1).Element(DefaultCellWithIndentationContainer).Text(model.ModelType.ToNameString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(2).Element(DefaultCellContainer).Text(unitAmount.HasValue ? unitAmount.ToString() : string.Empty).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(3).Element(DefaultCellContainer).Text(model.Movement.ToString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(4).Element(DefaultCellContainer).Text(model.WeaponSkill.ToString()).FontSize(fontSize);
@@ -389,7 +429,7 @@ public class PdfPrinter
 
     static void PrintMountRow(TableDescriptor table, float fontSize, uint rowNumber, int? unitAmount, TowModelMount model)
     {
-        table.Cell().Row(rowNumber).Column(1).Element(UnitName).Text(model.ModelMountType.ToDescriptionString()).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(1).Element(DefaultCellContainerLeftAligned).Text(model.ModelMountType.ToNameString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(2).Element(DefaultCellContainer).Text(unitAmount.HasValue ? unitAmount.ToString() : string.Empty).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(3).Element(DefaultCellContainer).Text(model.Movement.ToString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(4).Element(DefaultCellContainer).Text(model.WeaponSkill.ToString()).FontSize(fontSize);
@@ -431,24 +471,24 @@ public class PdfPrinter
         table.Cell().Row(rowNumber).Column(15).Element(DefaultCellContainer).Text($"[{model.PointCost}]").FontSize(fontSize).Italic();
     }
 
-    static void PrintMagicItemRow(TableDescriptor table, float fontSize, uint rowNumber, TowMagicItem banner)
+    static void PrintMagicItemRow(TableDescriptor table, float fontSize, uint rowNumber, TowMagicItem magicItem)
     {
-        table.Cell().Row(rowNumber).Column(1).Element(DefaultCellContainer).Text(banner.MagicItemType.ToDescriptionString()).FontSize(fontSize).Italic();
-        table.Cell().Row(rowNumber).Column(2).ColumnSpan(13).Element(DefaultCellContainer).Text(banner.GetSpecialRulesShortDescription()).FontSize(fontSize);
-        table.Cell().Row(rowNumber).Column(15).Element(DefaultCellContainer).Text($"[{banner.Points}]").FontSize(fontSize).Italic();
+        table.Cell().Row(rowNumber).Column(1).Element(DefaultCellContainer).Text(magicItem.MagicItemType.ToNameString()).FontSize(fontSize).Italic();
+        table.Cell().Row(rowNumber).Column(2).ColumnSpan(13).Element(DefaultCellContainer).Text(magicItem.GetSpecialRulesShortDescription()).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(15).Element(DefaultCellContainer).Text($"[{magicItem.Points}]").FontSize(fontSize).Italic();
     }
 
-    static void PrintMagicWeaponItemRow(TableDescriptor table, float fontSize, uint rowNumber, TowMagicItem banner)
+    static void PrintMagicWeaponItemRow(TableDescriptor table, float fontSize, uint rowNumber, TowMagicItem magicWeapon)
     {
-        table.Cell().Row(rowNumber).Column(1).Element(DefaultCellWithDoubleIndentationContainer).Text(banner.MagicItemType.ToDescriptionString()).FontSize(fontSize).Italic();
-        table.Cell().Row(rowNumber).Column(2).ColumnSpan(13).Element(DefaultCellContainer).Text(banner.GetSpecialRulesShortDescription()).FontSize(fontSize);
-        table.Cell().Row(rowNumber).Column(15).Element(DefaultCellContainer).Text($"[{banner.Points}]").FontSize(fontSize).Italic();
+        table.Cell().Row(rowNumber).Column(1).Element(DefaultCellWithDoubleIndentationContainer).Text(magicWeapon.MagicItemType.ToNameString()).FontSize(fontSize).Italic();
+        table.Cell().Row(rowNumber).Column(2).ColumnSpan(13).Element(DefaultCellContainerLeftAligned).Text(magicWeapon.GetSpecialRulesShortDescription()).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(15).Element(DefaultCellContainer).Text($"[{magicWeapon.Points}]").FontSize(fontSize).Italic();
     }
 
     static void PrintWeapon(TableDescriptor table, float fontSize, uint rowNumber, TowWeapon weapon)
     {
-        table.Cell().Row(rowNumber).Column(1).Element(DefaultCellWithDoubleIndentationContainer).Text(weapon.WeaponType.ToDescriptionString()).FontSize(fontSize).Italic();
-        table.Cell().Row(rowNumber).Column(2).ColumnSpan(13).Element(DefaultCellContainer).Text(weapon.GetSpecialRulesShortDescription()).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(1).Element(DefaultCellWithDoubleIndentationContainer).Text(weapon.WeaponType.ToNameString()).FontSize(fontSize).Italic();
+        table.Cell().Row(rowNumber).Column(2).ColumnSpan(13).Element(DefaultCellContainerLeftAligned).Text(weapon.GetSpecialRulesShortDescription()).FontSize(fontSize);
     }
 
 }

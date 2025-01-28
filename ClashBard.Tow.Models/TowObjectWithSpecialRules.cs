@@ -1,16 +1,23 @@
 ﻿using ClashBard.Tow.Models.Armors.Interfaces;
+using ClashBard.Tow.Models.Interfaces;
 using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.StaticData;
+using System.Collections.Immutable;
 using System.Reflection;
 using System.Text;
 
 namespace ClashBard.Tow.Models;
 
-public abstract class TowObjectWithSpecialRules: TowObjectWithOwner
+public abstract class TowObjectWithSpecialRules: TowObjectWithOwner, ITowValidatable
 {
     //private ICollection<TowSpecialRule> _specialRules = new HashSet<TowSpecialRule>();    
 
-    public ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>();
+    protected ICollection<TowSpecialRule> SpecialRules { get; set; } = new HashSet<TowSpecialRule>();
+
+    public ICollection<TowSpecialRule> GetSpecialRules()
+    {
+        return SpecialRules.ToImmutableList();
+    }
 
     protected TowObjectWithSpecialRules(TowObject owner)
         : base(owner)
@@ -62,8 +69,14 @@ public abstract class TowObjectWithSpecialRules: TowObjectWithOwner
         }
     }
 
-    protected ICollection<TowSpecialRule> GetSpecialRules()
+    public virtual IEnumerable<ValidationError> Validate()
     {
-        return SpecialRules.ToList();
+        foreach (var rule in SpecialRules.OfType<ITowValidatable>())
+        {
+            foreach (var error in rule.Validate())
+            {
+                yield return error;
+            }
+        }
     }
 }

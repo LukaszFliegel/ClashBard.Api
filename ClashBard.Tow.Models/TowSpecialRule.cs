@@ -46,7 +46,7 @@ public class TowSpecialRule: TowObject
         string separator = ClashBardStatic.Separator;
 
         if (printName)
-            shortDescriptionSb.Append($"{RuleType.ToDescriptionString()}");
+            shortDescriptionSb.Append($"{RuleType.ToNameString()}");
 
         if (printName && printShortDescription)
             shortDescriptionSb.Append(": ");

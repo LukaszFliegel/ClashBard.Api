@@ -1,4 +1,5 @@
-﻿using ClashBard.Tow.Models.TowTypes;
+﻿using ClashBard.Tow.Models.SpecialRules.Interfaces;
+using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.Models.Weapons;
 using ClashBard.Tow.StaticData;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace ClashBard.Tow.Models;
 
-public class TowUnit: TowObject
+public class TowUnit: TowObject, IMagicStandardUser
 {
     public readonly TowModel Model;
     private readonly int amount;
@@ -16,7 +17,9 @@ public class TowUnit: TowObject
     private readonly bool musician;
     private readonly bool champion;
 
-    private TowMagicBanner? magicBanner = null;
+    public TowMagicStandard? MagicStandard { get; private set; }
+
+    public int MagicStandardUpToPoints => Model.MagicStandardUpToPoints ?? 0;
 
     public TowUnit(TowModel model, int amount, TowFaction faction, bool standard = false, bool musician = false, bool champion = false)
     {
@@ -66,14 +69,14 @@ public class TowUnit: TowObject
         bool atLeastOneArmorPrinted = false;
         foreach (var armor in armoursToPrint)
         {
-            shortDescriptionSb.Append(armor.ArmorType.ToDescriptionString() + separator);
+            shortDescriptionSb.Append(armor.ArmorType.ToNameString() + separator);
             atLeastOneArmorPrinted = true;
         }
 
         if(atLeastOneArmorPrinted)
             shortDescriptionSb.AppendLine();
 
-        foreach (var rule in Model.SpecialRules.Where(p => p.PrintInSummary))
+        foreach (var rule in Model.GetSpecialRules().Where(p => p.PrintInSummary))
         {
             shortDescriptionSb.Append(rule.GetShortDescription() + separator);
         }
@@ -91,12 +94,12 @@ public class TowUnit: TowObject
         return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());
     }
 
-    public void SetMagicBanner(TowMagicBanner magicBanner)
+    public void SetMagicStandard(TowMagicStandard magicStandard)
     {
-        if (magicBanner.Points > Model.MagicStandardUpToPoints)
-            throw new ArgumentException($"{magicBanner.MagicItemType} cost exceeds available {Model.MagicStandardUpToPoints} for {Model.ModelType}");
+        if (magicStandard.Points > Model.MagicStandardUpToPoints)
+            throw new ArgumentException($"{magicStandard.MagicItemType} cost exceeds available {Model.MagicStandardUpToPoints} for {Model.ModelType}");
 
-        this.magicBanner = magicBanner;
+        MagicStandard = magicStandard;
     }
 
     public void SetWeapon(TowWeapon weapon)
@@ -139,15 +142,15 @@ public class TowUnit: TowObject
 
     public bool HasMagicBanner()
     {
-        return magicBanner != null;
+        return MagicStandard != null;
     }
 
-    public TowMagicBanner GetMagicBanner()
+    public TowMagicStandard GetMagicStandard()
     {
-        if (magicBanner == null)
+        if (MagicStandard == null)
             throw new Exception($"Magic banner not available for {Model.ModelType}");
 
-        return magicBanner;
+        return MagicStandard;
     }
 
     public int UnitStrength()
@@ -171,8 +174,8 @@ public class TowUnit: TowObject
         if (HasChampion())
             cost += Model.ChampionUpgradeCost.Value;
 
-        if (magicBanner != null)
-            cost += magicBanner.Points;
+        if (MagicStandard != null)
+            cost += MagicStandard.Points;
 
         // if any of available weapons is assign to Weapons in a model, then add this available weapon cost
         foreach (var availableWeapon in Model.AvailableWeapons)

@@ -350,6 +350,8 @@ public enum TowSpecialRuleType
     EternalHatred,
     [Description("Hekarti's Blessing")]
     HekartisBlessing,
+    [Description("Lore of Naggaroth")]
+    LoreOfNaggaroth,
     [Description("Martial Prowess")]
     MartialProwess,
     [Description("Murderous")]
