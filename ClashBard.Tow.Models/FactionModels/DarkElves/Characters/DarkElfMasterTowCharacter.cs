@@ -14,7 +14,7 @@ public class DarkElfMasterTowCharacter : TowCharacterBsb
 
     public DarkElfMasterTowCharacter(TowObject owner)
         :base(owner, DarkElfTowModelType.DarkElfMaster, 5, 6, 6, 4, 3, 2, 5, 3, 9, pointsCost,
-            TowModelTroopType.RegularInfantryCharacter, new DarkElvesTowFaction(), 25, 25, 50,
+            TowModelTroopType.RegularInfantryCharacter, new DarkElvesTowFaction(), 25, 25, 50, 25,
             new TowMagicItemCategory[] { TowMagicItemCategory.MagicArmour, TowMagicItemCategory.MagicWeapon, TowMagicItemCategory.Talisman, TowMagicItemCategory.EnchantedItem },
             mayBuyMagicItemsUpToPoints: 50)
     {
@@ -44,8 +44,8 @@ public class DarkElfMasterTowCharacter : TowCharacterBsb
         AvailableArmours.Add((TowArmourType.Shield, 2));
 
         // mounts
-        AvailableMounts.Add((TowModelMountType.DarkSteed, 14));
-        AvailableMounts.Add((TowModelMountType.ColdOne, 18));
-        AvailableMounts.Add((TowModelMountType.ColdOneChariot, 125));
+        AvailableMounts.Add((DarkElfTowModelMountType.DarkSteed, 14));
+        AvailableMounts.Add((DarkElfTowModelMountType.ColdOne, 18));
+        AvailableMounts.Add((DarkElfTowModelMountType.ColdOneChariot, 125));
     }
 }

@@ -1,4 +1,5 @@
-﻿using ClashBard.Tow.Models.Factions;
+﻿using ClashBard.Tow.Models.FactionModels.DarkElves.Mounts;
+using ClashBard.Tow.Models.Factions;
 using ClashBard.Tow.Models.SpecialRules;
 using ClashBard.Tow.Models.SpecialRules.DarkElvesSpecialRules;
 using ClashBard.Tow.Models.TowTypes;
@@ -16,7 +17,9 @@ public class ColdOneKnightTowModel : TowModel
     }
 
     protected ColdOneKnightTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(owner, DarkElfTowModelType.ColdOneKnights, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.HeavyCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
+        : base(owner, DarkElfTowModelType.ColdOneKnights, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, 
+            TowModelTroopType.HeavyCavalry, new DarkElvesTowFaction(), 
+            30, 60, minUnitSize: 5)
     {
         // special rules        
         AssignSpecialRule(new ArmouredHide1());

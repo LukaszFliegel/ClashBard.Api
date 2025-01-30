@@ -1,3 +1,4 @@
+using ClashBard.Tow.Models.ArmyComposition;
 using ClashBard.Tow.Models.TowTypes;
 
 namespace ClashBard.Tow.Models.Factions;

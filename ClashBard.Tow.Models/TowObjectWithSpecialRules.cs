@@ -16,7 +16,7 @@ public abstract class TowObjectWithSpecialRules: TowObjectWithOwner, ITowValidat
 
     public ICollection<TowSpecialRule> GetSpecialRules()
     {
-        return SpecialRules.ToImmutableList();
+        return SpecialRules.ToList();
     }
 
     protected TowObjectWithSpecialRules(TowObject owner)
@@ -25,14 +25,24 @@ public abstract class TowObjectWithSpecialRules: TowObjectWithOwner, ITowValidat
         
     }
 
-    public virtual string GetSpecialRulesShortDescription()
+    public virtual string GetSpecialRulesShortDescription(TowSpecialRuleType[]? excludeRules = null)
     {
         StringBuilder shortDescriptionSb = new();
         string separator = ClashBardStatic.Separator;
 
-        foreach (var rule in SpecialRules.Where(p => p.PrintInSummary))
+        if (excludeRules != null && excludeRules.Length > 0)
         {
-            shortDescriptionSb.Append($"{rule.GetShortDescription()}{separator}");
+            foreach (var rule in SpecialRules.Where(p => p.PrintInSummary && !excludeRules.Contains(p.RuleType)))
+            {
+                shortDescriptionSb.Append($"{rule.GetShortDescription()}{separator}");
+            }
+        }
+        else
+        {
+            foreach (var rule in SpecialRules.Where(p => p.PrintInSummary))
+            {
+                shortDescriptionSb.Append($"{rule.GetShortDescription()}{separator}");
+            }
         }
 
         return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());

@@ -1,4 +1,5 @@
 ﻿using ClashBard.Tow.Models.Armors.Interfaces;
+using ClashBard.Tow.Models.FactionModels.DarkElves.Mounts;
 using ClashBard.Tow.Models.Interfaces;
 using ClashBard.Tow.Models.SpecialRules.Interfaces;
 using ClashBard.Tow.Models.TowTypes;
@@ -13,8 +14,9 @@ using System.Text;
 namespace ClashBard.Tow.Models;
 
 public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
-{   
-    public TowModel(TowObject owner, Enum modelType, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction,
+{
+    public TowModel(TowObject owner, Enum modelType, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld, int pointCost, 
+        TowModelTroopType modelTroopType, TowFaction faction, //TowArmySlotType[] armySlotType,
         int minUnitSize = 1, int? maxUnitSize = null, int? armorValue = null)
         :base(owner)
     {
@@ -30,8 +32,8 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         Leadership = ld;
         PointCost = pointCost;
         ModelTroopType = modelTroopType;
-        //ModelSlotType = modelSlotType;
         Faction = faction;
+        //this.armySlotType = armySlotType;
         SetDefaultBaseSize();
         MinUnitSize = minUnitSize;
         MaxUnitSize = maxUnitSize;
@@ -52,13 +54,43 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         }
     }
 
-    public TowModel(TowObject owner, Enum modelType, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction, 
+    //public TowModel(TowObject owner, Enum modelType, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld, int pointCost,
+    //    TowModelTroopType modelTroopType, TowFaction faction, TowArmySlotType armySlotType,
+    //    int minUnitSize = 1, int? maxUnitSize = null, int? armorValue = null)
+    //    : this(owner, modelType, m, ws, bs, s, t, w, i, a, ld, pointCost, modelTroopType, faction, new TowArmySlotType[] { armySlotType }, minUnitSize, maxUnitSize, armorValue)
+    //{
+
+    //}
+
+    public TowModel(TowObject owner, Enum modelType, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld, int pointCost, 
+        TowModelTroopType modelTroopType, TowFaction faction, //TowArmySlotType[] armySlotType,
         int? baseSizeWidth, int? baseSizeLength, 
         int minUnitSize = 1, int? maxUnitSize = null, int? armorValue = null)
-        : this(owner, modelType, m, ws, bs, s, t, w, i, a, ld, pointCost, modelTroopType/*, modelSlotType*/, faction, minUnitSize, maxUnitSize, armorValue)
+        : this(owner, modelType, m, ws, bs, s, t, w, i, a, ld, pointCost, modelTroopType, faction, /*armySlotType,*/ minUnitSize, maxUnitSize, armorValue)
     {
         BaseSizeWidth = baseSizeWidth;
         BaseSizeLength = baseSizeLength;
+    }
+
+    //public TowModel(TowObject owner, Enum modelType, int? m, int? ws, int? bs, int? s, int t, int w, int? i, int? a, int? ld, int pointCost,
+    //    TowModelTroopType modelTroopType, TowFaction faction, TowArmySlotType armySlotType,
+    //    int? baseSizeWidth, int? baseSizeLength,
+    //    int minUnitSize = 1, int? maxUnitSize = null, int? armorValue = null)
+    //    : this(owner, modelType, m, ws, bs, s, t, w, i, a, ld, pointCost, modelTroopType, faction, new TowArmySlotType[] { armySlotType }, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize, armorValue)
+    //{
+
+    //}
+
+    public override bool Equals(object? obj)
+    {
+        var towModel = obj as TowModel;
+
+        return towModel != null && this.ModelType == towModel.ModelType;
+    }
+
+    public override int GetHashCode()
+    {
+        return this.ModelType.GetHashCode();
     }
 
     public Enum ModelType { get; private set; }
@@ -95,7 +127,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         ChampionModel = championModel;
         ChampionUpgradeCost = championUpgradeCost;
         ChampionName = championName;
-        if (ChampionModel != null)
+        if (ChampionModel != null && championUpgradeCost.HasValue)
         {
             ChampionModel.ChampionName = championName;
             ChampionModel.PointCost = championUpgradeCost.Value;
@@ -107,7 +139,9 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         MusicianUpgradeCost = musicianUpgradeCost;
         MagicStandardUpToPoints = magicStandardUpToPoints;
         
-    }    
+    }
+
+    //private readonly TowArmySlotType[] armySlotType;
 
     public int? BaseSizeWidth { get; set; }
     public int? BaseSizeLength { get; set; }
@@ -116,9 +150,9 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
     public ICollection<TowOption<TowWeaponType>> OptionalWeapons { get; protected set; } = new List<TowOption<TowWeaponType>>() { };
     private ICollection<TowWeapon> Weapons { get; set; } = new List<TowWeapon>() { };
 
-    public ICollection<TowWeapon> GetWeapons(bool excludeHandWeapon = true)
+    public virtual ICollection<TowWeapon> GetWeapons(bool excludeHandWeapon = true)
     {
-        return Weapons.Where(p => excludeHandWeapon ? p.WeaponType != TowWeaponType.HandWeapon : true).ToImmutableList();
+        return Weapons.Where(p => excludeHandWeapon ? p.WeaponType != TowWeaponType.HandWeapon : true).ToList();
     }
 
     public ICollection<(TowArmourType, int)> AvailableArmours { get; protected set; } = new HashSet<(TowArmourType, int)>() { };   
@@ -126,7 +160,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
 
     public ICollection<TowArmour> GetArmours()
     {
-        return Armours.ToImmutableList();
+        return Armours.ToList();
     }
 
     public void Assign(TowArmour armour)
@@ -227,7 +261,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
 
     public TowModelMount? Mount { get; private set; }
 
-    public ICollection<(TowModelMountType, int)> AvailableMounts { get; protected set; } = new HashSet<(TowModelMountType, int)>() { };
+    public ICollection<(Enum, int)> AvailableMounts { get; protected set; } = new HashSet<(Enum, int)>() { };
 
     public ICollection<TowModelAdditional> Crew { get; set; } = new HashSet<TowModelAdditional>();
 
@@ -236,7 +270,12 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
 
     public ICollection<(TowSpecialRuleType, int)> AvailableSpecialRules { get; set; } = new HashSet<(TowSpecialRuleType, int)>() { };
 
-    public ICollection<TowMagicItem> MagicItems { get; set; } = new HashSet<TowMagicItem>();
+    protected ICollection<TowMagicItem> MagicItems { get; set; } = new HashSet<TowMagicItem>();
+
+    public virtual ICollection<TowMagicItem> GetMagicItems()
+    {
+        return MagicItems.ToList();
+    }
 
     public ICollection<IWardSaveImprover> WardSaveImprovers { get; set; } = new HashSet<IWardSaveImprover>();
 
@@ -372,7 +411,17 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         //    throw new ArgumentException("Mount must belong to the same owner");
         //}
 
-        if (!AvailableMounts.Any(m => m.Item1 == mount.ModelMountType))
+        if(this is not TowCharacter && mount is TowModelCharacterMount)
+        {
+            throw new ArgumentException($"Mount {mount.ModelMountType} is for characters, assigment tried for {this.ModelType}");
+        }
+
+        if (this is TowCharacter && mount is not TowModelCharacterMount)
+        {
+            throw new ArgumentException($"Mount {mount.ModelMountType} is for units, assigment tried for {this.ModelType}");
+        }
+
+        if (!AvailableMounts.Any(m => m.Item1.Equals(mount.ModelMountType)))
         {
             throw new ArgumentException($"Mount {mount.ModelMountType} not available for {ModelType} model");
         }
@@ -522,8 +571,8 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
 
     public int CalculateTotalWounds()
     {
-        if (Mount != null)
-            return Wounds + Mount.WoundsAdded ?? 0;
+        if (Mount != null && Mount is TowModelCharacterMount mount)
+            return Wounds + mount.WoundsAdded ?? 0;
 
         return Wounds;
     }

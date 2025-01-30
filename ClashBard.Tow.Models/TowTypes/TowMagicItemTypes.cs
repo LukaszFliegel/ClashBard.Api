@@ -16,6 +16,9 @@ public enum TowMagicItemCategory
     Talisman,
     [Description("Arcane")]
     Arcane,
+
+    [Description("Faction specific print as weapon")]
+    FactionSpecificPrintAsWeapon,
 }
 
 public enum TowMagicItemWeaponType

@@ -54,7 +54,7 @@ public class TowModelAdditional: TowObjectWithSpecialRules
 
     public ICollection<TowWeapon> GetWeapons(bool excludeHandWeapon = true)
     {
-        return Weapons.Where(p => excludeHandWeapon ? p.WeaponType != TowWeaponType.HandWeapon : true).ToImmutableList();
+        return Weapons.Where(p => excludeHandWeapon ? p.WeaponType != TowWeaponType.HandWeapon : true).ToList();
     }
 
     public Enum ModelType { get; set; }

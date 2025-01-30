@@ -15,7 +15,9 @@ public class BloodwrackShrineTowModel : TowModel
     }
 
     protected BloodwrackShrineTowModel(TowObject owner, int? m, int? ws, int? bs, int s, int t, int w, int? i, int? a, int? ld) 
-        : base(owner, DarkElfTowModelType.BloodwrackShrine, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.HeavyChariot, new DarkElvesTowFaction(), 60, 100, 1, 1, 4)
+        : base(owner, DarkElfTowModelType.BloodwrackShrine, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, 
+            TowModelTroopType.HeavyChariot, new DarkElvesTowFaction(),
+            60, 100, 1, 1, 4)
     {
         // special rules        
         AssignSpecialRule(new CloseOrder());

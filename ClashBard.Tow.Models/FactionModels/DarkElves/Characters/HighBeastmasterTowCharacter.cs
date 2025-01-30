@@ -39,8 +39,8 @@ public class HighBeastmasterTowCharacter : TowCharacter
         AvailableArmours.Add((TowArmourType.Shield, 2));
 
         // mounts
-        AvailableMounts.Add((TowModelMountType.ScourgerunnerChariot, 85));
-        AvailableMounts.Add((TowModelMountType.Manticore, 130));
+        AvailableMounts.Add((DarkElfTowModelMountType.ScourgerunnerChariot, 85));
+        AvailableMounts.Add((DarkElfTowModelMountType.Manticore, 130));
     }
 
     public override IEnumerable<ValidationError> Validate()

@@ -6,18 +6,21 @@ namespace ClashBard.Tow.Models;
 public class TowCharacterBsb : TowCharacter, IMagicStandardUser
 {
     private readonly int magicStandardUpToPoints;
+    private readonly int battleStandardBearerUpgradeCost;
+
     //private TowMagicStandard? magicStandard;
 
-    private bool isBattleStandardBearer = false;
+    private bool isBattleStandardBearer = false;    
 
     public TowCharacterBsb(TowObject owner, Enum modelType, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld, int pointCost,
-        TowModelTroopType modelTroopType, TowFaction faction, int baseSizeWidth, int baseSizeLength, int magicStandardUpToPoints,
+        TowModelTroopType modelTroopType, TowFaction faction, int baseSizeWidth, int baseSizeLength, 
+        int magicStandardUpToPoints, int battleStandardBearerUpgradeCost,
         TowMagicItemCategory[]? availableMagicItemTypes = null, int minUnitSize = 1, int? maxUnitSize = 1, int mayBuyMagicItemsUpToPoints = 0) 
         : base(owner, modelType, m, ws, bs, s, t, w, i, a, ld, pointCost, modelTroopType, faction, baseSizeWidth, baseSizeLength, 
             availableMagicItemTypes, minUnitSize, maxUnitSize, mayBuyMagicItemsUpToPoints)
     {
         this.magicStandardUpToPoints = magicStandardUpToPoints;
-
+        this.battleStandardBearerUpgradeCost = battleStandardBearerUpgradeCost;
         AvailableMagicItemTypes.Add(TowMagicItemCategory.MagicStandard);
     }
 
@@ -45,5 +48,15 @@ public class TowCharacterBsb : TowCharacter, IMagicStandardUser
         }
 
         this.isBattleStandardBearer = isBattleStandardBearer;
+    }
+
+    public override int CalculateTotalCost()
+    {
+        if(isBattleStandardBearer)
+        {
+            return base.CalculateTotalCost() + battleStandardBearerUpgradeCost;
+        }
+
+        return base.CalculateTotalCost();
     }
 }

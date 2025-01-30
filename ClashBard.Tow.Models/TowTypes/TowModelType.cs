@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 namespace ClashBard.Tow.Models.TowTypes;
 
 
-
 public enum DarkElfTowModelType
 {
     [Description("Dark Elf Dreadlord")]

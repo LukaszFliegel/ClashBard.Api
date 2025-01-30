@@ -1,4 +1,5 @@
-﻿using ClashBard.Tow.Models.Factions;
+﻿using ClashBard.Tow.Models.FactionModels.DarkElves.Mounts;
+using ClashBard.Tow.Models.Factions;
 using ClashBard.Tow.Models.SpecialRules;
 using ClashBard.Tow.Models.SpecialRules.DarkElvesSpecialRules;
 using ClashBard.Tow.Models.TowTypes;
@@ -25,7 +26,7 @@ public class DoomfireWarlockTowModel : TowModel
         AssignSpecialRule(new FastCavalry());
         AssignSpecialRule(new HatredHighElves());
         AssignSpecialRule(new OpenOrder());
-        AssignSpecialRule(new PoisonedAttacks());
+        AssignSpecialRule(new PoisonedAttacks("(Doomfire Warlocks and Master only)"));
         AssignSpecialRule(new Swiftstride());
 
         // mounts

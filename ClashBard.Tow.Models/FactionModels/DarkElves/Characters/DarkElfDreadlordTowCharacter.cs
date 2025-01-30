@@ -42,11 +42,11 @@ public class DarkElfDreadlordTowCharacter: TowCharacter
         AvailableArmours.Add((TowArmourType.Shield, 2));        
 
         // mounts
-        AvailableMounts.Add((TowModelMountType.DarkSteed, 14));
-        AvailableMounts.Add((TowModelMountType.ColdOne, 18));
-        AvailableMounts.Add((TowModelMountType.ColdOneChariot, 125));
-        AvailableMounts.Add((TowModelMountType.BlackDragon, 280));
-        AvailableMounts.Add((TowModelMountType.Manticore, 130));
+        AvailableMounts.Add((DarkElfTowModelMountType.DarkSteed, 14));
+        AvailableMounts.Add((DarkElfTowModelMountType.ColdOne, 18));
+        AvailableMounts.Add((DarkElfTowModelMountType.ColdOneChariot, 125));
+        AvailableMounts.Add((DarkElfTowModelMountType.BlackDragon, 280));
+        AvailableMounts.Add((DarkElfTowModelMountType.Manticore, 130));
 
         
     }

@@ -7,11 +7,13 @@ namespace ClashBard.Tow.Models;
 
 public class TowCharacter : TowModel
 {
-    public TowCharacter(TowObject owner, Enum modelType, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld, int pointCost, TowModelTroopType modelTroopType/*, TowModelSlotType modelSlotType*/, TowFaction faction,
+    public TowCharacter(TowObject owner, Enum modelType, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld, int pointCost,
+        TowModelTroopType modelTroopType, TowFaction faction,
         int? baseSizeWidth, int? baseSizeLength,
         TowMagicItemCategory[]? availableMagicItemTypes = null,
         int minUnitSize = 1, int? maxUnitSize = 1, int mayBuyMagicItemsUpToPoints = 0)
-        : base(owner, modelType, m, ws, bs, s, t, w, i, a, ld, pointCost, modelTroopType/*, modelSlotType*/, faction, baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize)
+        : base(owner, modelType, m, ws, bs, s, t, w, i, a, ld, pointCost, modelTroopType, faction, //new TowArmySlotType[] { TowArmySlotType.Characters }, 
+            baseSizeWidth, baseSizeLength, minUnitSize, maxUnitSize)
     {
         MayBuyMagicItemsUpToPoints = mayBuyMagicItemsUpToPoints;
 
@@ -25,6 +27,8 @@ public class TowCharacter : TowModel
     }
 
     public int MayBuyMagicItemsUpToPoints { get; private set; }
+
+    public new TowModelCharacterMount? Mount { get => base.Mount as TowModelCharacterMount; }
 
     protected ICollection<TowMagicItemCategory> AvailableMagicItemTypes = new HashSet<TowMagicItemCategory>() { };
 
@@ -150,8 +154,8 @@ public class TowCharacter : TowModel
             shortDescriptionSb.Append(rule.GetShortDescription() + separator);
         }
 
-        if (SpecialRules.Count != 0)
-            shortDescriptionSb.AppendLine();
+        //if (SpecialRules.Count != 0)
+        //    shortDescriptionSb.AppendLine();
 
         //foreach (var magicItem in MagicItems)
         //{
@@ -159,7 +163,10 @@ public class TowCharacter : TowModel
         //}
 
         if (Mount != null)
-            shortDescriptionSb.Append(Mount.GetSpecialRulesShortDescription() + separator);
+        {
+            var charactersRuleToExclude = SpecialRules.Select(p => p.RuleType).ToArray();
+            shortDescriptionSb.Append(Mount.GetSpecialRulesShortDescription(charactersRuleToExclude) + separator);
+        }
 
         return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());
     }
@@ -200,7 +207,7 @@ public class TowCharacter : TowModel
     //    }
     //}
 
-    public int CalculateTotalCost()
+    public virtual int CalculateTotalCost()
     {
         int totalCost = PointCost;
         foreach (var magicItem in MagicItems)
@@ -210,25 +217,25 @@ public class TowCharacter : TowModel
 
         foreach (var availableWeapon in AvailableWeapons)
         {
-            if (GetWeapons().Any(p => p.WeaponType == availableWeapon.Item1))
+            if (GetWeapons().Any(p => p.WeaponType.Equals(availableWeapon.Item1)))
                 totalCost += availableWeapon.Item2;
         }
 
         foreach (var availableArmor in AvailableArmours)
         {
-            if (GetArmours().Any(p => p.ArmorType == availableArmor.Item1))
+            if (GetArmours().Any(p => p.ArmorType.Equals(availableArmor.Item1)))
                 totalCost += availableArmor.Item2;
         }
 
         foreach (var specialRule in AvailableSpecialRules)
         {
-            if (SpecialRules.Any(p => p.RuleType == specialRule.Item1))
+            if (SpecialRules.Any(p => p.RuleType.Equals(specialRule.Item1)))
                 totalCost += specialRule.Item2;
         }
 
         foreach (var mount in AvailableMounts)
         {
-            if (Mount != null && Mount.ModelMountType == mount.Item1)
+            if (Mount != null && Mount.ModelMountType.Equals(mount.Item1))
             {
                 totalCost += mount.Item2;
             }

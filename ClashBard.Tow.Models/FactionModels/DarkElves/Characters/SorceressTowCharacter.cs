@@ -33,8 +33,8 @@ public class SorceressTowCharacter : TowCharacterMage
         // armours
 
         // mounts
-        AvailableMounts.Add((TowModelMountType.DarkSteed, 14));
-        AvailableMounts.Add((TowModelMountType.ColdOne, 18));
-        AvailableMounts.Add((TowModelMountType.DarkPegasus, 35));
+        AvailableMounts.Add((DarkElfTowModelMountType.DarkSteed, 14));
+        AvailableMounts.Add((DarkElfTowModelMountType.ColdOne, 18));
+        AvailableMounts.Add((DarkElfTowModelMountType.DarkPegasus, 35));
     }
 }

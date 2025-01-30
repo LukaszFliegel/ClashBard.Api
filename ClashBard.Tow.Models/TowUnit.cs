@@ -90,7 +90,13 @@ public class TowUnit: TowObject, IMagicStandardUser
         {
             shortDescriptionSb.Append($"Musician: +1 Ld to rally, +1 CR on tie, +1 Ld on march test" + separator);
         }
-       
+
+        if (Model.Mount != null)
+        {
+            var charactersRuleToExclude = Model.GetSpecialRules().Select(p => p.RuleType).ToArray();
+            shortDescriptionSb.Append(Model.Mount.GetSpecialRulesShortDescription(charactersRuleToExclude) + separator);
+        }
+
         return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());
     }
 

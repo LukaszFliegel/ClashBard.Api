@@ -1,4 +1,5 @@
-﻿using ClashBard.Tow.Models.SpecialRules.Interfaces;
+﻿using ClashBard.Tow.Models.Interfaces;
+using ClashBard.Tow.Models.SpecialRules.Interfaces;
 using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.StaticData;
 
@@ -32,6 +33,19 @@ public class TowCharacterMage : TowCharacter, IMagicUser
         else
         {
             throw new ArgumentException($"Magic level {magicLevel} not available for {ModelType.ToNameString()}");
+        }
+    }
+
+    public override IEnumerable<ValidationError> Validate()
+    {
+        if (MagicItems.Sum(p => p.Points) > MayBuyMagicItemsUpToPoints)
+        {
+            yield return new ValidationError($"{ModelType.ToNameString()} has exceeded the maximum magic item points allowance of {MayBuyMagicItemsUpToPoints}", ModelType.ToNameString());
+        }
+
+        foreach (var error in base.Validate())
+        {
+            yield return error;
         }
     }
 }

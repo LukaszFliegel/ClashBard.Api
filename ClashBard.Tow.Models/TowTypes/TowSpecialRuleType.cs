@@ -43,6 +43,8 @@ public enum TowSpecialRuleType
     ExtraAttacksPlus3,
     [Description("Extra Attacks (+4)")]
     ExtraAttacksPlus4,
+    [Description("Extra Attacks (+D3)")]
+    ExtraAttacksPlusD3,
     [Description("Extremely Common")]
     ExtremelyCommon,
     [Description("Extra Attacks (+remaining Wounds)")]
@@ -81,6 +83,8 @@ public enum TowSpecialRuleType
     HatredX,
     [Description("Hatred (High Elves)")]
     HatredHighElves,
+    [Description("Hatred (all enemies)")]
+    HatredAllEnemies,
     [Description("Horde")]
     Horde,
     [Description("Howdah")]
@@ -372,6 +376,12 @@ public enum TowSpecialRuleType
     RavagerHarpoonNotes,
     [Description("Blessings of Khaine")]
     BlessingsOfKhaine,
+    [Description("Fury of Khaine")]
+    FuryOfKhaine,
+    [Description("Strength of Khaine")]
+    StrengthOfKhaine,
+    [Description("Bloodshield of Khaine")]
+    BloodshieldOfKhaine,
     [Description("Stony Stare")]
     StonyStare,
     [Description("Petrifying Gaze Notes")]
@@ -395,4 +405,9 @@ public enum TowSpecialRuleType
 
     [Description("Sea Dragon Cloak")]
     SeaDragonCloakTowArmourRules,
+
+    [Description("Cry of War")]
+    CryOfWar,
+    [Description("Witchbrew")]
+    Witchbrew,
 }

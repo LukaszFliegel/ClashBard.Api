@@ -15,7 +15,9 @@ public class ColdOneChariotsTowModel : TowModel
     }
 
     protected ColdOneChariotsTowModel(TowObject owner, int? m, int? ws, int? bs, int s, int t, int w, int? i, int? a, int? ld) 
-        : base(owner, DarkElfTowModelType.ColdOneChariots, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.HeavyCavalry, new DarkElvesTowFaction(), 50, 100, 1, 1, 4)
+        : base(owner, DarkElfTowModelType.ColdOneChariots, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, 
+            TowModelTroopType.HeavyCavalry, new DarkElvesTowFaction(),
+            50, 100, 1, 1, 4)
     {        
         // special rules
         //AssignSpecialRule(new ArmourBane1()); // cold one only

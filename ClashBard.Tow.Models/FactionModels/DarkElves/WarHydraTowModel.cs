@@ -9,7 +9,7 @@ namespace ClashBard.Tow.Models.FactionModels.DarkElves;
 public class WarHydraTowModel : TowModel
 {
     private static int pointsCost = 200;
-    private static TowModelMountType modelType = TowModelMountType.WarHydra;
+    private static DarkElfTowModelType modelType = DarkElfTowModelType.WarHydra;
 
     private static TowFaction faction = new DarkElvesTowFaction();
 

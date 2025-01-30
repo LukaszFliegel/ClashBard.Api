@@ -52,7 +52,7 @@ public class TowMagicWeapon : TowMagicItem
 
     public int ArmorPiercing { get; set; }
 
-    public override string GetSpecialRulesShortDescription()
+    public override string GetSpecialRulesShortDescription(TowSpecialRuleType[]? excludeRules = null)
     {
         StringBuilder shortDescriptionSb = new();
         string separator = ClashBardStatic.Separator;

@@ -1,4 +1,5 @@
 ﻿using ClashBard.Tow.Models;
+using ClashBard.Tow.Models.ArmyComposition;
 using ClashBard.Tow.Models.MagicItems.MagicArmours;
 using ClashBard.Tow.StaticData;
 using QuestPDF.Companion;
@@ -42,7 +43,7 @@ public class PdfPrinter
                     });
 
                     table.Cell().Row(1).Column(1).Element(DefaultCellContainer).Text(army.FactionName).FontSize(fontSize);
-                    table.Cell().Row(1).Column(2).Element(DefaultCellContainer).Text($"{army.GetTotalPoints().ToString()} points").FontSize(fontSize);
+                    table.Cell().Row(1).Column(2).Element(DefaultCellContainer).Text($"{army.GetTotalPoints().ToString()}/{army.ArmyPoints} points").FontSize(fontSize);
 
                     PrintSeparatorLine(table, 1);
                 });
@@ -78,7 +79,7 @@ public class PdfPrinter
                     });
 
 
-                    foreach (var character in army.Characters)
+                    foreach (var character in army.GetCharacters())
                     {
                         column.Item().ShowEntire().Table(table =>
                         {
@@ -90,7 +91,7 @@ public class PdfPrinter
                         });
                     }
 
-                    foreach (var unit in army.Units)
+                    foreach (var unit in army.GetUnits())
                     {
                         column.Item().ShowEntire().Table(table =>
                         {
@@ -202,7 +203,7 @@ public class PdfPrinter
         table.Cell().Row(RowIterator).Column(15).Element(DefaultCellContainer).Text(character.CalculateTotalCost().ToString()).FontSize(fontSize);
 
         // print magic weapons
-        foreach (var magicItem in character.MagicItems.Where(p => p.TowMagicItemCategory == Models.TowTypes.TowMagicItemCategory.MagicWeapon))
+        foreach (var magicItem in character.GetMagicItems().Where(p => p.TowMagicItemCategory == Models.TowTypes.TowMagicItemCategory.MagicWeapon))
         {
             RowIterator++;
             PrintMagicWeaponItemRow(table, fontSize, RowIterator, magicItem);
@@ -214,10 +215,17 @@ public class PdfPrinter
             PrintWeapon(table, fontSize, RowIterator, weapon);
         }
 
+        // print all "print as a weapon" magic items
+        foreach (var magicItem in character.GetMagicItems().Where(p => p.TowMagicItemCategory == Models.TowTypes.TowMagicItemCategory.FactionSpecificPrintAsWeapon))
+        {
+            RowIterator++;
+            PrintMagicItemRow(table, fontSize, RowIterator, magicItem);
+        }
+
         if (character.Mount != null)
         {
             RowIterator++;
-            PrintMountRow(table, fontSize, RowIterator, 1, character.Mount);
+            PrintCharacterMountRow(table, fontSize, RowIterator, 1, character.Mount);
 
             table.Cell().Row(RowIterator).Column(15).Element(DefaultCellContainer).Text($"[{character.Mount.PointCost}]").FontSize(fontSize).Italic();
 
@@ -226,17 +234,47 @@ public class PdfPrinter
                 RowIterator++;
                 PrintWeapon(table, fontSize, RowIterator, weapon);
             }
+
+            // print all "print as a weapon" magic items
+            foreach (var magicItem in character.Mount.GetMagicItems().Where(p => p.TowMagicItemCategory == Models.TowTypes.TowMagicItemCategory.FactionSpecificPrintAsWeapon))
+            {
+                RowIterator++;
+                PrintMagicItemRow(table, fontSize, RowIterator, magicItem);
+            }
+
+            var groupedCrewMembers = character.Mount.Crew
+                .GroupBy(crew => crew.ModelType)
+                .Select(group => new
+                {
+                    ModelType = group.Key,
+                    Count = group.Count(),
+                    CrewMember = group.First()
+                })
+                .ToList();
+
+            foreach (var crew in groupedCrewMembers)
+            {
+                RowIterator++;
+                PrintAdditialModelRow(table, fontSize, RowIterator, crew.Count, crew.CrewMember);
+
+                foreach (var weapon in crew.CrewMember.GetWeapons())
+                {
+                    RowIterator++;
+                    PrintWeapon(table, fontSize, RowIterator, weapon);
+                }
+            }
         }
 
         // print all non-weapon magic items
-        foreach (var magicItem in character.MagicItems.Where(p => p.TowMagicItemCategory != Models.TowTypes.TowMagicItemCategory.MagicWeapon))
+        foreach (var magicItem in character.GetMagicItems().Where(p => p.TowMagicItemCategory != Models.TowTypes.TowMagicItemCategory.MagicWeapon && p.TowMagicItemCategory != Models.TowTypes.TowMagicItemCategory.FactionSpecificPrintAsWeapon))
         {
             RowIterator++;
             PrintMagicItemRow(table, fontSize, RowIterator, magicItem);
         }
 
-        PrintCharacterRules(table, fontSize, RowIterator + 1, character);
         RowIterator++;
+        PrintCharacterRules(table, fontSize, RowIterator, character);
+        
         //RowIterator++;
         //table.Cell().RowSpan(RowIterator).ColumnSpan(15).LineHorizontal(8, Unit.Point);
         //table.ExtendLastCellsToTableBottom();
@@ -253,16 +291,30 @@ public class PdfPrinter
         table.Cell().Row(RowIterator).Column(14).Element(DefaultCellContainer).Text(unit.UnitStrength().ToString()).FontSize(fontSize);
         table.Cell().Row(RowIterator).Column(15).Element(DefaultCellContainer).Text(unit.CalculateTotalCost().ToString()).FontSize(fontSize);
 
+        if (unit.HasChampion() && unit.Model.ChampionModel != null)
+        {
+            PrintChampionModelRow(table, fontSize, RowIterator + 1, unit.Model.ChampionModel);
+            RowIterator++;
+        }
+
         foreach (var weapon in unit.Model.GetWeapons())
         {
             RowIterator++;
             PrintWeapon(table, fontSize, RowIterator, weapon);
         }
 
-        if (unit.HasChampion() && unit.Model.ChampionModel != null)
+        if (unit.Model.Mount != null)
         {
-            PrintChampionModelRow(table, fontSize, RowIterator + 1, unit.Model.ChampionModel);
             RowIterator++;
+            PrintUnitMountRow(table, fontSize, RowIterator, unit.GetAmount(), unit.Model.Mount);
+
+            //table.Cell().Row(RowIterator).Column(15).Element(DefaultCellContainer).Text($"[{unit.Model.Mount.PointCost}]").FontSize(fontSize).Italic();
+
+            //foreach (var weapon in unit.Model.Mount.GetWeapons())
+            //{
+            //    RowIterator++;
+            //    PrintWeapon(table, fontSize, RowIterator, weapon);
+            //}
         }
 
         if (unit.HasMagicBanner())
@@ -270,7 +322,6 @@ public class PdfPrinter
             PrintMagicItemRow(table, fontSize, RowIterator + 1, unit.GetMagicStandard());
             RowIterator++;
         }
-
 
         //var groupedCrewMembers = unit.Model.Crew.GroupBy(p => p.ModelType) // how to group them?
 
@@ -399,7 +450,7 @@ public class PdfPrinter
     {
         table.Cell().Row(rowNumber).Column(1).Element(DefaultCellContainerLeftAligned).Text(model.ModelType.ToNameString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(2).Element(DefaultCellContainer).Text(unitAmount.HasValue ? unitAmount.ToString() : string.Empty).FontSize(fontSize);
-        table.Cell().Row(rowNumber).Column(3).Element(DefaultCellContainer).Text(model.Movement.ToString()).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(3).Element(DefaultCellContainer).Text(model.Mount == null ? model.Movement.ToString() : "-").FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(4).Element(DefaultCellContainer).Text(model.WeaponSkill.ToString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(5).Element(DefaultCellContainer).Text(model.BallisticSkill.ToString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(6).Element(DefaultCellContainer).Text(model.Strength.ToString()).FontSize(fontSize);
@@ -427,7 +478,30 @@ public class PdfPrinter
         table.Cell().Row(rowNumber).Column(11).Element(DefaultCellContainer).Text(model.Leadership.ToString()).FontSize(fontSize);
     }
 
-    static void PrintMountRow(TableDescriptor table, float fontSize, uint rowNumber, int? unitAmount, TowModelMount model)
+    static void PrintCharacterMountRow(TableDescriptor table, float fontSize, uint rowNumber, int? unitAmount, TowModelCharacterMount model)
+    {
+        string toughnessString = model.ToughnessAdded.HasValue ?
+            $"+{model.ToughnessAdded}" :
+            model.Toughness.HasValue ? model.Toughness.Value.ToString() : string.Empty;
+
+        string woundsstring = model.WoundsAdded.HasValue ?
+            $"+{model.WoundsAdded}" :
+            model.Wounds.HasValue ? model.Wounds.Value.ToString() : string.Empty;
+
+        table.Cell().Row(rowNumber).Column(1).Element(DefaultCellContainerLeftAligned).Text(model.ModelMountType.ToNameString()).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(2).Element(DefaultCellContainer).Text(unitAmount.HasValue ? unitAmount.ToString() : string.Empty).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(3).Element(DefaultCellContainer).Text(model.Movement.ToString()).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(4).Element(DefaultCellContainer).Text(model.WeaponSkill.ToString()).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(5).Element(DefaultCellContainer).Text(model.BallisticSkill.ToString()).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(6).Element(DefaultCellContainer).Text(model.Strength.ToString()).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(7).Element(DefaultCellContainer).Text(toughnessString).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(8).Element(DefaultCellContainer).Text(woundsstring).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(9).Element(DefaultCellContainer).Text(model.Initiative.ToString()).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(10).Element(DefaultCellContainer).Text(model.Attacks.ToString()).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(11).Element(DefaultCellContainer).Text(model.Leadership.ToString()).FontSize(fontSize);
+    }
+
+    static void PrintUnitMountRow(TableDescriptor table, float fontSize, uint rowNumber, int? unitAmount, TowModelMount model)
     {
         table.Cell().Row(rowNumber).Column(1).Element(DefaultCellContainerLeftAligned).Text(model.ModelMountType.ToNameString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(2).Element(DefaultCellContainer).Text(unitAmount.HasValue ? unitAmount.ToString() : string.Empty).FontSize(fontSize);
@@ -435,8 +509,8 @@ public class PdfPrinter
         table.Cell().Row(rowNumber).Column(4).Element(DefaultCellContainer).Text(model.WeaponSkill.ToString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(5).Element(DefaultCellContainer).Text(model.BallisticSkill.ToString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(6).Element(DefaultCellContainer).Text(model.Strength.ToString()).FontSize(fontSize);
-        table.Cell().Row(rowNumber).Column(7).Element(DefaultCellContainer).Text($"+{model.ToughnessAdded}").FontSize(fontSize);
-        table.Cell().Row(rowNumber).Column(8).Element(DefaultCellContainer).Text($"+{model.WoundsAdded}").FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(7).Element(DefaultCellContainer).Text(string.Empty).FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(8).Element(DefaultCellContainer).Text(string.Empty).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(9).Element(DefaultCellContainer).Text(model.Initiative.ToString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(10).Element(DefaultCellContainer).Text(model.Attacks.ToString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(11).Element(DefaultCellContainer).Text(model.Leadership.ToString()).FontSize(fontSize);
@@ -455,7 +529,7 @@ public class PdfPrinter
     static void PrintChampionModelRow(TableDescriptor table, float fontSize, uint rowNumber, TowModel model)
     {
         table.Cell().Row(rowNumber).Column(1).Element(DefaultCellWithIndentationContainer).Text(model.ChampionName).FontSize(fontSize).Italic();
-        table.Cell().Row(rowNumber).Column(2).Element(DefaultCellContainer).Text("1").FontSize(fontSize);
+        table.Cell().Row(rowNumber).Column(2).Element(DefaultCellContainer).Text("[1]").FontSize(fontSize).Italic();
         table.Cell().Row(rowNumber).Column(3).Element(DefaultCellContainer).Text(model.Movement.ToString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(4).Element(DefaultCellContainer).Text(model.WeaponSkill.ToString()).FontSize(fontSize);
         table.Cell().Row(rowNumber).Column(5).Element(DefaultCellContainer).Text(model.BallisticSkill.ToString()).FontSize(fontSize);
@@ -475,7 +549,10 @@ public class PdfPrinter
     {
         table.Cell().Row(rowNumber).Column(1).Element(DefaultCellContainer).Text(magicItem.MagicItemType.ToNameString()).FontSize(fontSize).Italic();
         table.Cell().Row(rowNumber).Column(2).ColumnSpan(13).Element(DefaultCellContainer).Text(magicItem.GetSpecialRulesShortDescription()).FontSize(fontSize);
-        table.Cell().Row(rowNumber).Column(15).Element(DefaultCellContainer).Text($"[{magicItem.Points}]").FontSize(fontSize).Italic();
+        if (magicItem.Points > 0)
+        {
+            table.Cell().Row(rowNumber).Column(15).Element(DefaultCellContainer).Text($"[{magicItem.Points}]").FontSize(fontSize).Italic();
+        }
     }
 
     static void PrintMagicWeaponItemRow(TableDescriptor table, float fontSize, uint rowNumber, TowMagicItem magicWeapon)
@@ -490,5 +567,4 @@ public class PdfPrinter
         table.Cell().Row(rowNumber).Column(1).Element(DefaultCellWithDoubleIndentationContainer).Text(weapon.WeaponType.ToNameString()).FontSize(fontSize).Italic();
         table.Cell().Row(rowNumber).Column(2).ColumnSpan(13).Element(DefaultCellContainerLeftAligned).Text(weapon.GetSpecialRulesShortDescription()).FontSize(fontSize);
     }
-
 }
