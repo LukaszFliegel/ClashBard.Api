@@ -24,7 +24,7 @@ public class TowCharacterBsb : TowCharacter, IMagicStandardUser
         AvailableMagicItemTypes.Add(TowMagicItemCategory.MagicStandard);
     }
 
-    public TowMagicStandard? MagicStandard => MagicItems.Where(p => p.TowMagicItemCategory == TowMagicItemCategory.MagicStandard).Select(p => p as TowMagicStandard).FirstOrDefault();
+    public TowMagicStandard? MagicStandard => _magicItems.Where(p => p.TowMagicItemCategory == TowMagicItemCategory.MagicStandard).Select(p => p as TowMagicStandard).FirstOrDefault();
 
     int IMagicStandardUser.MagicStandardUpToPoints => magicStandardUpToPoints;
 
@@ -35,7 +35,7 @@ public class TowCharacterBsb : TowCharacter, IMagicStandardUser
 
         if (AvailableMagicItemTypes.Contains(TowMagicItemCategory.MagicStandard))
         {
-            MagicItems.Add(magicStandard);
+            _magicItems.Add(magicStandard);
         }
     }
 
@@ -44,7 +44,7 @@ public class TowCharacterBsb : TowCharacter, IMagicStandardUser
         // if it was BSB but no longer should be, remove the magic standard
         if (this.isBattleStandardBearer && !isBattleStandardBearer && MagicStandard != null)
         {
-            MagicItems.Remove(MagicStandard);
+            _magicItems.Remove(MagicStandard);
         }
 
         this.isBattleStandardBearer = isBattleStandardBearer;

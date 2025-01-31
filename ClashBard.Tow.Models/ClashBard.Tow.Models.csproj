@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="MagicItems\DarkElves\EnchantedItems\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
 

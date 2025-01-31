@@ -15,6 +15,7 @@ public class SupremeSorceressTowCharacter : TowCharacterMage
     public SupremeSorceressTowCharacter(TowObject owner)
         :base(owner, DarkElfTowModelType.SupremeSorceress, 5, 4, 4, 3, 3, 3, 5, 2, 8, pointsCost,
             TowModelTroopType.RegularInfantryCharacter, new DarkElvesTowFaction(), 25, 25, TowMagicLevelType.Level3,
+            new TowMagicLoreType[] { TowMagicLoreType.BattleMagic, TowMagicLoreType.Daemonology, TowMagicLoreType.DarkMagic, TowMagicLoreType.Elementalism, TowMagicLoreType.Illusion },
             new TowMagicItemCategory[] { TowMagicItemCategory.Talisman, TowMagicItemCategory.EnchantedItem, TowMagicItemCategory.Arcane },
             mayBuyMagicItemsUpToPoints: 100)
     {
@@ -37,5 +38,7 @@ public class SupremeSorceressTowCharacter : TowCharacterMage
         AvailableMounts.Add((DarkElfTowModelMountType.ColdOne, 18));
         AvailableMounts.Add((DarkElfTowModelMountType.DarkPegasus, 35));
         AvailableMounts.Add((DarkElfTowModelMountType.BlackDragon, 280));
+
+        // lores
     }
 }

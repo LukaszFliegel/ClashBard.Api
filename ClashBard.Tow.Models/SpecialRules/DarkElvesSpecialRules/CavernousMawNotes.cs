@@ -10,7 +10,8 @@ public class CavernousMawNotes : TowSpecialRule
     public CavernousMawNotes()
         : base(TowSpecialRuleType.CavernousMawNotes,
             ShortDescription,
-            LongDescription)
+            LongDescription,
+            printName: false)
     {
 
     }

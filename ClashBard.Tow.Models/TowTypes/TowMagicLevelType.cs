@@ -12,5 +12,5 @@ public enum TowMagicLevelType
     [Description("Level 3")]
     Level3 = 3,
     [Description("Level 4")]
-    Level4 = 4,
+    Level4 = 4, 
 }

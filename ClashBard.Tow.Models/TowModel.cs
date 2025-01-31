@@ -116,7 +116,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
 
     public TowModel? ChampionModel { get; private set; }
     public string? ChampionName { get; private set; }
-    public int? ChampionMagicItemsUpToPoints { get; private set; }
+    protected int? ChampionMagicItemsUpToPoints { get; private set; }
     public int? ChampionUpgradeCost { get; private set; }
     public int? MagicStandardUpToPoints { get; private set; }
     public int? StandardBearerUpgradeCost { get; private set; }
@@ -163,7 +163,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         return Armours.ToList();
     }
 
-    public void Assign(TowArmour armour)
+    protected void Assign(TowArmour armour)
     {
         if (!AvailableArmours.Select(p => p.Item1).Contains(armour.ArmorType))
         {
@@ -176,7 +176,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         Armours.Add(armour);
     }
 
-    public void AssignDefault(TowArmour armour)
+    protected void AssignDefault(TowArmour armour)
     {
         if (!AvailableArmours.Select(p => p.Item1).Contains(armour.ArmorType))
         {
@@ -190,7 +190,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
     }
 
     // overloaded function to assign armor (@see Assign(TowArmourType ArmorType))
-    //public void Assign(TowArmourType ArmorType)
+    //protected void Assign(TowArmourType ArmorType)
     //{
     //    if (!AvailableArmours.Select(p => p.Item1).Contains(ArmorType))
     //    {
@@ -202,7 +202,22 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
     //    Assign(armour);
     //}
 
-    public void Assign(TowWeapon weapon)
+    protected void Assign(TowMagicItem magicItem)
+    {
+        if (magicItem is ISaveImprover saveImprover)
+        {
+            SaveImprovers.Add(saveImprover);
+        }
+
+        if (magicItem is IWardSaveImprover wardSaveImprover)
+        {
+            WardSaveImprovers.Add(wardSaveImprover);
+        }
+
+        _magicItems.Add(magicItem);
+    }
+
+    protected void Assign(TowWeapon weapon)
     {
         if(!AvailableWeapons.Select(p => p.Item1).Contains(weapon.WeaponType))
         {
@@ -222,7 +237,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         Weapons.Add(weapon);
     }
 
-    public void AssignDefault(TowWeapon weapon)
+    protected void AssignDefault(TowWeapon weapon)
     {
         if (!AvailableWeapons.Select(p => p.Item1).Contains(weapon.WeaponType))
         {
@@ -243,7 +258,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
     }
 
     // overloaded function to assign weapon (@see Assign(TowWeaponType weaponType))
-    //public void Assign(TowWeaponType weaponType)
+    //protected void Assign(TowWeaponType weaponType)
     //{
     //    if (!AvailableWeapons.Select(p => p.Item1).Contains(weaponType))
     //    {
@@ -261,7 +276,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
 
     public TowModelMount? Mount { get; private set; }
 
-    public ICollection<(Enum, int)> AvailableMounts { get; protected set; } = new HashSet<(Enum, int)>() { };
+    protected ICollection<(Enum, int)> AvailableMounts { get; set; } = new HashSet<(Enum, int)>() { };
 
     public ICollection<TowModelAdditional> Crew { get; set; } = new HashSet<TowModelAdditional>();
 
@@ -270,11 +285,13 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
 
     public ICollection<(TowSpecialRuleType, int)> AvailableSpecialRules { get; set; } = new HashSet<(TowSpecialRuleType, int)>() { };
 
-    protected ICollection<TowMagicItem> MagicItems { get; set; } = new HashSet<TowMagicItem>();
+    protected ICollection<TowMagicItem> _magicItems { get; set; } = new HashSet<TowMagicItem>();
+
+    protected ICollection<TowMagicItem> MagicItems { get => _magicItems.ToImmutableList(); } // has to be immutable, since only change to the collection shall be via Assign method in this class
 
     public virtual ICollection<TowMagicItem> GetMagicItems()
     {
-        return MagicItems.ToList();
+        return _magicItems.ToList();
     }
 
     public ICollection<IWardSaveImprover> WardSaveImprovers { get; set; } = new HashSet<IWardSaveImprover>();
@@ -308,9 +325,9 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         if (saveBearer.GetMeleeSave().HasValue)
         {
             if (saveBearer.GetRangedSave().HasValue && saveBearer.GetMeleeSave() != saveBearer.GetRangedSave())
-                return $"{saveBearer.GetMeleeSave()}/{saveBearer.GetRangedSave()}{PrintAsteriskfNeededForSave()}";
+                return $"{saveBearer.GetMeleeSave()}+/{saveBearer.GetRangedSave()}+{PrintAsteriskfNeededForSave()}";
             else
-                return $"{saveBearer.GetMeleeSave()}{PrintAsteriskfNeededForSave()}";
+                return $"{saveBearer.GetMeleeSave()}+{PrintAsteriskfNeededForSave()}";
         }
         else
             return string.Empty;
@@ -323,9 +340,9 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         if (saveBearer.GetMeleeWardSave().HasValue)
         {
             if (saveBearer.GetRangedWardSave().HasValue && saveBearer.GetMeleeWardSave() != saveBearer.GetRangedWardSave())
-                return $"{saveBearer.GetMeleeWardSave()}/{saveBearer.GetRangedWardSave()}{PrintAsteriskfNeededForWardSave()}";
+                return $"{saveBearer.GetMeleeWardSave()}+/{saveBearer.GetRangedWardSave()}+{PrintAsteriskfNeededForWardSave()}";
             else
-                return $"{saveBearer.GetMeleeWardSave()}{PrintAsteriskfNeededForWardSave()}";
+                return $"{saveBearer.GetMeleeWardSave()}+{PrintAsteriskfNeededForWardSave()}";
         }
         else
             return string.Empty;
@@ -358,11 +375,6 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         //    throw new ArgumentException("Weapon must belong to the same owner");
         //}
 
-        if (!AvailableWeapons.Any(w => w.Item1 == weapon.WeaponType))
-        {
-            throw new ArgumentException($"Weapon {weapon.WeaponType} not available for {ModelType} model");
-        }
-
         Assign(weapon);
 
         if (ChampionModel != null)
@@ -373,15 +385,12 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
 
     public void SetArmor(TowArmour armor)
     {
+        // TODO: gow to check if the owner of the armor is the model?
         //if (armor.Owner != this && armor.Owner != Owner)
         //{
         //    throw new ArgumentException("Armor must belong to the same owner");
         //}
 
-        if (!AvailableArmours.Any(a => a.Item1 == armor.ArmorType))
-        {
-            throw new ArgumentException($"Armor {armor.ArmorType} not available for {ModelType} model");
-        }
         Assign(armor);
 
         if(ChampionModel != null)
@@ -396,7 +405,18 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         {
             throw new ArgumentException($"Special rule {specialRule.RuleType} not available for {ModelType} model");
         }
+
         SpecialRules.Add(specialRule);
+
+        if (specialRule is ISaveImprover saveImprover)
+        {
+            SaveImprovers.Add(saveImprover);
+        }
+
+        if (specialRule is IWardSaveImprover wardSaveImprover)
+        {
+            WardSaveImprovers.Add(wardSaveImprover);
+        }
 
         if (ChampionModel != null)
         {
@@ -404,7 +424,37 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         }
     }
 
-    public void Assign(TowModelMount mount)
+    public void SetMount(TowModelMount mount)
+    {
+        if (mount.Owner != this && mount.Owner != Owner)
+        {
+            throw new ArgumentException("Mount must belong to the same owner");
+        }
+
+        if (!AvailableMounts.Any(m => m.Item1.Equals(mount.ModelMountType)))
+        {
+            throw new ArgumentException($"Mount {mount.ModelMountType} not available for {ModelType} model");
+        }
+
+        if (mount is ISaveImprover saveImprover)
+        {
+            SaveImprovers.Add(saveImprover);
+        }
+
+        if (mount is IWardSaveImprover wardSaveImprover)
+        {
+            WardSaveImprovers.Add(wardSaveImprover);
+        }
+
+        Mount = mount;
+
+        if (ChampionModel != null)
+        {
+            ChampionModel.Mount = mount;
+        }
+    }
+
+    protected void Assign(TowModelMount mount)
     {
         //if (mount.Owner != this && mount.Owner != Owner)
         //{
@@ -444,7 +494,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         }
     }
 
-    public void AssignDefault(TowModelMount mount)
+    protected void AssignDefault(TowModelMount mount)
     {
         if (!AvailableMounts.Any(m => m.Item1 == mount.ModelMountType))
         {

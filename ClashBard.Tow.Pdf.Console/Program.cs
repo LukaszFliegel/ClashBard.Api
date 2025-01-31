@@ -28,7 +28,7 @@ var serviceProvider = services.BuildServiceProvider();
 
 var sampleArmyList = serviceProvider.GetService<SampleArmyList>();
 
-var army = sampleArmyList.GetSampleDarkElfArmy();
+var army = sampleArmyList.GetVnDarkElfArmy();
 
 PdfPrinter pdfPrinter = new();
 

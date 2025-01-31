@@ -17,6 +17,8 @@ public enum TowMagicItemCategory
     [Description("Arcane")]
     Arcane,
 
+    //[Description("Faction specific")]
+    //FactionSpecific,
     [Description("Faction specific print as weapon")]
     FactionSpecificPrintAsWeapon,
 }

@@ -37,7 +37,7 @@ public class WitchElfTowModel : TowModel
 public class WitchElfChampionTowModel : WitchElfTowModel
 {
     public WitchElfChampionTowModel(TowObject owner)
-        : base(owner, m: 5, ws: 4, bs: 4, s: 2, t: 2, w: 1, i: 5, a: 2, ld: 8)
+        : base(owner, m: 5, ws: 4, bs: 4, s: 3, t: 3, w: 1, i: 5, a: 2, ld: 8)
     {
         
     }

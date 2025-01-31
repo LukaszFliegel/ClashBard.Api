@@ -15,6 +15,14 @@ public enum TowSpecialRuleType
     ArmourBane3,
     [Description("Armoured Hide (1)")]
     ArmouredHide1,
+    [Description("Armour Piercing +1")]
+    ArmourPiercingPlus1,
+    [Description("Armour Piercing +2")]
+    ArmourPiercingPlus2,
+    [Description("Armour Piercing +3")]
+    ArmourPiercingPlus3,
+    [Description("Armour Piercing +4")]
+    ArmourPiercingPlus4,
     [Description("Breath Weapon")]
     BreathWeapon,
     [Description("Chariot Runners")]
@@ -84,7 +92,7 @@ public enum TowSpecialRuleType
     [Description("Hatred (High Elves)")]
     HatredHighElves,
     [Description("Hatred (all enemies)")]
-    HatredAllEnemies,
+    HatredAllEnemies,    
     [Description("Horde")]
     Horde,
     [Description("Howdah")]
@@ -147,6 +155,8 @@ public enum TowSpecialRuleType
     MultipleWoundsD3,
     [Description("Open Order")]
     OpenOrder,
+    [Description("Plus one Spell")]
+    PlusOneSpell,
     [Description("Poisoned Attacks")]
     PoisonedAttacks,
     [Description("Ponderous")]
@@ -173,6 +183,8 @@ public enum TowSpecialRuleType
     Scouts,
     [Description("Shieldwall")]
     Shieldwall,
+    [Description("Single Use")]
+    SingleUse,
     [Description("Skirmishers")]
     Skirmishers,
     [Description("Stomp Attacks (X)")]
@@ -402,6 +414,8 @@ public enum TowSpecialRuleType
     AbyssalHowl,
     [Description("Cavernous Maw Notes")]
     CavernousMawNotes,
+    [Description("Hidden")]
+    HiddenDarkElves,
 
     [Description("Sea Dragon Cloak")]
     SeaDragonCloakTowArmourRules,
@@ -410,4 +424,11 @@ public enum TowSpecialRuleType
     CryOfWar,
     [Description("Witchbrew")]
     Witchbrew,
+    [Description("Black Lotus")]
+    BlackLotus,
+    [Description("Manbane")]
+    Manbane,
+
+    [Description("Focus Familiar")]
+    FocusFamiliar,
 }

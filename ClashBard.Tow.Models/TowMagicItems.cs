@@ -1,4 +1,5 @@
-﻿using ClashBard.Tow.Models.TowTypes;
+﻿using ClashBard.Tow.Models.SpecialRules.Interfaces;
+using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.StaticData;
 using System.Reflection;
 using System.Text;
@@ -19,23 +20,59 @@ public abstract class TowMagicItem: TowObjectWithSpecialRules
     public Enum MagicItemType { get; set; }
     public int Points { get; }
 
-    //public virtual string GetMagicItemRulesShortDescription()
-    //{
-    //    StringBuilder shortDescriptionSb = new();
-    //    string separator = ClashBardStatic.Separator;
+    public override bool Equals(object? obj)
+    {
+        var magicItem = obj as TowMagicItem;
 
-    //    foreach (var rule in SpecialRules.Where(p => p.PrintInSummary))
+        return magicItem != null && this.MagicItemType == magicItem.MagicItemType;
+    }
+
+    //public override bool Equals(object? obj)
+    //{
+    //    // Check if null or different type
+    //    if (obj == null || GetType() != obj.GetType())
+    //        return false;
+
+    //    var other = obj as TowMagicItem;
+
+    //    // Compare MagicItemType first as it's always used
+    //    if (!this.MagicItemType.Equals(other.MagicItemType))
+    //        return false;
+
+    //    // Check if either object has IMultiplicable
+    //    var thisMultiplicable = this.SpecialRules.OfType<IMultiplicable>().SingleOrDefault();
+    //    var otherMultiplicable = other.SpecialRules.OfType<IMultiplicable>().SingleOrDefault();
+
+    //    // If one has IMultiplicable and other doesn't, they're not equal
+    //    if ((thisMultiplicable == null) != (otherMultiplicable == null))
+    //        return false;
+
+    //    // If both have IMultiplicable, compare their Ids
+    //    if (thisMultiplicable != null && otherMultiplicable != null)
     //    {
-    //        shortDescriptionSb.Append(rule.GetShortDescription() + separator);
+    //        return thisMultiplicable.Id == otherMultiplicable.Id;
     //    }
 
-    //    return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());
+    //    // If neither has IMultiplicable, they're equal (as long as MagicItemType matches, which we checked above)
+    //    return true;
     //}
+
+    public override int GetHashCode()
+    {
+        //if(SpecialRules.Any(p => p is IMultiplicable))
+        //{
+        //    //var extremellyCommonItemIt = SpecialRules.Where(p => p is IMultiplicable).Select(p => p as IMultiplicable).Single().Id;
+        //    var extremellyCommonItemIt = SpecialRules.OfType<IMultiplicable>().Single();
+        //    return HashCode.Combine(this.MagicItemType.GetHashCode(), extremellyCommonItemIt.Id);
+        //}
+
+        return this.MagicItemType.GetHashCode();
+    }
 }
 
 public class TowMagicWeapon : TowMagicItem
 {
-    public TowMagicWeapon(TowObject owner, TowMagicItemWeaponType magicWeaponType, int points, int? range, TowWeaponStrength strength, int armorPiercing)
+    public TowMagicWeapon(TowObject owner, Enum magicWeaponType, int points, int? range, TowWeaponStrength strength, int armorPiercing)
         :base(owner, magicWeaponType, points, TowMagicItemCategory.MagicWeapon)
     {
         MagicWeaponType = magicWeaponType;
@@ -44,7 +81,7 @@ public class TowMagicWeapon : TowMagicItem
         ArmorPiercing = armorPiercing;
     }
 
-    public TowMagicItemWeaponType MagicWeaponType { get; set; }
+    public Enum MagicWeaponType { get; set; } // TowMagicItemWeaponType
 
     public int? Range { get; set; } = 0; // 0 means range "Combat"
 
@@ -77,7 +114,7 @@ public class TowMagicWeapon : TowMagicItem
 
 public class TowMagicArmour : TowMagicItem
 {
-    public TowMagicArmour(TowObject owner, TowMagicItemArmorType armorType, int points,
+    public TowMagicArmour(TowObject owner, Enum armorType, int points,
         int armoursSaveValue, int wardSaveValue = 0)
         : this(owner, armorType, points, 
               armoursSaveValue, armoursSaveValue, armoursSaveValue, armoursSaveValue, armoursSaveValue, armoursSaveValue, armoursSaveValue, armoursSaveValue,
@@ -86,7 +123,7 @@ public class TowMagicArmour : TowMagicItem
 
     }
 
-    public TowMagicArmour(TowObject owner, TowMagicItemArmorType armorType, int points,
+    public TowMagicArmour(TowObject owner, Enum armorType, int points,
         int meleeSaveBaseline, int meleeSaveImprovement, int rangedSaveBaseline, int rangedSaveImprovement, int magicMeleeSaveBaseline, int magicMeleeSaveImprovement, int magicRangedSaveBaseline, int magicRangedSaveImprovement, 
         int meleeWardSaveBaseline = 0, int meleeWardSaveImprovement = 0, int rangedWardSaveBaseline = 0, int rangedWardSaveImprovement = 0, int magicWardMeleeSaveBaseline = 0, int magicWardMeleeSaveImprovement = 0, int magicWardRangedSaveBaseline = 0, int magicWardRangedSaveImprovement = 0)
         : base(owner, armorType, points, TowMagicItemCategory.MagicArmour)
@@ -110,7 +147,7 @@ public class TowMagicArmour : TowMagicItem
         MagicWardRangedSaveImprovement = magicWardRangedSaveImprovement;
     }
 
-    public TowMagicItemArmorType ArmorType { get; set; }
+    public Enum ArmorType { get; set; } // TowMagicItemArmorType
 
     // armour save
     public int MeleeSaveBaseline { get; set; }
@@ -143,7 +180,7 @@ public class TowMagicArmour : TowMagicItem
 
 public class TowTalisman : TowMagicItem
 {
-    public TowTalisman(TowObject owner, TowMagicItemTalismanType talismanType, int points)
+    public TowTalisman(TowObject owner, Enum talismanType, int points) // Enum = TowMagicItemTalismanType
         : base(owner, talismanType, points, TowMagicItemCategory.Talisman)
     {
         
@@ -152,7 +189,7 @@ public class TowTalisman : TowMagicItem
 
 public class TowEnchantedItem : TowMagicItem
 {
-    public TowEnchantedItem(TowObject owner, TowMagicItemEnchantedType talismanType, int points)
+    public TowEnchantedItem(TowObject owner, Enum talismanType, int points) // Enum = TowMagicItemEnchantedType
         : base(owner, talismanType, points, TowMagicItemCategory.EnchantedItem)
     {
 
@@ -161,7 +198,7 @@ public class TowEnchantedItem : TowMagicItem
 
 public class TowArcaneItem : TowMagicItem
 {
-    public TowArcaneItem(TowObject owner, TowMagicItemArcaneType arcaneType, int points)
+    public TowArcaneItem(TowObject owner, Enum arcaneType, int points) // Enum = TowMagicItemArcaneType
         : base(owner, arcaneType, points, TowMagicItemCategory.Arcane)
     {
 
@@ -170,7 +207,7 @@ public class TowArcaneItem : TowMagicItem
 
 public class TowMagicStandard : TowMagicItem
 {
-    public TowMagicStandard(TowObject owner, TowMagicItemBannerType magicStandardType, int points)
+    public TowMagicStandard(TowObject owner, Enum magicStandardType, int points) // Enum = TowMagicItemBannerType
         : base(owner, magicStandardType, points, TowMagicItemCategory.MagicStandard)
     {
 

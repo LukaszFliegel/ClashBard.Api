@@ -1,4 +1,5 @@
 ﻿using ClashBard.Tow.Models.Interfaces;
+using ClashBard.Tow.Models.SpecialRules.Interfaces;
 using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.StaticData;
 using System.Text;
@@ -48,22 +49,22 @@ public class TowCharacter : TowModel
 
         if (AvailableMagicItemTypes.Contains(magicItem.TowMagicItemCategory))
         {
-            MagicItems.Add(magicItem);
+            Assign(magicItem);
         }
     }
 
-    public void SetMagicArmor(TowMagicArmour magicArmour)
-    {
-        if(magicArmour.Owner != this)
-        {
-            throw new ArgumentException("Magic armour must belong to the same owner");
-        }
+    //public void SetMagicArmor(TowMagicArmour magicArmour)
+    //{
+    //    if(magicArmour.Owner != this)
+    //    {
+    //        throw new ArgumentException("Magic armour must belong to the same owner");
+    //    }
 
-        if (AvailableMagicItemTypes.Contains(TowMagicItemCategory.MagicArmour))
-        {
-            MagicItems.Add(magicArmour);
-        }
-    }
+    //    if (AvailableMagicItemTypes.Contains(TowMagicItemCategory.MagicArmour))
+    //    {
+    //        Assign(magicArmour);
+    //    }
+    //}
 
     //public void SetMagicStandard(TowMagicStandard magicBanner)
     //{
@@ -73,44 +74,44 @@ public class TowCharacter : TowModel
     //    }
     //}
 
-    public void SetEnchantedItem(TowEnchantedItem enchantedItem)
-    {
-        if (enchantedItem.Owner != this)
-        {
-            throw new ArgumentException("Enchanted tem item must belong to the same owner");
-        }
+    //public void SetEnchantedItem(TowEnchantedItem enchantedItem)
+    //{
+    //    if (enchantedItem.Owner != this)
+    //    {
+    //        throw new ArgumentException("Enchanted tem item must belong to the same owner");
+    //    }
 
-        if (AvailableMagicItemTypes.Contains(TowMagicItemCategory.EnchantedItem))
-        {
-            MagicItems.Add(enchantedItem);
-        }
-    }
+    //    if (AvailableMagicItemTypes.Contains(TowMagicItemCategory.EnchantedItem))
+    //    {
+    //        Assign(enchantedItem);
+    //    }
+    //}
 
-    public void SetTalisman(TowTalisman talisman)
-    {
-        if (talisman.Owner != this)
-        {
-            throw new ArgumentException("Talisman item must belong to the same owner");
-        }
+    //public void SetTalisman(TowTalisman talisman)
+    //{
+    //    if (talisman.Owner != this)
+    //    {
+    //        throw new ArgumentException("Talisman item must belong to the same owner");
+    //    }
 
-        if (AvailableMagicItemTypes.Contains(TowMagicItemCategory.Talisman))
-        {
-            MagicItems.Add(talisman);
-        }
-    }
+    //    if (AvailableMagicItemTypes.Contains(TowMagicItemCategory.Talisman))
+    //    {
+    //        Assign(talisman);
+    //    }
+    //}
 
-    public void SetArcaneItem(TowArcaneItem arcaneItem)
-    {
-        if(arcaneItem.Owner != this)
-        {
-            throw new ArgumentException("Arcane item must belong to the same owner");
-        }
+    //public void SetArcaneItem(TowArcaneItem arcaneItem)
+    //{
+    //    if(arcaneItem.Owner != this)
+    //    {
+    //        throw new ArgumentException("Arcane item must belong to the same owner");
+    //    }
 
-        if (AvailableMagicItemTypes.Contains(TowMagicItemCategory.Arcane))
-        {
-            MagicItems.Add(arcaneItem);
-        }
-    }
+    //    if (AvailableMagicItemTypes.Contains(TowMagicItemCategory.Arcane))
+    //    {
+    //        Assign(arcaneItem);
+    //    }
+    //}
 
     public string GetRulesShortDescription()
     {
@@ -210,9 +211,16 @@ public class TowCharacter : TowModel
     public virtual int CalculateTotalCost()
     {
         int totalCost = PointCost;
-        foreach (var magicItem in MagicItems)
+        foreach (var magicItem in _magicItems)
         {
-            totalCost += magicItem.Points;
+            if (magicItem is IExtremelyCommon extremelyCommon)
+            {
+                totalCost += magicItem.Points * extremelyCommon.NumberOfOccurences;
+            }
+            else
+            {
+                totalCost += magicItem.Points;
+            }
         }
 
         foreach (var availableWeapon in AvailableWeapons)

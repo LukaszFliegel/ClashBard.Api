@@ -61,9 +61,9 @@ public class TowSpecialRule: TowObject
 
     public override bool Equals(object? obj)
     {
-        var towSpecialRule = obj as TowSpecialRule;
+        var specialRule = obj as TowSpecialRule;
 
-        return towSpecialRule != null && this.RuleType == towSpecialRule.RuleType;
+        return specialRule != null && this.RuleType == specialRule.RuleType;
     }
 
     public override int GetHashCode()

@@ -1,5 +1,5 @@
 ﻿using ClashBard.Tow.Models.Factions;
-using ClashBard.Tow.Models.Factions.MagiItems;
+using ClashBard.Tow.Models.MagicItems.DarkElves;
 using ClashBard.Tow.Models.SpecialRules;
 using ClashBard.Tow.Models.SpecialRules.DarkElvesSpecialRules;
 using ClashBard.Tow.Models.TowTypes;

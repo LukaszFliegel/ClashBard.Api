@@ -15,6 +15,7 @@ public class SorceressTowCharacter : TowCharacterMage
     public SorceressTowCharacter(TowObject owner)
         :base(owner, DarkElfTowModelType.Sorceress, 5, 4, 4, 3, 3, 2, 4, 1, 8, pointsCost,
             TowModelTroopType.RegularInfantryCharacter, new DarkElvesTowFaction(), 25, 25, TowMagicLevelType.Level1,
+            new TowMagicLoreType[] { TowMagicLoreType.BattleMagic, TowMagicLoreType.Daemonology, TowMagicLoreType.DarkMagic, TowMagicLoreType.Elementalism, TowMagicLoreType.Illusion },
             new TowMagicItemCategory[] { TowMagicItemCategory.Talisman, TowMagicItemCategory.EnchantedItem, TowMagicItemCategory.Arcane },
             mayBuyMagicItemsUpToPoints: 50)
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClashBard.Tow.Models.Factions.MagiItems;
+namespace ClashBard.Tow.Models.MagicItems.DarkElves;
 
 public enum TowDarkElfMagicItemType
 {
@@ -24,4 +24,22 @@ public enum TowDarkElfMagicItemType
     StrengthOfKhaine,
     [Description("Bloodshield of Khaine")]
     BloodshieldOfKhaine,
+
+    // Forbidden poisins
+    [Description("Black Lotus")]
+    BlackLotus,
+    [Description("Dark Venom")]
+    DarkVenom,
+    [Description("Manbane")]
+    Manbane,
+
+    // Talismans
+    [Description("Pendant of Khaeleth")]
+    PendantOfKhaeleth,
+
+    // Arcane Items
+    [Description("Tome of Furion")]
+    TomeOfFurion,
+    [Description("Focus Familiar")]
+    FocusFamiliar,
 }

@@ -51,8 +51,8 @@ public enum TowWeaponType
     Handgun,
     [Description("Repeater Handgun")]
     RepeaterHandgun,
-    [Description("Throwing Weapon")]
-    ThrowingWeapon,
+    [Description("Throwing Weapons")]
+    ThrowingWeapons,
     [Description("Throwing Axe")]
     ThrowingAxe,
     [Description("Javelin")]

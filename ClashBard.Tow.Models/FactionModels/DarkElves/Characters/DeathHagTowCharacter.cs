@@ -1,5 +1,5 @@
 ﻿using ClashBard.Tow.Models.Factions;
-using ClashBard.Tow.Models.Factions.MagiItems;
+using ClashBard.Tow.Models.MagicItems.DarkElves;
 using ClashBard.Tow.Models.SpecialRules;
 using ClashBard.Tow.Models.SpecialRules.DarkElvesSpecialRules;
 using ClashBard.Tow.Models.SpecialRules.Interfaces;
@@ -38,9 +38,6 @@ public class DeathHagTowCharacter : TowCharacter
 
         // mounts
         AvailableMounts.Add((DarkElfTowModelMountType.CauldronOfBlood, 150));
-
-        // model specifics
-        //AvailableMagicItemTypes.Add(TowMagicItemCategory.DarkElfSpecific);
     }
 
     // code for Death Hag specific rules
@@ -99,7 +96,7 @@ public class CryOfWarRuneOfKhaine : DarkElvesGiftsOfKhaine
 {
     public CryOfWarRuneOfKhaine(TowObject owner) : base(owner, TowDarkElfMagicItemType.CryOfWar, 15)
     {
-        AssignSpecialRule(new CryOfWar());
+        AssignSpecialRule(new CryOfWarRuneOfKhaineRules());
     }
 }
 
@@ -115,6 +112,6 @@ public class WitchbrewRuneOfKhaine : DarkElvesGiftsOfKhaine
 {
     public WitchbrewRuneOfKhaine(TowObject owner) : base(owner, TowDarkElfMagicItemType.Witchbrew, 20)
     {
-        AssignSpecialRule(new Witchbrew());
+        AssignSpecialRule(new WitchbrewRuneOfKhaineRules());
     }
 }

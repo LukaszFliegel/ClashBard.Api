@@ -1,6 +1,7 @@
 ﻿using ClashBard.Tow.Models;
 using ClashBard.Tow.Models.ArmyComposition;
 using ClashBard.Tow.Models.MagicItems.MagicArmours;
+using ClashBard.Tow.Models.SpecialRules.Interfaces;
 using ClashBard.Tow.StaticData;
 using QuestPDF.Companion;
 using QuestPDF.Fluent;
@@ -136,7 +137,7 @@ public class PdfPrinter
 
                         foreach (var validationError in army.Validate().ToList())
                         {
-                            
+
                             //column.Item().ShowEntire().Table(table =>
                             //{
                             //    table.ColumnsDefinition(columns =>
@@ -150,8 +151,8 @@ public class PdfPrinter
                             RowIterator++;
                         }
                     });
-                    
-                    
+
+
                 });
 
                 page.Footer()
@@ -163,9 +164,20 @@ public class PdfPrinter
                     });
             });
         })
+        //.GeneratePdfAndShow();
         .ShowInCompanion();
 
     }
+
+    // good for preview
+    static Color darkerTone = Colors.Grey.Lighten1;
+    static Color lightenTone = Colors.Grey.Lighten3;
+
+    // good for printing
+    //static Color darkerTone = Colors.Grey.Medium;
+    //static Color lightenTone = Colors.Grey.Lighten1;
+
+    static int indentation = 16;
 
     private static uint PrintSeparatorLine(TableDescriptor table, uint RowIterator)
     {
@@ -201,6 +213,13 @@ public class PdfPrinter
         PrintModelRow(table, fontSize, RowIterator, 1, character);
         table.Cell().Row(RowIterator).Column(14).Element(DefaultCellContainer).Text(character.UnitStrength().ToString()).FontSize(fontSize);
         table.Cell().Row(RowIterator).Column(15).Element(DefaultCellContainer).Text(character.CalculateTotalCost().ToString()).FontSize(fontSize);
+
+        if(character is TowCharacterMage mage)
+        {
+            RowIterator++;
+            table.Cell().Row(RowIterator).Column(1).Element(DefaultCellContainer).Text($"Level {mage.MagicLevel.ToString()}").FontSize(fontSize);
+            table.Cell().Row(RowIterator).Column(2).ColumnSpan(13).Element(DefaultCellContainer).Text($"{mage.GetMagicLore()}").FontSize(fontSize);
+        }
 
         // print magic weapons
         foreach (var magicItem in character.GetMagicItems().Where(p => p.TowMagicItemCategory == Models.TowTypes.TowMagicItemCategory.MagicWeapon))
@@ -265,7 +284,7 @@ public class PdfPrinter
             }
         }
 
-        // print all non-weapon magic items
+        // print all non-weapon magic items (and all non "print as a weapon" magic items)
         foreach (var magicItem in character.GetMagicItems().Where(p => p.TowMagicItemCategory != Models.TowTypes.TowMagicItemCategory.MagicWeapon && p.TowMagicItemCategory != Models.TowTypes.TowMagicItemCategory.FactionSpecificPrintAsWeapon))
         {
             RowIterator++;
@@ -380,7 +399,7 @@ public class PdfPrinter
     {
         return container
             .Border(1)
-            .Background(Colors.Grey.Lighten2)
+            .Background(darkerTone)
             .ShowOnce()
             .AlignCenter()
             .AlignMiddle()
@@ -391,20 +410,20 @@ public class PdfPrinter
     {
         return container
             .Border(1)
-            .Background(Colors.Grey.Lighten4)
+            .Background(lightenTone)
             .Padding(1)
             .ShowOnce()
             .AlignCenter()
             .AlignMiddle();
     }
 
-    const int indentation = 16;
+    
 
     static IContainer DefaultCellWithIndentationContainer(IContainer container)
     {
         return container
             .Border(1)
-            .Background(Colors.Grey.Lighten4)
+            .Background(lightenTone)
             .Padding(1)
             .ShowOnce()
             .AlignLeft()
@@ -417,7 +436,7 @@ public class PdfPrinter
     {
         return container
             .Border(1)
-            .Background(Colors.Grey.Lighten4)
+            .Background(lightenTone)
             .ShowOnce()
             .AlignLeft()
             .PaddingLeft(2* indentation, Unit.Point)
@@ -429,7 +448,7 @@ public class PdfPrinter
     {
         return container
             .Border(1)
-            .Background(Colors.Grey.Lighten4)
+            .Background(lightenTone)
             .Padding(1)
             .ShowOnce()
             .AlignLeft()
@@ -441,7 +460,7 @@ public class PdfPrinter
     {
         return container
             .PaddingBottom(8)
-            .Background(Colors.Grey.Lighten2)
+            .Background(darkerTone)
             .BorderHorizontal(0)
             .ShowOnce();
     }
@@ -547,7 +566,14 @@ public class PdfPrinter
 
     static void PrintMagicItemRow(TableDescriptor table, float fontSize, uint rowNumber, TowMagicItem magicItem)
     {
-        table.Cell().Row(rowNumber).Column(1).Element(DefaultCellContainer).Text(magicItem.MagicItemType.ToNameString()).FontSize(fontSize).Italic();
+        if (magicItem is IExtremelyCommon extremelyCommonMagicItem && extremelyCommonMagicItem.NumberOfOccurences > 1)
+        {
+            table.Cell().Row(rowNumber).Column(1).Element(DefaultCellContainer).Text($"{magicItem.MagicItemType.ToNameString()} x{extremelyCommonMagicItem.NumberOfOccurences}").FontSize(fontSize).Italic();
+        }
+        else
+        {
+            table.Cell().Row(rowNumber).Column(1).Element(DefaultCellContainer).Text(magicItem.MagicItemType.ToNameString()).FontSize(fontSize).Italic();
+        }
         table.Cell().Row(rowNumber).Column(2).ColumnSpan(13).Element(DefaultCellContainer).Text(magicItem.GetSpecialRulesShortDescription()).FontSize(fontSize);
         if (magicItem.Points > 0)
         {
