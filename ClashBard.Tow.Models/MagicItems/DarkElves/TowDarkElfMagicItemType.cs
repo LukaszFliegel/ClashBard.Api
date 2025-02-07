@@ -42,4 +42,8 @@ public enum TowDarkElfMagicItemType
     TomeOfFurion,
     [Description("Focus Familiar")]
     FocusFamiliar,
+
+    // Banners
+    [Description("Banner Of Har Ganeth")]
+    BannerOfHarGaneth,
 }
