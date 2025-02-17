@@ -2,6 +2,7 @@
 using ClashBard.Tow.Models.SpecialRules.Interfaces;
 using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.StaticData;
+using System.Data;
 using System.Text;
 
 namespace ClashBard.Tow.Models;
@@ -113,19 +114,57 @@ public class TowCharacter : TowModel
     //    }
     //}
 
+    public Dictionary<string, string> GetRulesDescriptions()
+    {
+        Dictionary<string, string> rules = new();
+        string separator = ClashBardStatic.Separator;
+
+        // for printing take armour with highest MeleeSaveBaseline and all armours that have any improvement
+        List<TowArmour> armoursToPrint = new();
+
+        if (GetArmours().Any(p => p.MeleeSaveBaseline > 0))
+            armoursToPrint.Add(GetArmours().Where(p => p.MeleeSaveBaseline > 0).OrderBy(p => p.MeleeSaveBaseline).First());
+
+        armoursToPrint.AddRange(GetArmours().Where(p =>
+            p.MeleeSaveImprovement > 0
+            || p.RangedSaveImprovement > 0
+            || p.MeleeWardSaveImprovement > 0
+            || p.RangedWardSaveImprovement > 0
+            ));
+
+        foreach (var armor in armoursToPrint)
+        {
+            var armorRulesStrings = armor.GetSpecialRulesStrings();
+            foreach (var armorRule in armorRulesStrings)
+            {
+                rules.Add(armorRule.Key, armorRule.Value);
+            }
+        }
+
+        // add all special rules
+        foreach (var rule in GetSpecialRulesStrings())
+        {
+            rules.Add(rule.Key, rule.Value);
+        }
+
+        if (Mount != null)
+        {
+            var charactersRuleToExclude = SpecialRules.Select(p => p.RuleType).ToArray();
+
+            var mountRules = Mount.GetSpecialRulesStrings(charactersRuleToExclude);
+            foreach (var rule in mountRules)
+            {
+                rules.Add(rule.Key, rule.Value);
+            }
+        }
+
+        return rules;
+    }
+
     public string GetRulesShortDescription()
     {
         StringBuilder shortDescriptionSb = new();
         string separator = ClashBardStatic.Separator;
-
-        //foreach (var weapon in GetWeapons().Where(p => p.WeaponType != TowWeaponType.HandWeapon))
-        //{
-        //    shortDescriptionSb.Append(weapon.WeaponType.ToDescriptionString() + separator);
-        //    shortDescriptionSb.Append(weapon.GetSpecialRulesShortDescription() + separator);
-        //}
-
-        //if(GetWeapons().Where(p => p.WeaponType != TowWeaponType.HandWeapon).Count() != 0)
-        //    shortDescriptionSb.AppendLine();
 
         // for printing take armour with highest MeleeSaveBaseline and all armours that have any improvement
         List<TowArmour> armoursToPrint = new();
@@ -155,14 +194,6 @@ public class TowCharacter : TowModel
             shortDescriptionSb.Append(rule.GetShortDescription() + separator);
         }
 
-        //if (SpecialRules.Count != 0)
-        //    shortDescriptionSb.AppendLine();
-
-        //foreach (var magicItem in MagicItems)
-        //{
-        //    shortDescriptionSb.Append(magicItem.GetSpecialRulesShortDescription() + separator);
-        //}
-
         if (Mount != null)
         {
             var charactersRuleToExclude = SpecialRules.Select(p => p.RuleType).ToArray();
@@ -171,42 +202,6 @@ public class TowCharacter : TowModel
 
         return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());
     }
-
-    //public int UnitStrength()
-    //{
-    //    var modelTroopType = Mount != null ? Mount.ModelTroopType : ModelTroopType;
-
-    //    switch (modelTroopType)
-    //    {
-    //        case TowModelTroopType.RegularInfantry:
-    //        case TowModelTroopType.RegularInfantryCharacter:
-    //            return 1;
-    //        case TowModelTroopType.MonstrousInfantry:
-    //            return 3;
-    //        case TowModelTroopType.LightCavalry:
-    //            return 2;
-    //        case TowModelTroopType.HeavyCavalry:
-    //            return 2;
-    //        case TowModelTroopType.MonstrousCavalry:
-    //            return 3;
-    //        case TowModelTroopType.MonstrousCreature: // as starting wounds
-    //            return CalculateTotalWounds();
-    //        case TowModelTroopType.WarMachine: // as starting wounds
-    //            return CalculateTotalWounds();
-    //        case TowModelTroopType.HeavyChariot:
-    //            return 5;
-    //        case TowModelTroopType.LightChariot:
-    //            return 3;
-    //        case TowModelTroopType.Behemoth: // as starting wounds
-    //            return CalculateTotalWounds();
-    //        case TowModelTroopType.WarBeast:
-    //            return 1;
-    //        case TowModelTroopType.Swarm:
-    //            return 3;
-    //        default:
-    //            throw new Exception("Unknown model type");
-    //    }
-    //}
 
     public virtual int CalculateTotalCost()
     {

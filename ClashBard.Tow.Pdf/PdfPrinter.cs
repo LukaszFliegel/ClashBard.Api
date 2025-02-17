@@ -10,6 +10,7 @@ using QuestPDF.Infrastructure;
 using QuestPDF.Previewer;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -292,8 +293,11 @@ public class PdfPrinter
         }
 
         RowIterator++;
-        PrintCharacterRules(table, fontSize, RowIterator, character);
-        
+        PrintCharacterFormattedRules(table, fontSize, RowIterator, character);
+
+        //RowIterator++;
+        //PrintCharacterRules(table, fontSize, RowIterator, character);
+
         //RowIterator++;
         //table.Cell().RowSpan(RowIterator).ColumnSpan(15).LineHorizontal(8, Unit.Point);
         //table.ExtendLastCellsToTableBottom();
@@ -366,8 +370,11 @@ public class PdfPrinter
             }
         }
 
-        PrintUnitRules(table, fontSize, RowIterator + 1, unit);
+        PrintUnitFormattedRules(table, fontSize, RowIterator + 1, unit);
         RowIterator++;
+
+        //PrintUnitRules(table, fontSize, RowIterator + 1, unit);
+        //RowIterator++;
 
         //RowIterator++;
 
@@ -535,9 +542,83 @@ public class PdfPrinter
         table.Cell().Row(rowNumber).Column(11).Element(DefaultCellContainer).Text(model.Leadership.ToString()).FontSize(fontSize);
     }
 
+    static void PrintUnitFormattedRules(TableDescriptor table, float fontSize, uint rowNumber, TowUnit unit)
+    {
+        var separator = ClashBardStatic.Separator;
+
+        table.Cell().Row(rowNumber).Column(2).ColumnSpan(14).Element(DefaultCellContainer).Text(text =>
+        {
+            var atLeastOneArmorPrinted = false;
+            foreach (var armor in unit.Model.GetArmoursToPrint())
+            {
+                text.Span($"{armor.ArmorType.ToNameString()}").FontSize(fontSize).Bold();
+                text.Span(separator).FontSize(fontSize);
+
+                atLeastOneArmorPrinted = true;
+            }
+
+            if (atLeastOneArmorPrinted)
+            {
+                text.EmptyLine();
+            }
+
+            foreach (var rule in unit.GetRulesDescriptions())
+            {
+                if (!string.IsNullOrEmpty(rule.Key))
+                    text.Span($"{rule.Key}").FontSize(fontSize).Bold();
+
+                if (!string.IsNullOrEmpty(rule.Key) && !string.IsNullOrEmpty(rule.Value))
+                    text.Span(": ").FontSize(fontSize);
+
+                if (!string.IsNullOrEmpty(rule.Value))
+                    text.Span($"{rule.Value.Trim()}").FontSize(fontSize);
+
+                text.Span(separator).FontSize(fontSize);
+            }
+        }
+        );
+    }
+
     static void PrintUnitRules(TableDescriptor table, float fontSize, uint rowNumber, TowUnit unit)
     {
         table.Cell().Row(rowNumber).Column(2).ColumnSpan(14).Element(DefaultCellContainer).Text(unit.GetRulesShortDescription()).FontSize(fontSize);
+    }
+
+    static void PrintCharacterFormattedRules(TableDescriptor table, float fontSize, uint rowNumber, TowCharacter character)
+    {
+        var separator = ClashBardStatic.Separator;
+
+        table.Cell().Row(rowNumber).Column(2).ColumnSpan(14).Element(DefaultCellContainer).Text(text =>
+        {
+            var atLeastOneArmorPrinted = false;
+            foreach (var armor in character.GetArmoursToPrint())
+            {
+                text.Span($"{armor.ArmorType.ToNameString()}").FontSize(fontSize).Bold();
+                text.Span(separator).FontSize(fontSize);
+
+                atLeastOneArmorPrinted = true;
+            }
+
+            if (atLeastOneArmorPrinted)
+            {
+                text.EmptyLine();
+            }
+
+            foreach (var rule in character.GetRulesDescriptions())
+            {
+                if (!string.IsNullOrEmpty(rule.Key))
+                    text.Span($"{rule.Key}").FontSize(fontSize).Bold();
+
+                if (!string.IsNullOrEmpty(rule.Key) && !string.IsNullOrEmpty(rule.Value))
+                    text.Span(": ").FontSize(fontSize);
+
+                if (!string.IsNullOrEmpty(rule.Value))
+                    text.Span($"{rule.Value.Trim()}").FontSize(fontSize);
+
+                text.Span(separator).FontSize(fontSize);
+            }
+        }
+        );
     }
 
     static void PrintCharacterRules(TableDescriptor table, float fontSize, uint rowNumber, TowCharacter character)

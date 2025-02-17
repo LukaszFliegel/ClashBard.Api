@@ -25,6 +25,30 @@ public abstract class TowObjectWithSpecialRules: TowObjectWithOwner, ITowValidat
         
     }
 
+    public virtual Dictionary<string, string> GetSpecialRulesStrings(TowSpecialRuleType[]? excludeRules = null)
+    {
+        Dictionary<string, string> rules = new();
+
+        if (excludeRules != null && excludeRules.Length > 0)
+        {
+            foreach (var rule in SpecialRules.Where(p => p.PrintInSummary && !excludeRules.Contains(p.RuleType)))
+            {
+                var ruleStrings = rule.GetRuleStrings();
+                rules.Add(ruleStrings.Item1, ruleStrings.Item2);
+            }
+        }
+        else
+        {
+            foreach (var rule in SpecialRules.Where(p => p.PrintInSummary))
+            {
+                var ruleStrings = rule.GetRuleStrings();
+                rules.Add(ruleStrings.Item1, ruleStrings.Item2);
+            }
+        }
+
+        return rules;
+    }
+
     public virtual string GetSpecialRulesShortDescription(TowSpecialRuleType[]? excludeRules = null)
     {
         StringBuilder shortDescriptionSb = new();

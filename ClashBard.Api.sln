@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClashBard.Tow.Pdf", "ClashB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClashBard.Tow.Pdf.Console", "ClashBard.Tow.Pdf.Console\ClashBard.Tow.Pdf.Console.csproj", "{B7C1E2E9-C840-4CA2-8FE5-86A9E00A23E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClashBard.Tow.ClassProducer.Console", "ClashBard.Tow.ClassProducer.Console\ClashBard.Tow.ClassProducer.Console.csproj", "{21A429D6-2AD3-4C56-B08D-ED71E0FE6A90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClashBard.Tow.ClassProducer.ConsoleApp", "ClashBard.Tow.ClassProducer.Console\ClashBard.Tow.ClassProducer.ConsoleApp.csproj", "{21A429D6-2AD3-4C56-B08D-ED71E0FE6A90}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClashBard.Tow.StaticData", "ClashBard.Tow.StaticData\ClashBard.Tow.StaticData.csproj", "{AB44A6D8-9D8C-4075-AA45-527CE3F054C0}"
 EndProject

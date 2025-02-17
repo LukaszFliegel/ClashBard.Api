@@ -9,7 +9,7 @@ public class HatredAllEnemies : TowSpecialRule
     private static string LongDescription = "A model with this special rule may re-roll any failed rolls To Hit made against enemy models during the first round of combat.";
 
     public HatredAllEnemies()
-        : base(TowSpecialRuleType.HatredHighElves,
+        : base(TowSpecialRuleType.HatredAllEnemies,
             ShortDescription,
             LongDescription,
             printShortDescription: false)

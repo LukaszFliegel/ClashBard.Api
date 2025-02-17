@@ -39,19 +39,71 @@ public class TowUnit: TowObject, IMagicStandardUser
         if (champion && !Model.ChampionUpgradeCost.HasValue)
             throw new ArgumentException($"{Model.ModelType} does not have champion upgrade");
     }
-    
+
+    public Dictionary<string, string> GetRulesDescriptions()
+    {
+        Dictionary<string, string> rules = new();
+        string separator = ClashBardStatic.Separator;
+
+        // for printing take armour with highest MeleeSaveBaseline and all armours that have any improvement
+        List<TowArmour> armoursToPrint = new();
+
+        if (Model.GetArmours().Any(p => p.MeleeSaveBaseline > 0))
+            armoursToPrint.Add(Model.GetArmours().Where(p => p.MeleeSaveBaseline > 0).OrderBy(p => p.MeleeSaveBaseline).First());
+
+        armoursToPrint.AddRange(Model.GetArmours().Where(p =>
+            p.MeleeSaveImprovement > 0
+            || p.RangedSaveImprovement > 0
+            || p.MeleeWardSaveImprovement > 0
+            || p.RangedWardSaveImprovement > 0
+            ));
+
+        foreach (var armor in armoursToPrint)
+        {
+            //var armorRulesStrings = armor.GetSpecialRulesStrings();
+            //foreach (var armorRule in armorRulesStrings)
+            //{
+            //    rules.Add(armorRule.Key, armorRule.Value);
+            //}
+            //rules.Add(armor.ArmorType.ToNameString(), string.Empty);
+        }
+
+        if (standard)
+        {
+            //shortDescriptionSb.Append($"Standard: +1 CR" + separator);
+            rules.Add("Standard", "+1 CR");
+        }
+
+        if (musician)
+        {
+            //shortDescriptionSb.Append($"Musician: +1 Ld to rally, +1 CR on tie, +1 Ld on march test" + separator);
+            rules.Add("Musician", "+1 Ld to rally, +1 CR on tie, +1 Ld on march test");
+        }
+
+        // add all special rules
+        foreach (var rule in Model.GetSpecialRulesStrings())
+        {
+            rules.Add(rule.Key, rule.Value);
+        }
+
+        if (Model.Mount != null)
+        {
+            var charactersRuleToExclude = Model.GetSpecialRules().Select(p => p.RuleType).ToArray();
+
+            var mountRules = Model.Mount.GetSpecialRulesStrings(charactersRuleToExclude);
+            foreach (var rule in mountRules)
+            {
+                rules.Add(rule.Key, rule.Value);
+            }
+        }
+
+        return rules;
+    }
+
     public string GetRulesShortDescription()
     {
         StringBuilder shortDescriptionSb = new();
         string separator = ClashBardStatic.Separator;
-
-        //foreach (var weapon in Model.GetWeapons().Where(p => p.WeaponType != TowWeaponType.HandWeapon))
-        //{
-        //    shortDescriptionSb.Append(weapon.WeaponType.ToDescriptionString() + ": ");
-        //    shortDescriptionSb.Append(weapon.GetSpecialRulesShortDescription() + separator);
-        //}
-
-        //shortDescriptionSb.AppendLine();
 
         // for printing take armour with highest MeleeSaveBaseline and all armours that have any improvement
         List<TowArmour> armoursToPrint = new();

@@ -59,6 +59,23 @@ public class TowSpecialRule: TowObject
         return shortDescriptionSb.ToString().TrimEnd(separator.ToCharArray());
     }
 
+    public (string, string) GetRuleStrings()
+    {
+        var name = string.Empty;
+        var shortDescription = string.Empty;
+
+        if (printName)
+            name = RuleType.ToNameString();
+
+        if(printShortDescription)
+            shortDescription = $"{this.shortDescription.Trim()}";
+
+        if (!string.IsNullOrEmpty(shortDescriptionAppendix))
+            shortDescription += $" {shortDescriptionAppendix}";
+
+        return (name, shortDescription);
+    }
+
     public override bool Equals(object? obj)
     {
         var specialRule = obj as TowSpecialRule;

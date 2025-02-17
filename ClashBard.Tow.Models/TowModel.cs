@@ -163,6 +163,23 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         return Armours.ToList();
     }
 
+    public ICollection<TowArmour> GetArmoursToPrint()
+    {
+        List<TowArmour> armoursToPrint = new();
+
+        if (GetArmours().Any(p => p.MeleeSaveBaseline > 0))
+            armoursToPrint.Add(GetArmours().Where(p => p.MeleeSaveBaseline > 0).OrderBy(p => p.MeleeSaveBaseline).First());
+
+        armoursToPrint.AddRange(GetArmours().Where(p =>
+            p.MeleeSaveImprovement > 0
+            || p.RangedSaveImprovement > 0
+            || p.MeleeWardSaveImprovement > 0
+            || p.RangedWardSaveImprovement > 0
+            ));
+
+        return armoursToPrint;
+    }
+
     protected void Assign(TowArmour armour)
     {
         if (!AvailableArmours.Select(p => p.Item1).Contains(armour.ArmorType))

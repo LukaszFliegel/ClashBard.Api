@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClashBard.Tow.ClassProducer.Console.Models;
+namespace ClashBard.Tow.ClassProducer.ConsoleApp.Models;
 public class TowBuilderMagicItems
 {
     public General[] general { get; set; }
