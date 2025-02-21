@@ -18,7 +18,7 @@ public class BeastmasterCrewTowModelAdditional : TowModelAdditional
     }
 
     protected BeastmasterCrewTowModelAdditional(TowObject owner, int? m, int ws, int bs, int s, int? t, int? w, int i, int a, int ld)
-        : base(owner, DarkElfTowModelAdditionalType.BeastmasterHandlers, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
+        : base(owner, DarkElvesTowModelAdditionalType.BeastmasterHandlers, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
     {
     }
 }

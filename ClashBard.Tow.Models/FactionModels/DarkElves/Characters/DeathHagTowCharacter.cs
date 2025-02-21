@@ -14,9 +14,9 @@ public class DeathHagTowCharacter : TowCharacter
     private static int pointsCost = 70;
 
     public DeathHagTowCharacter(TowObject owner)
-        :base(owner, DarkElfTowModelType.DeathHag, 5, 6, 6, 4, 3, 2, 7, 3, 8, pointsCost,
+        :base(owner, DarkElvesTowModelType.DeathHag, 5, 6, 6, 4, 3, 2, 7, 3, 8, pointsCost,
             TowModelTroopType.RegularInfantryCharacter, new DarkElvesTowFaction(), 25, 25,
-            new TowMagicItemCategory[] { TowMagicItemCategory.MagicArmour, TowMagicItemCategory.MagicWeapon, TowMagicItemCategory.Talisman, TowMagicItemCategory.EnchantedItem },
+            new TowMagicItemCategory[] { TowMagicItemCategory.MagicArmour, TowMagicItemCategory.MagicWeapon, TowMagicItemCategory.Talisman, TowMagicItemCategory.EnchantedItem, TowMagicItemCategory.GiftsOfKhaine },
             mayBuyMagicItemsUpToPoints: 75)
     {
         // special rules
@@ -32,50 +32,47 @@ public class DeathHagTowCharacter : TowCharacter
         AssignDefault(new AdditionalHandWeaponTowWeapon(this));
 
         // armours
-        AvailableArmours.Add((TowArmourType.HeavyArmour, 3));
-        AvailableArmours.Add((TowArmourType.FullPlateArmour, 6));
-        AvailableArmours.Add((TowArmourType.Shield, 2));
 
         // mounts
-        AvailableMounts.Add((DarkElfTowModelMountType.CauldronOfBlood, 150));
+        AvailableMounts.Add((DarkElvesTowModelMountType.CauldronOfBlood, 150));
     }
 
     // code for Death Hag specific rules
 
-    public DarkElvesGiftsOfKhaine? GiftOfKhaine { get; private set; }
+    //public DarkElvesGiftsOfKhaine? GiftOfKhaine { get; private set; }
 
-    public void SetGiftOfKhaine(DarkElvesGiftsOfKhaine giftOfKhaine)
-    {
-        if (giftOfKhaine.Owner != this)
-        {
-            throw new ArgumentException("Gift of Khaine must belong to the same owner");
-        }
+    //public void SetGiftOfKhaine(DarkElvesGiftsOfKhaine giftOfKhaine)
+    //{
+    //    if (giftOfKhaine.Owner != this)
+    //    {
+    //        throw new ArgumentException("Gift of Khaine must belong to the same owner");
+    //    }
 
-        GiftOfKhaine = giftOfKhaine;
-    }
+    //    GiftOfKhaine = giftOfKhaine;
+    //}
 
-    public override int CalculateTotalCost()
-    {
-        var giftOfKhainePoints = GiftOfKhaine?.Points ?? 0;
+    //public override int CalculateTotalCost()
+    //{
+    //    var giftOfKhainePoints = GiftOfKhaine?.Points ?? 0;
 
-        return base.CalculateTotalCost() + giftOfKhainePoints;
-    }
+    //    return base.CalculateTotalCost() + giftOfKhainePoints;
+    //}
 
-    public override ICollection<TowMagicItem> GetMagicItems()
-    {
-        // return base.GetMagicItems() and GiftOfKhaine
-        var magicItems = base.GetMagicItems();
-        if (GiftOfKhaine != null)
-        {
-            magicItems.Add(GiftOfKhaine);
-        }
-        return magicItems;
-    }
+    //public override ICollection<TowMagicItem> GetMagicItems()
+    //{
+    //    // return base.GetMagicItems() and GiftOfKhaine
+    //    var magicItems = base.GetMagicItems();
+    //    if (GiftOfKhaine != null)
+    //    {
+    //        magicItems.Add(GiftOfKhaine);
+    //    }
+    //    return magicItems;
+    //}
 }
 
 public abstract class DarkElvesGiftsOfKhaine : TowMagicItem
 {
-    public DarkElvesGiftsOfKhaine(TowObject owner, TowDarkElfMagicItemType type, int points) : base(owner, type, points, TowMagicItemCategory.FactionSpecificPrintAsWeapon)
+    public DarkElvesGiftsOfKhaine(TowObject owner, TowDarkElvesMagicItemType type, int points) : base(owner, type, points, TowMagicItemCategory.GiftsOfKhaine)
     {
     }
 }
@@ -94,7 +91,7 @@ Witchbrew: This character, their mount and any unit they have joined cannot lose
 
 public class CryOfWarRuneOfKhaine : DarkElvesGiftsOfKhaine
 {
-    public CryOfWarRuneOfKhaine(TowObject owner) : base(owner, TowDarkElfMagicItemType.CryOfWar, 15)
+    public CryOfWarRuneOfKhaine(TowObject owner) : base(owner, TowDarkElvesMagicItemType.CryOfWar, 15)
     {
         AssignSpecialRule(new CryOfWarRuneOfKhaineRules());
     }
@@ -102,7 +99,7 @@ public class CryOfWarRuneOfKhaine : DarkElvesGiftsOfKhaine
 
 public class RuneOfKhaineRuneOfKhaine : DarkElvesGiftsOfKhaine
 {
-    public RuneOfKhaineRuneOfKhaine(TowObject owner) : base(owner, TowDarkElfMagicItemType.RuneOfKhaine, 10)
+    public RuneOfKhaineRuneOfKhaine(TowObject owner) : base(owner, TowDarkElvesMagicItemType.RuneOfKhaine, 10)
     {
         AssignSpecialRule(new ExtraAttacksPlusD3());
     }
@@ -110,7 +107,7 @@ public class RuneOfKhaineRuneOfKhaine : DarkElvesGiftsOfKhaine
 
 public class WitchbrewRuneOfKhaine : DarkElvesGiftsOfKhaine
 {
-    public WitchbrewRuneOfKhaine(TowObject owner) : base(owner, TowDarkElfMagicItemType.Witchbrew, 20)
+    public WitchbrewRuneOfKhaine(TowObject owner) : base(owner, TowDarkElvesMagicItemType.Witchbrew, 20)
     {
         AssignSpecialRule(new WitchbrewRuneOfKhaineRules());
     }

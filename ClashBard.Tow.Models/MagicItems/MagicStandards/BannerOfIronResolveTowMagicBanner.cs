@@ -11,21 +11,19 @@ public class BannerOfIronResolveTowMagicBanner : TowMagicStandard
     {
         AssignSpecialRule(new BannerOfIronResolveRules());
     }
-}
 
-
-public class BannerOfIronResolveRules : TowSpecialRule
-{
-    private static string ShortDescription = "Gives unit Stubborn";
-    private static string LongDescription = "A unit carrying the Banner of Iron Resolve gains the Stubborn special rule.";
-
-    public BannerOfIronResolveRules()
-        : base(TowSpecialRuleType.BannerOfIronResolveRules,
-            ShortDescription,
-            LongDescription,
-            printName: false)
+    protected class BannerOfIronResolveRules : TowSpecialRule
     {
+        private static string ShortDescription = "Gives unit Stubborn";
+        private static string LongDescription = "A unit carrying the Banner of Iron Resolve gains the Stubborn special rule.";
 
+        public BannerOfIronResolveRules()
+            : base(TowSpecialRuleType.BannerOfIronResolveRules,
+                ShortDescription,
+                LongDescription,
+                printName: false)
+        {
+
+        }
     }
 }
-

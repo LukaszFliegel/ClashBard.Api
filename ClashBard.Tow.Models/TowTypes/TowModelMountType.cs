@@ -9,7 +9,7 @@ namespace ClashBard.Tow.Models.TowTypes;
 
 
 
-public enum DarkElfTowModelMountType
+public enum DarkElvesTowModelMountType
 {
     [Description("Cold One")]
     ColdOne,

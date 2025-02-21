@@ -25,9 +25,10 @@ try
 
     logger.LogInformation("Starting class generation process");
 
-    TowBuilderArmyParser armyParser = new(logger);
+    ArmyHtmlScrapperCharacters armyHtmlScrapperCharacters = new(logger);
+    TowBuilderArmyParser armyParser = new(logger, armyHtmlScrapperCharacters);
 
-    
+    await armyParser.ParseArmy(armyName);
 
     logger.LogInformation("Character class generation completed");
 }

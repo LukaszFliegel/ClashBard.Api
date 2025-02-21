@@ -8,7 +8,7 @@ public class FocusFamiliarTowArcaneItem : TowArcaneItem, IExtremelyCommon
 {
     private const int points = 10;
 
-    public FocusFamiliarTowArcaneItem(TowObject owner, int numberOfOccurences = 1) : base(owner, TowDarkElfMagicItemType.FocusFamiliar, points)
+    public FocusFamiliarTowArcaneItem(TowObject owner, int numberOfOccurences = 1) : base(owner, TowDarkElvesMagicItemType.FocusFamiliar, points)
     {
         AssignSpecialRule(new SingleUse());
         //AssignSpecialRule(new ExtremelyCommon(numberOfOccurences));

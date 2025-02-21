@@ -27,7 +27,7 @@ public class BloodwrackMedusaTowModelAdditional : TowModelAdditional
     }
 
     protected BloodwrackMedusaTowModelAdditional(TowObject owner, int? m, int ws, int bs, int s, int? t, int? w, int i, int a, int? ld)
-        : base(owner, DarkElfTowModelAdditionalType.BloodwrackMedusa, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
+        : base(owner, DarkElvesTowModelAdditionalType.BloodwrackMedusa, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
     {
     }
 }

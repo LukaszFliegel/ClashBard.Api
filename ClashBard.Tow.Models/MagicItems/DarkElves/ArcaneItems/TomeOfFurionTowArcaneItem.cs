@@ -7,7 +7,7 @@ public class TomeOfFurionTowArcaneItem : TowArcaneItem
 {
     private const int points = 15;
 
-    public TomeOfFurionTowArcaneItem(TowObject owner) : base(owner, TowDarkElfMagicItemType.TomeOfFurion, points)
+    public TomeOfFurionTowArcaneItem(TowObject owner) : base(owner, TowDarkElvesMagicItemType.TomeOfFurion, points)
     {
         AssignSpecialRule(new PlusOneSpell());
     }

@@ -9,7 +9,7 @@ namespace ClashBard.Tow.Models.TowTypes;
 
 
 
-public enum DarkElfTowModelAdditionalType
+public enum DarkElvesTowModelAdditionalType
 {
     [Description("Dark Steed")]
     DarkSteed,

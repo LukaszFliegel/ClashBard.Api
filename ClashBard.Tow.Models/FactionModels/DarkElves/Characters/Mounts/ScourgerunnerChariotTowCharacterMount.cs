@@ -9,7 +9,7 @@ namespace ClashBard.Tow.Models.FactionModels.DarkElves.Characters.Mounts;
 public class ScourgerunnerChariotTowCharacterMount : TowModelCharacterMount
 {
     private static int pointsCost = 85;
-    private static DarkElfTowModelMountType modelType = DarkElfTowModelMountType.ScourgerunnerChariot;
+    private static DarkElvesTowModelMountType modelType = DarkElvesTowModelMountType.ScourgerunnerChariot;
 
     private static TowFaction faction = new DarkElvesTowFaction();
 

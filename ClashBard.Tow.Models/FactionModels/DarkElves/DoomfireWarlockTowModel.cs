@@ -17,7 +17,7 @@ public class DoomfireWarlockTowModel : TowModel
     }
 
     protected DoomfireWarlockTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(owner, DarkElfTowModelType.DoomfireWarlocks, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.LightCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
+        : base(owner, DarkElvesTowModelType.DoomfireWarlocks, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.LightCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
     {
         // special rules
         AssignSpecialRule(new CursedCoven());

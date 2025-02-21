@@ -8,7 +8,7 @@ namespace ClashBard.Tow.Models.FactionModels.DarkElves.Characters.Mounts;
 public class ColdOneChariotsTowCharacterMount : TowModelCharacterMount
 {
     private static int pointsCost = 125;
-    private static DarkElfTowModelMountType modelType = DarkElfTowModelMountType.ColdOneChariot;
+    private static DarkElvesTowModelMountType modelType = DarkElvesTowModelMountType.ColdOneChariot;
 
     private static TowFaction faction = new DarkElvesTowFaction();
 

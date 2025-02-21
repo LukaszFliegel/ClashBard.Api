@@ -14,7 +14,7 @@ public class HighBeastmasterTowCharacter : TowCharacter
     private static int pointsCost = 75;
 
     public HighBeastmasterTowCharacter(TowObject owner)
-        :base(owner, DarkElfTowModelType.HighBeastmaster, null, 7, 7, 4, 3, 3, 5, 3, 9, pointsCost,
+        :base(owner, DarkElvesTowModelType.HighBeastmaster, null, 7, 7, 4, 3, 3, 5, 3, 9, pointsCost,
             TowModelTroopType.RegularInfantryCharacter, new DarkElvesTowFaction(), null, null,
             new TowMagicItemCategory[] { TowMagicItemCategory.MagicArmour, TowMagicItemCategory.MagicWeapon, TowMagicItemCategory.Talisman, TowMagicItemCategory.EnchantedItem },
             mayBuyMagicItemsUpToPoints: 75)
@@ -39,15 +39,15 @@ public class HighBeastmasterTowCharacter : TowCharacter
         AvailableArmours.Add((TowArmourType.Shield, 2));
 
         // mounts
-        AvailableMounts.Add((DarkElfTowModelMountType.ScourgerunnerChariot, 85));
-        AvailableMounts.Add((DarkElfTowModelMountType.Manticore, 130));
+        AvailableMounts.Add((DarkElvesTowModelMountType.ScourgerunnerChariot, 85));
+        AvailableMounts.Add((DarkElvesTowModelMountType.Manticore, 130));
     }
 
     public override IEnumerable<ValidationError> Validate()
     {
         Console.WriteLine("HB 1");
         if (Mount == null)
-            yield return new ValidationError("Mount is required for High Beastmaster", DarkElfTowModelType.HighBeastmaster.ToNameString());
+            yield return new ValidationError("Mount is required for High Beastmaster", DarkElvesTowModelType.HighBeastmaster.ToNameString());
 
         Console.WriteLine("HB 2");
         foreach (var error in base.Validate())

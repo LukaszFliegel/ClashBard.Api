@@ -19,7 +19,7 @@ public class DarkRiderTowModel : TowModel
     }
 
     protected DarkRiderTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(owner, DarkElfTowModelType.DarkRiders, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.LightCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
+        : base(owner, DarkElvesTowModelType.DarkRiders, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.LightCavalry, new DarkElvesTowFaction(), 30, 60, minUnitSize: 5)
     {
         // special rules
         AssignSpecialRule(new ElvenReflexes());

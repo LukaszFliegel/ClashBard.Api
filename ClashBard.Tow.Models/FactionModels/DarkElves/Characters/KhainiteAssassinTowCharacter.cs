@@ -14,7 +14,7 @@ public class KhainiteAssassinTowCharacter : TowCharacter
     private static int pointsCost = 80;
 
     public KhainiteAssassinTowCharacter(TowObject owner)
-        :base(owner, DarkElfTowModelType.KhainiteAssassin, 5, 8, 7, 4, 3, 2, 7, 3, 8, pointsCost,
+        :base(owner, DarkElvesTowModelType.KhainiteAssassin, 5, 8, 7, 4, 3, 2, 7, 3, 8, pointsCost,
             TowModelTroopType.RegularInfantryCharacter, new DarkElvesTowFaction(), 25, 25,
             new TowMagicItemCategory[] { TowMagicItemCategory.MagicArmour, TowMagicItemCategory.MagicWeapon, TowMagicItemCategory.Talisman, TowMagicItemCategory.EnchantedItem },
             mayBuyMagicItemsUpToPoints: 50)
@@ -72,7 +72,7 @@ public class KhainiteAssassinTowCharacter : TowCharacter
 
 public abstract class DarkElvesForbiddenPoisons : TowMagicItem
 {
-    public DarkElvesForbiddenPoisons(TowObject owner, TowDarkElfMagicItemType type, int points) : base(owner, type, points, TowMagicItemCategory.FactionSpecificPrintAsWeapon)
+    public DarkElvesForbiddenPoisons(TowObject owner, TowDarkElvesMagicItemType type, int points) : base(owner, type, points, TowMagicItemCategory.FactionSpecificPrintAsWeapon)
     {
     }
 }
@@ -91,7 +91,7 @@ Manbane: When this character makes a roll To Wound, a roll of 4+ is always a suc
 
 public class BlackLotusForbiddenPoison : DarkElvesForbiddenPoisons
 {
-    public BlackLotusForbiddenPoison(TowObject owner) : base(owner, TowDarkElfMagicItemType.BlackLotus, 5)
+    public BlackLotusForbiddenPoison(TowObject owner) : base(owner, TowDarkElvesMagicItemType.BlackLotus, 5)
     {
         AssignSpecialRule(new BlackLotusForbiddenPoisonRules());
     }
@@ -99,7 +99,7 @@ public class BlackLotusForbiddenPoison : DarkElvesForbiddenPoisons
 
 public class DarkVenomForbiddenPoison : DarkElvesForbiddenPoisons
 {
-    public DarkVenomForbiddenPoison(TowObject owner) : base(owner, TowDarkElfMagicItemType.DarkVenom, 15)
+    public DarkVenomForbiddenPoison(TowObject owner) : base(owner, TowDarkElvesMagicItemType.DarkVenom, 15)
     {
         AssignSpecialRule(new KillingBlow());
     }
@@ -107,7 +107,7 @@ public class DarkVenomForbiddenPoison : DarkElvesForbiddenPoisons
 
 public class ManbaneForbiddenPoison : DarkElvesForbiddenPoisons
 {
-    public ManbaneForbiddenPoison(TowObject owner) : base(owner, TowDarkElfMagicItemType.Manbane, 15)
+    public ManbaneForbiddenPoison(TowObject owner) : base(owner, TowDarkElvesMagicItemType.Manbane, 15)
     {
         AssignSpecialRule(new ManbaneForbiddenPoisonRules());
     }

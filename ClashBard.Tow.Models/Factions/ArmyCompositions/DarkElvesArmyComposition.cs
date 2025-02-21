@@ -13,12 +13,12 @@ public class DarkElvesArmyComposition : TowArmyComposition
     public DarkElvesArmyComposition(TowArmy army)
     {
         // 0-1 Dark Elf Dreadlord or Supreme Sorceress per 1,000 points
-        armyCompositionRules.Add(new TowArmyCompositionRuleZeroToXNumberOfUnitsPerXPoints<DarkElfTowModelType>(army, DarkElfTowModelType.DarkElfDreadlord, 1));
-        armyCompositionRules.Add(new TowArmyCompositionRuleZeroToXNumberOfUnitsPerXPoints<DarkElfTowModelType>(army, DarkElfTowModelType.SupremeSorceress, 1));
+        armyCompositionRules.Add(new TowArmyCompositionRuleZeroToXNumberOfUnitsPerXPoints<DarkElvesTowModelType>(army, DarkElvesTowModelType.DarkElfDreadlord, 1));
+        armyCompositionRules.Add(new TowArmyCompositionRuleZeroToXNumberOfUnitsPerXPoints<DarkElvesTowModelType>(army, DarkElvesTowModelType.SupremeSorceress, 1));
 
         // 0-1 Cauldron of Blood per 1,000 points (taken as a mount for a Death Hag)
-        armyCompositionRules.Add(new TowArmyCompositionRuleZeroToXNumberOfUnitMountsPerXPoints<DarkElfTowModelMountType>(army, DarkElfTowModelMountType.CauldronOfBlood, 1));
+        armyCompositionRules.Add(new TowArmyCompositionRuleZeroToXNumberOfUnitMountsPerXPoints<DarkElvesTowModelMountType>(army, DarkElvesTowModelMountType.CauldronOfBlood, 1));
 
-        armyCompositionRules.Add(new TowArmyCompositionRuleZeroToXNumberOfUnitsPerXPoints<DarkElfTowModelType>(army, DarkElfTowModelType.ColdOneKnights, 1));
+        armyCompositionRules.Add(new TowArmyCompositionRuleZeroToXNumberOfUnitsPerXPoints<DarkElvesTowModelType>(army, DarkElvesTowModelType.ColdOneKnights, 1));
     }
 }

@@ -21,6 +21,10 @@ public enum TowMagicItemCategory
     //FactionSpecific,
     [Description("Faction specific print as weapon")]
     FactionSpecificPrintAsWeapon,
+
+    // Dark Elves
+    [Description("Gifts of Khaine")]
+    GiftsOfKhaine,
 }
 
 public enum TowMagicItemWeaponType

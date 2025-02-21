@@ -18,7 +18,7 @@ public class ScourgerunnerChariotTowModel : TowModel//, ISaveImprover
     }
 
     protected ScourgerunnerChariotTowModel(TowObject owner, int? m, int? ws, int? bs, int s, int t, int w, int? i, int? a, int? ld) 
-        : base(owner, DarkElfTowModelType.ScourgerunnerChariots, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.LightChariot, new DarkElvesTowFaction(), 50, 100, 1, 3, armorValue)
+        : base(owner, DarkElvesTowModelType.ScourgerunnerChariots, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.LightChariot, new DarkElvesTowFaction(), 50, 100, 1, 3, armorValue)
     {
         // special rules
         AssignSpecialRule(new ElvenReflexes());

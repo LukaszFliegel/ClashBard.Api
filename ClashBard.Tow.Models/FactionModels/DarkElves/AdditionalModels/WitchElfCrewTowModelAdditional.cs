@@ -26,7 +26,7 @@ public class WitchElfCrewTowModelAdditional : TowModelAdditional
     }
 
     protected WitchElfCrewTowModelAdditional(TowObject owner, int? m, int ws, int bs, int s, int? t, int? w, int i, int a, int ld)
-        : base(owner, DarkElfTowModelAdditionalType.WitchElfCrew, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
+        : base(owner, DarkElvesTowModelAdditionalType.WitchElfCrew, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
     {
     }
 }

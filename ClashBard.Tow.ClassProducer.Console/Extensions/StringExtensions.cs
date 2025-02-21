@@ -9,7 +9,7 @@ public static class StringExtensions
         if (string.IsNullOrEmpty(str))
             return str;
 
-        str = str.Trim().Replace("*", string.Empty).Replace("'", string.Empty);
+        str = str.Trim().Replace("*", string.Empty).Replace("'", string.Empty).Replace("(", string.Empty).Replace(")", string.Empty);
 
         var textInfo = CultureInfo.CurrentCulture.TextInfo;
         var words = str.Split(new[] { ' ', '-', '_' }, StringSplitOptions.RemoveEmptyEntries);
@@ -18,6 +18,7 @@ public static class StringExtensions
         foreach (var word in words)
         {
             sb.Append(textInfo.ToTitleCase(word.ToLower()));
+            //sb.Append(word);
         }
 
         return sb.ToString();

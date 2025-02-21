@@ -20,7 +20,7 @@ public class ColdOneTowModelAdditional : TowModelAdditional
     }
 
     protected ColdOneTowModelAdditional(TowObject owner, int? m, int ws, int? bs, int s, int? t, int? w, int i, int a, int? ld)
-        : base(owner, DarkElfTowModelAdditionalType.ColdOne, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
+        : base(owner, DarkElvesTowModelAdditionalType.ColdOne, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
     {
     }
 }

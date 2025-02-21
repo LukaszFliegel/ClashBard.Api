@@ -17,7 +17,7 @@ public class RepeaterCrossbowmanTowModel : TowModel
     }
 
     protected RepeaterCrossbowmanTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(owner, DarkElfTowModelType.RepeaterCrossbowmen, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
+        : base(owner, DarkElvesTowModelType.RepeaterCrossbowmen, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 10)
     {
         // special rules
         AssignSpecialRule(new CloseOrder());

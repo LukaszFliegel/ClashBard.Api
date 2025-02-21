@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClashBard.Tow.Models.MagicItems.DarkElves;
 
-public enum TowDarkElfMagicItemType
+public enum TowDarkElvesMagicItemType
 {
     // Gifts Of Khaine
     [Description("Cry of War")]

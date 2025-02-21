@@ -9,7 +9,7 @@ namespace ClashBard.Tow.Models.FactionModels.DarkElves.Characters.Mounts;
 public class ManticoreTowCharacterMount : TowModelCharacterMount
 {
     private static int pointsCost = 130;
-    private static DarkElfTowModelMountType modelType = DarkElfTowModelMountType.Manticore;
+    private static DarkElvesTowModelMountType modelType = DarkElvesTowModelMountType.Manticore;
 
     private static TowFaction faction = new DarkElvesTowFaction();
 

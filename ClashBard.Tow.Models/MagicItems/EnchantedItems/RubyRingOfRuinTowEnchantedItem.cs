@@ -12,20 +12,22 @@ public class RubyRingOfRuinTowEnchantedItem : TowEnchantedItem
         AssignSpecialRule(new RubyRingOfRuinRules());
         
     }
-}
 
-
-public class RubyRingOfRuinRules : TowSpecialRule
-{
-    private static string ShortDescription = "xxx";
-    private static string LongDescription = "xxx";
-
-    public RubyRingOfRuinRules()
-        : base(TowSpecialRuleType.RubyRingOfRuinRules,
-            ShortDescription,
-            LongDescription,
-            printName: false)
+    protected class RubyRingOfRuinRules : TowSpecialRule
     {
+        private static string ShortDescription = "xxx";
+        private static string LongDescription = "xxx";
 
+        public RubyRingOfRuinRules()
+            : base(TowSpecialRuleType.RubyRingOfRuinRules,
+                ShortDescription,
+                LongDescription,
+                printName: false)
+        {
+
+        }
     }
 }
+
+
+

@@ -17,7 +17,7 @@ public class ColdOneKnightTowModel : TowModel
     }
 
     protected ColdOneKnightTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(owner, DarkElfTowModelType.ColdOneKnights, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, 
+        : base(owner, DarkElvesTowModelType.ColdOneKnights, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, 
             TowModelTroopType.HeavyCavalry, new DarkElvesTowFaction(), 
             30, 60, minUnitSize: 5)
     {

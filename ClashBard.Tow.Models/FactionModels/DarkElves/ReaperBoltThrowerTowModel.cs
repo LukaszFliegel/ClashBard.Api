@@ -9,7 +9,7 @@ namespace ClashBard.Tow.Models.FactionModels.DarkElves;
 public class ReaperBoltThrowerTowModel : TowModel
 {
     private static int pointsCost = 80;
-    private static DarkElfTowModelType modelType = DarkElfTowModelType.ReaperBoltThrower;
+    private static DarkElvesTowModelType modelType = DarkElvesTowModelType.ReaperBoltThrower;
 
     private static TowFaction faction = new DarkElvesTowFaction();
 

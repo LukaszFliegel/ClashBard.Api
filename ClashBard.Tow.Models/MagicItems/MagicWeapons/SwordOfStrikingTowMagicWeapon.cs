@@ -18,18 +18,19 @@ public class SwordOfStrikingTowMagicWeapon : TowMagicWeapon, IExtremelyCommon
     }
 
     public int NumberOfOccurences { get; }
-}
 
-public class SwordOfStrikingRules : TowSpecialRule
-{
-    private static string ShortDescription = "+1 to hit in combat";
-    private static string LongDescription = "During the Combat phase, the wielder of the Sword of Striking has a +1 modifier to their rolls To Hit.";
-
-    public SwordOfStrikingRules()
-        : base(TowSpecialRuleType.SwordOfStrikingRules,
-            ShortDescription,
-            LongDescription)
+    protected class SwordOfStrikingRules : TowSpecialRule
     {
+        private static string ShortDescription = "+1 to hit in combat";
+        private static string LongDescription = "During the Combat phase, the wielder of the Sword of Striking has a +1 modifier to their rolls To Hit.";
 
+        public SwordOfStrikingRules()
+            : base(TowSpecialRuleType.SwordOfStrikingRules,
+                ShortDescription,
+                LongDescription)
+        {
+
+        }
     }
 }
+

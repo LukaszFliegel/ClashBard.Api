@@ -8,7 +8,7 @@ namespace ClashBard.Tow.Models.FactionModels.DarkElves.Mounts;
 
 public class ColdOneTowMount : TowModelMount
 {
-    private static DarkElfTowModelMountType modelType = DarkElfTowModelMountType.ColdOne;
+    private static DarkElvesTowModelMountType modelType = DarkElvesTowModelMountType.ColdOne;
 
     private static TowFaction faction = new DarkElvesTowFaction();
 

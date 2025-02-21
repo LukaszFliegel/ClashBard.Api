@@ -8,7 +8,7 @@ namespace ClashBard.Tow.Models.FactionModels.DarkElves;
 
 public class DarkElfCrewTowModelAdditional : TowModelAdditional
 {
-    private static DarkElfTowModelAdditionalType modelType = DarkElfTowModelAdditionalType.DarkElfCrew;
+    private static DarkElvesTowModelAdditionalType modelType = DarkElvesTowModelAdditionalType.DarkElfCrew;
     private static TowFaction faction = new DarkElvesTowFaction();
 
     public DarkElfCrewTowModelAdditional(TowObject owner) : this(owner, m: 5, ws: 4, bs: 4, s: 3, t: 3, w: 2, i: 4, a: 2, ld: 8)

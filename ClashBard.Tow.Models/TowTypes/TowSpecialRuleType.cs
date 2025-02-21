@@ -431,4 +431,7 @@ public enum TowSpecialRuleType
 
     [Description("Focus Familiar")]
     FocusFamiliar,
+
+    [Description("Cold-Blooded Banner")]
+    ColdBloodedBannerRules,
 }

@@ -14,7 +14,7 @@ public class DarkSteedTowModelAdditional : TowModelAdditional
     }
 
     protected DarkSteedTowModelAdditional(TowObject owner, int? m, int ws, int? bs, int s, int? t, int? w, int i, int a, int? ld)
-        : base(owner, DarkElfTowModelAdditionalType.DarkSteed, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
+        : base(owner, DarkElvesTowModelAdditionalType.DarkSteed, m, ws, bs, s, t, w, i, a, ld, new DarkElvesTowFaction())
     {
     }
 }

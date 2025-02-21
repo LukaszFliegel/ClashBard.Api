@@ -16,7 +16,7 @@ public class HarpyTowModel : TowModel
     }
 
     protected HarpyTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(owner, DarkElfTowModelType.Harpies, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 5)
+        : base(owner, DarkElvesTowModelType.Harpies, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new DarkElvesTowFaction(), 25, 25, minUnitSize: 5)
     {
         // special rules
         AssignSpecialRule(new Fly10());

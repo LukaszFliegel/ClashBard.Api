@@ -8,7 +8,7 @@ public class BannerOfHarGanethTowMagicBanner : TowMagicStandard
 {
     private const int points = 25;
 
-    public BannerOfHarGanethTowMagicBanner(TowObject owner) : base(owner, TowDarkElfMagicItemType.BannerOfHarGaneth, points)
+    public BannerOfHarGanethTowMagicBanner(TowObject owner) : base(owner, TowDarkElvesMagicItemType.BannerOfHarGaneth, points)
     {
         AssignSpecialRule(new ArmourPiercingPlus1());
     }

@@ -13,10 +13,10 @@ public class SorceressTowCharacter : TowCharacterMage
     private static int pointsCost = 75;
 
     public SorceressTowCharacter(TowObject owner)
-        :base(owner, DarkElfTowModelType.Sorceress, 5, 4, 4, 3, 3, 2, 4, 1, 8, pointsCost,
+        :base(owner, DarkElvesTowModelType.Sorceress, 5, 4, 4, 3, 3, 2, 4, 1, 8, pointsCost,
             TowModelTroopType.RegularInfantryCharacter, new DarkElvesTowFaction(), 25, 25, TowMagicLevelType.Level1,
             new TowMagicLoreType[] { TowMagicLoreType.BattleMagic, TowMagicLoreType.Daemonology, TowMagicLoreType.DarkMagic, TowMagicLoreType.Elementalism, TowMagicLoreType.Illusion },
-            new TowMagicItemCategory[] { TowMagicItemCategory.Talisman, TowMagicItemCategory.EnchantedItem, TowMagicItemCategory.Arcane },
+            new TowMagicItemCategory[] { TowMagicItemCategory.MagicWeapon, TowMagicItemCategory.Talisman, TowMagicItemCategory.EnchantedItem, TowMagicItemCategory.Arcane },
             mayBuyMagicItemsUpToPoints: 50)
     {
         // special rules
@@ -34,8 +34,8 @@ public class SorceressTowCharacter : TowCharacterMage
         // armours
 
         // mounts
-        AvailableMounts.Add((DarkElfTowModelMountType.DarkSteed, 14));
-        AvailableMounts.Add((DarkElfTowModelMountType.ColdOne, 18));
-        AvailableMounts.Add((DarkElfTowModelMountType.DarkPegasus, 35));
+        AvailableMounts.Add((DarkElvesTowModelMountType.DarkSteed, 14));
+        AvailableMounts.Add((DarkElvesTowModelMountType.ColdOne, 18));
+        AvailableMounts.Add((DarkElvesTowModelMountType.DarkPegasus, 35));
     }
 }

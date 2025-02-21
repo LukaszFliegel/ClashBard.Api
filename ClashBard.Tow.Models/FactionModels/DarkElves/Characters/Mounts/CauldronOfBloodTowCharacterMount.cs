@@ -10,7 +10,7 @@ namespace ClashBard.Tow.Models.FactionModels.DarkElves.Characters.Mounts;
 public class CauldronOfBloodTowCharacterMount : TowModelCharacterMount
 {
     private static int pointsCost = 150;
-    private static DarkElfTowModelMountType modelType = DarkElfTowModelMountType.CauldronOfBlood;
+    private static DarkElvesTowModelMountType modelType = DarkElvesTowModelMountType.CauldronOfBlood;
 
     private static TowFaction faction = new DarkElvesTowFaction();
 
@@ -53,14 +53,14 @@ public class CauldronOfBloodTowCharacterMount : TowModelCharacterMount
 
 public abstract class DarkElvesBlessingOfKhaine : TowMagicItem
 {
-    public DarkElvesBlessingOfKhaine(TowObject owner, TowDarkElfMagicItemType type, int points) : base(owner, type, points, TowMagicItemCategory.FactionSpecificPrintAsWeapon)
+    public DarkElvesBlessingOfKhaine(TowObject owner, TowDarkElvesMagicItemType type, int points) : base(owner, type, points, TowMagicItemCategory.FactionSpecificPrintAsWeapon)
     {
     }
 }
 
 public class FuryOfKhaineBlessingOfKhaine : DarkElvesBlessingOfKhaine
 {
-    public FuryOfKhaineBlessingOfKhaine(TowObject owner) : base(owner, TowDarkElfMagicItemType.FuryOfKhaine, 0)
+    public FuryOfKhaineBlessingOfKhaine(TowObject owner) : base(owner, TowDarkElvesMagicItemType.FuryOfKhaine, 0)
     {
         AssignSpecialRule(new FuryOfKhaine());
     }
@@ -68,7 +68,7 @@ public class FuryOfKhaineBlessingOfKhaine : DarkElvesBlessingOfKhaine
 
 public class StrengthOfKhaineBlessingOfKhaine : DarkElvesBlessingOfKhaine
 {
-    public StrengthOfKhaineBlessingOfKhaine(TowObject owner) : base(owner, TowDarkElfMagicItemType.StrengthOfKhaine, 0)
+    public StrengthOfKhaineBlessingOfKhaine(TowObject owner) : base(owner, TowDarkElvesMagicItemType.StrengthOfKhaine, 0)
     {
         AssignSpecialRule(new StrengthOfKhaine());
     }
@@ -76,7 +76,7 @@ public class StrengthOfKhaineBlessingOfKhaine : DarkElvesBlessingOfKhaine
 
 public class BloodshieldOfKhaineBlessingOfKhaine : DarkElvesBlessingOfKhaine
 {
-    public BloodshieldOfKhaineBlessingOfKhaine(TowObject owner) : base(owner, TowDarkElfMagicItemType.BloodshieldOfKhaine, 0)
+    public BloodshieldOfKhaineBlessingOfKhaine(TowObject owner) : base(owner, TowDarkElvesMagicItemType.BloodshieldOfKhaine, 0)
     {
         AssignSpecialRule(new BloodshieldOfKhaine());
     }

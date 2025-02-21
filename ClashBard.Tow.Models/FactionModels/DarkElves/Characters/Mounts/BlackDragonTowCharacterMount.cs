@@ -9,7 +9,7 @@ namespace ClashBard.Tow.Models.FactionModels.DarkElves.Characters.Mounts;
 public class BlackDragonTowCharacterMount : TowModelCharacterMount
 {
     private static int pointsCost = 280;
-    private static DarkElfTowModelMountType modelType = DarkElfTowModelMountType.BlackDragon;
+    private static DarkElvesTowModelMountType modelType = DarkElvesTowModelMountType.BlackDragon;
 
     private static TowFaction faction = new DarkElvesTowFaction();
 

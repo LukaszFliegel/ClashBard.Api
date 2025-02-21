@@ -60,7 +60,7 @@ public class ArmyHtmlScrapper
                 {
                     string characterName = link.InnerText.Trim();
                     string characterUrl = link.GetAttributeValue("href", string.Empty);
-                    armyHtmlScrapperCharacters.ScrapeCharacterHtml(characterUrl);
+                    //armyHtmlScrapperCharacters.ScrapeCharacterHtml(characterUrl);
                 }
             }
         }
