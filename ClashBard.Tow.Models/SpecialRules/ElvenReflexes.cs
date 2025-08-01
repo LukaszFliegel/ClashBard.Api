@@ -1,7 +1,6 @@
-using ClashBard.Tow.Models;
 using ClashBard.Tow.Models.TowTypes;
 
-namespace ClashBard.Tow.Models.SpecialRules.DarkElvesSpecialRules;
+namespace ClashBard.Tow.Models.SpecialRules;
 
 public class ElvenReflexes : TowSpecialRule
 {

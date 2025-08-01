@@ -13,6 +13,7 @@
   <ItemGroup>
     <Folder Include="MagicItems\DarkElves\EnchantedItems\" />
     <Folder Include="Interfaces\" />
+    <Folder Include="Documentation\" />
   </ItemGroup>
 
 </Project>

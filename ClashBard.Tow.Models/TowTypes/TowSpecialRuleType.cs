@@ -103,12 +103,20 @@ public enum TowSpecialRuleType
     ImmunetoPsychology,
     [Description("Impact Hits (X)")]
     ImpactHitsX,
+    [Description("Impact Hits (1)")]
+    ImpactHits1,
+    [Description("Impact Hits (D3)")]
+    ImpactHitsD3,
+    [Description("Impact Hits (D3+1)")]
+    ImpactHitsD3Plus1,
     [Description("Impact Hits (D6)")]
     ImpactHitsD6,
     [Description("Impact Hits (D6+1)")]
     ImpactHitsD6Plus1,
     [Description("Impetuous")]
     Impetuous,
+    [Description("Ithilmar Barding")]
+    IthilmarBarding,
     [Description("Killing Blow")]
     KillingBlow,
     [Description("Large Target")]
@@ -171,6 +179,8 @@ public enum TowSpecialRuleType
     RandomMovement,
     [Description("Regeneration (X+)")]
     RegenerationXPlus,
+    [Description("Regeneration (4+)")]
+    Regeneration4Plus,
     [Description("Regeneration (5+)")]
     Regeneration5Plus,
     [Description("Regimental Unit")]
@@ -370,6 +380,8 @@ public enum TowSpecialRuleType
     LoreOfNaggaroth,
     [Description("Martial Prowess")]
     MartialProwess,
+    [Description("Naval Discipline")]
+    NavalDiscipline,
     [Description("Murderous")]
     Murderous,
     [Description("Goad Beast")]
@@ -454,6 +466,8 @@ public enum TowSpecialRuleType
     PhoenixFire,
     [Description("Wake of Fire")]
     WakeOfFire,
+    [Description("Blizzard Aura")]
+    BlizzardAura,
     [Description("Ward Save")]
     WardSave,
 }

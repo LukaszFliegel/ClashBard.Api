@@ -10,13 +10,13 @@ public class ElvenSteedTowMount : TowModelMount
     private static HighElvesTowModelMountType modelType = HighElvesTowModelMountType.ElvenSteed;
     private static TowFaction faction = new HighElvesTowFaction();
     private static TowModelTroopType troopType = TowModelTroopType.LightCavalry;
-    private const int baseSizeWidth = 25;
-    private const int baseSizeLength = 50;
+    private const int baseSizeWidth = 30;
+    private const int baseSizeLength = 60;
 
     public ElvenSteedTowMount(TowObject owner) : this(owner, m: 9, ws: 3, bs: null, s: 3, t: null, w: null, i: 4, a: 1, ld: null)
     {
-        // special rules - elven steeds are swift and intelligent
         AssignSpecialRule(new FastCavalry());
+        AssignSpecialRule(new Swiftstride());
     }
 
     protected ElvenSteedTowMount(TowObject owner, int? m, int ws, int? bs, int s, int? t, int? w, int i, int a, int? ld)

@@ -17,7 +17,6 @@ Kingdom of Bretonnia
 Lizardmen
 Ogre Kingdoms
 Orc & Goblin Tribes
-Regiments of Renown
 Skaven
 Tomb Kings of Khemri
 Vampire Counts
@@ -39,7 +38,19 @@ ClashBard.Tow.Models - main project, contains all models for units and rules
     etc. - each faction has its own folder with specific rules and magic items
 ClashBard.Tow.Pdf - ignore this project
 ClashBard.Tow.Pdf.Console - ignore this project
-ClashBard.Tow.StaticData - use if some static data needed across all projects
+ClashBard.Tow.StaticData - use if some static data needed across all projects, also contains json data with all faction units (huge files)
+
+If you create .md file with applied changes, place it into {project}/Documentation folder.
+Do not create .md files in other projects.
+
+Whenever you implement a new model, use:
+https://tow.whfb.app/unit/{unit}
+/ClashBard.Tow.StaticData/{faction}.json
+Not all information is listed in 1st link (like points), so wheneve implementin model search also in faction json for that unit.
+
+So if you implementing/validating model "Eellyrian Reavers" from faction "High Elf Realms" use links:
+https://tow.whfb.app/unit/ellyrian-reavers
+/ClashBard.Tow.StaticData/high-elf-realms.json
 
 Useful naming conventions:
 - model - plastic model represnting an entity in the game
@@ -52,4 +63,7 @@ Useful naming conventions:
 Naming convention used in the project:
 - additianal models - models that is part of another mdoel (like a chariot driver or monster handler)
 - mount - model or an option to upgrade for a model to be mounted on a mount (like a horse, chariot, monster)
-
+- if model has a weapon by itself, weapons shall be AssignDefault in constructor
+- if model has an option to buy a weapon, it shall be added to AvailableWeapons list
+- same for armors
+- base class for models - TowModel in it's constructor assignes Hand Weapon (every model has hand weapon by default)
