@@ -31,6 +31,36 @@ public enum DarkElvesTowModelMountType
 
 
 
+public enum HighElvesTowModelMountType
+{
+    [Description("Elven Steed")]
+    ElvenSteed,
+    [Description("Barded Elven Steed")]
+    BardedElvenSteed,
+    [Description("Great Eagle")]
+    GreatEagle,
+    [Description("Ithilmar Chariot")]
+    IthilmarChariot,
+    [Description("Lion Chariot")]
+    LionChariot,
+    [Description("Tiranoc Chariot")]
+    TiranocChariot,
+    [Description("Star Dragon")]
+    StarDragon,
+    [Description("Sun Dragon")]
+    SunDragon,
+    [Description("Moon Dragon")]
+    MoonDragon,
+    [Description("Griffon")]
+    Griffon,
+    [Description("Flamespyre Phoenix")]
+    FlamesphyrePhoenix,
+    [Description("Frostheart Phoenix")]
+    FrostheartPhoenix,
+}
+
+
+
 /*
  * Lords of Bretonnia (Foot)
 Lords of Bretonnia (Bretonnian Warhorse)

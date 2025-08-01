@@ -434,4 +434,26 @@ public enum TowSpecialRuleType
 
     [Description("Cold-Blooded Banner")]
     ColdBloodedBannerRules,
+
+    // High Elves Special Rules
+    [Description("Always Strikes First")]
+    AlwaysStrikesFirst,
+    [Description("Valour of Ages")]
+    ValourOfAges,
+    [Description("Phoenix Reborn")]
+    PhoenixReborn,
+    [Description("Attuned to Magic")]
+    AttunedToMagic,
+    [Description("Forest Strider")]
+    ForestStrider,
+    [Description("Hatred Dark Elves")]
+    HatredDarkElves,
+    [Description("Woodsman")]
+    Woodsman,
+    [Description("Phoenix Fire")]
+    PhoenixFire,
+    [Description("Wake of Fire")]
+    WakeOfFire,
+    [Description("Ward Save")]
+    WardSave,
 }

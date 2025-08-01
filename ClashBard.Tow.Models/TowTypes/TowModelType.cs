@@ -77,6 +77,63 @@ public enum DarkElvesTowModelType
     ReaperBoltThrower,
 }
 
+public enum HighElvesTowModelType
+{
+    // Lords
+    [Description("Eltharion the Grim")]
+    EltharionTheGrim,
+    [Description("Prince")]
+    Prince,
+    [Description("Archmage")]
+    Archmage,
+    
+    // Heroes
+    [Description("Noble")]
+    Noble,
+    [Description("Mage")]
+    Mage,
+    [Description("Loremaster of Hoeth")]
+    LoremasterOfHoeth,
+    
+    // Core Units
+    [Description("Lothern Sea Guard")]
+    LothernSeaGuard,
+    [Description("Spearmen")]
+    Spearmen,
+    [Description("Archers")]
+    Archers,
+    [Description("Silver Helms")]
+    SilverHelms,
+    
+    // Special Units
+    [Description("Phoenix Guard")]
+    PhoenixGuard,
+    [Description("White Lions of Chrace")]
+    WhiteLionsOfChrace,
+    [Description("Sword Masters of Hoeth")]
+    SwordMastersOfHoeth,
+    [Description("Shadow Warriors")]
+    ShadowWarriors,
+    [Description("Ellyrian Reavers")]
+    EllyrianReavers,
+    [Description("Tiranoc Chariots")]
+    TiranocChariots,
+    [Description("Lion Chariots of Chrace")]
+    LionChariotsOfChrace,
+    [Description("Eagle Claw Bolt Thrower")]
+    EagleClawBoltThrower,
+    
+    // Rare Units
+    [Description("Flamespyre Phoenix")]
+    FlamesphyrePhoenix,
+    [Description("Frostheart Phoenix")]
+    FrostheartPhoenix,
+    [Description("Great Eagle")]
+    GreatEagle,
+    [Description("Dragons")]
+    Dragons,
+}
+
 /*
  * Lords of Bretonnia (Foot)
 Lords of Bretonnia (Bretonnian Warhorse)
