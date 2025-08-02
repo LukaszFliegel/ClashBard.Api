@@ -57,6 +57,8 @@ public enum HighElvesTowModelMountType
     FlamesphyrePhoenix,
     [Description("Frostheart Phoenix")]
     FrostheartPhoenix,
+    [Description("Unicorn")]
+    Unicorn,
 }
 
 

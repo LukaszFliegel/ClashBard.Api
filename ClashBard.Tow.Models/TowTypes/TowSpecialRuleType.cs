@@ -448,10 +448,14 @@ public enum TowSpecialRuleType
     ColdBloodedBannerRules,
 
     // High Elves Special Rules
+    [Description("Accomplished Archers")]
+    AccomplishedArchers,
     [Description("Always Strikes First")]
     AlwaysStrikesFirst,
     [Description("Valour of Ages")]
     ValourOfAges,
+    [Description("Lore of Saphery")]
+    LoreOfSaphery,
     [Description("Phoenix Reborn")]
     PhoenixReborn,
     [Description("Attuned to Magic")]
@@ -470,4 +474,20 @@ public enum TowSpecialRuleType
     BlizzardAura,
     [Description("Ward Save")]
     WardSave,
+    [Description("Mighty Constitution")]
+    MightyConstitution,
+    [Description("Lion Cloak")]
+    LionCloak,
+    [Description("Blessings of Asuryan")]
+    BlessingsOfAsuryan,
+    [Description("Dragon Armour")]
+    DragonArmour,
+    [Description("Arrows of Isha")]
+    ArrowsOfIsha,
+    [Description("Ithilmar Armour")]
+    IthilmarArmour,
+    [Description("Ithilmar Weapons")]
+    IthilmarWeapons,
+    [Description("Horn of Isha")]
+    HornOfIsha,
 }

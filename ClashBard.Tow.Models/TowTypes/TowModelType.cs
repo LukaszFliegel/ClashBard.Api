@@ -94,6 +94,20 @@ public enum HighElvesTowModelType
     Mage,
     [Description("Loremaster of Hoeth")]
     LoremasterOfHoeth,
+    [Description("Ishaya Vess")]
+    IshayaVess,
+    [Description("Korhil Lionmane")]
+    KorhilLionmane,
+    [Description("Chracian Chieftain")]
+    ChracianChieftain,
+    [Description("Dragon Mage")]
+    DragonMage,
+    [Description("Handmaiden of the Everqueen")]
+    HandmaidenOfTheEverqueen,
+    [Description("Sea Guard Garrison Commander")]
+    SeaGuardGarrisonCommander,
+    [Description("Storm Weaver")]
+    StormWeaver,
     
     // Core Units
     [Description("Lothern Sea Guard")]

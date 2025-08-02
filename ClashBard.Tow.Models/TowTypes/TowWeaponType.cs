@@ -109,4 +109,16 @@ public enum TowWeaponType
     WrithingTentacles,
     [Description("Ravager Harpoon")]
     RavagerHarpoon,
+
+    // High Elf Realms weapon types
+    [Description("Mathlann's Ire")]
+    MathlannsIre,
+    [Description("Chayal")]
+    Chayal,
+    [Description("Chracian Great Blade")]
+    ChracianGreatBlade,
+    [Description("Handmaiden's Spear")]
+    HandmaidensSpear,
+    [Description("Bow of Avelorn")]
+    BowOfAvelorn,
 }

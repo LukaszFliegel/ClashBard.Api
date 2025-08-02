@@ -9,26 +9,29 @@ namespace ClashBard.Tow.Models.FactionModels.HighElfRealms.Characters;
 
 public class PrinceTowCharacter: TowCharacter
 {
-    private static int pointsCost = 120;
+    private static int pointsCost = 130;
 
     public PrinceTowCharacter(TowObject owner)
-        :base(owner, HighElvesTowModelType.Prince, 5, 6, 6, 4, 3, 3, 6, 4, 10, pointsCost,
+        :base(owner, HighElvesTowModelType.Prince, 5, 7, 7, 4, 3, 3, 6, 4, 10, pointsCost,
             TowModelTroopType.RegularInfantryCharacter, new HighElvesTowFaction(), 25, 25,
             new TowMagicItemCategory[] { TowMagicItemCategory.MagicArmour, TowMagicItemCategory.MagicWeapon, TowMagicItemCategory.Talisman, TowMagicItemCategory.EnchantedItem },
             mayBuyMagicItemsUpToPoints: 100)
     {
         // special rules
-        AssignSpecialRule(new AlwaysStrikesFirst());
-        AssignSpecialRule(new ElvenReflexes());
+        AssignSpecialRule(new IthilmarWeapons());
+        AssignSpecialRule(new StrikeFirst());
         AssignSpecialRule(new ValourOfAges());
-        AssignSpecialRule(new MartialProwess());
 
         // weapons
-        AvailableWeapons.Add((TowWeaponType.Longbow, 5));
+        AvailableWeapons.Add((TowWeaponType.Longbow, 4));
         AvailableWeapons.Add((TowWeaponType.AdditionalHandWeapon, 3));
+        AvailableWeapons.Add((TowWeaponType.CavalrySpear, 2));
         AvailableWeapons.Add((TowWeaponType.GreatWeapon, 4));
         AvailableWeapons.Add((TowWeaponType.Halberd, 3));
         AvailableWeapons.Add((TowWeaponType.Lance, 4));
+
+        // Optional Rules weapon - Bow of Avelorn (from JSON: 12 pts)
+        AvailableWeapons.Add((TowWeaponType.BowOfAvelorn, 12));
 
         // armours
         AssignDefault(new LightArmourTowArmour(this));
@@ -38,12 +41,12 @@ public class PrinceTowCharacter: TowCharacter
         AvailableArmours.Add((TowArmourType.Shield, 2));        
 
         // mounts
-        AvailableMounts.Add((HighElvesTowModelMountType.ElvenSteed, 12));
+        AvailableMounts.Add((HighElvesTowModelMountType.ElvenSteed, 14));
         AvailableMounts.Add((HighElvesTowModelMountType.BardedElvenSteed, 18));
-        AvailableMounts.Add((HighElvesTowModelMountType.GreatEagle, 40));
-        AvailableMounts.Add((HighElvesTowModelMountType.Griffon, 150));
-        AvailableMounts.Add((HighElvesTowModelMountType.StarDragon, 350));
-        AvailableMounts.Add((HighElvesTowModelMountType.SunDragon, 280));
-        AvailableMounts.Add((HighElvesTowModelMountType.MoonDragon, 240));
+        AvailableMounts.Add((HighElvesTowModelMountType.GreatEagle, 60));
+        AvailableMounts.Add((HighElvesTowModelMountType.Griffon, 130));
+        AvailableMounts.Add((HighElvesTowModelMountType.StarDragon, 290));
+        AvailableMounts.Add((HighElvesTowModelMountType.SunDragon, 180));
+        AvailableMounts.Add((HighElvesTowModelMountType.MoonDragon, 235));
     }
 }
