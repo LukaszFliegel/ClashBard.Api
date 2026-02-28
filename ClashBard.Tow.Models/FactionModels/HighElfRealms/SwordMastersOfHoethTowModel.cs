@@ -1,7 +1,8 @@
+using ClashBard.Tow.Models.Armors;
 using ClashBard.Tow.Models.Factions;
 using ClashBard.Tow.Models.SpecialRules;
-using ClashBard.Tow.Models.SpecialRules.HighElvesSpecialRules;
 using ClashBard.Tow.Models.SpecialRules.DarkElvesSpecialRules;
+using ClashBard.Tow.Models.SpecialRules.HighElvesSpecialRules;
 using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.Models.Weapons;
 
@@ -9,7 +10,7 @@ namespace ClashBard.Tow.Models.FactionModels.HighElfRealms;
 
 public class SwordMastersOfHoethTowModel : TowModel
 {
-    private static int pointsCost = 16;
+    private static int pointsCost = 14;
 
     public SwordMastersOfHoethTowModel(TowObject owner) : this(owner, m: 5, ws: 6, bs: 4, s: 3, t: 3, w: 1, i: 6, a: 1, ld: 8)
     {
@@ -17,20 +18,26 @@ public class SwordMastersOfHoethTowModel : TowModel
     }
 
     protected SwordMastersOfHoethTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(owner, HighElvesTowModelType.SwordMastersOfHoeth, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new HighElvesTowFaction(), 25, 25, minUnitSize: 10)
+        : base(owner, HighElvesTowModelType.SwordMastersOfHoeth, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new HighElvesTowFaction(), 25, 25, minUnitSize: 5)
     {                
-        // special rules
+        // special rules per JSON
+        AssignSpecialRule(new CleavingBlow());
         AssignSpecialRule(new CloseOrder());
+        AssignSpecialRule(new DeflectShots());
         AssignSpecialRule(new ElvenReflexes());
+        AssignSpecialRule(new IthilmarArmour());
+        AssignSpecialRule(new MagicResistance1());
         AssignSpecialRule(new ValourOfAges());
-        AssignSpecialRule(new MartialProwess());
-        AssignSpecialRule(new AlwaysStrikesFirst());
+        AssignSpecialRule(new WarriorsOfTheWhiteTower());
 
-        // weapons - Sword Masters carry great weapons (greatswords)       
-        AvailableWeapons.Add((TowWeaponType.GreatWeapon, 0)); 
+        // options
+        AvailableSpecialRules.Add((TowSpecialRuleType.Drilled, 1));
 
-        // armours - No armor, they rely on skill
-        // No default armor assigned
+        // weapons - Swords of Hoeth (magical great swords, default equipment)
+        AssignDefault(new SwordsOfHoethTowWeapon(this));
+
+        // armours - Heavy armour (default active equipment per JSON)
+        AssignDefault(new HeavyArmourTowArmour(this));
     }
 }
 

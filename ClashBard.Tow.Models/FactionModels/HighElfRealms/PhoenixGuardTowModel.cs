@@ -1,3 +1,4 @@
+using ClashBard.Tow.Models.Armors;
 using ClashBard.Tow.Models.Factions;
 using ClashBard.Tow.Models.SpecialRules;
 using ClashBard.Tow.Models.SpecialRules.HighElvesSpecialRules;
@@ -17,19 +18,20 @@ public class PhoenixGuardTowModel : TowModel
     }
 
     protected PhoenixGuardTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
-        : base(owner, HighElvesTowModelType.PhoenixGuard, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.RegularInfantry, new HighElvesTowFaction(), 25, 25, minUnitSize: 5)
+        : base(owner, HighElvesTowModelType.PhoenixGuard, m, ws, bs, s, t, w, i, a, ld, pointCost: pointsCost, TowModelTroopType.HeavyInfantry, new HighElvesTowFaction(), 25, 25, minUnitSize: 5)
     {                
         // special rules
+        AssignSpecialRule(new BlessingsOfAsuryan());
         AssignSpecialRule(new CloseOrder());
         AssignSpecialRule(new ElvenReflexes());
         AssignSpecialRule(new Fear());
         AssignSpecialRule(new MartialProwess());
         AssignSpecialRule(new Veteran());
-        // TODO: Missing special rules: BlessingsOfAsuryan, WitnessToDestiny
+        AssignSpecialRule(new WitnessToDestiny());
 
         // weapons        
-        // Phoenix Guard carry ceremonial halberds (will use weapon type assignment instead of instantiating)
-        AvailableWeapons.Add((TowWeaponType.Halberd, 0)); // They come with halberds by default
+        // Phoenix Guard carry ceremonial halberds by default
+        AssignDefault(new CeremonialHalberdTowWeapon(this));
 
         // armours
         AssignDefault(new FullPlateArmourTowArmour(this));

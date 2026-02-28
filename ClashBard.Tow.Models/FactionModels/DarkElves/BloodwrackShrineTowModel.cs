@@ -9,7 +9,7 @@ public class BloodwrackShrineTowModel : TowModel
 {
     private static int pointsCost = 175;
 
-    public BloodwrackShrineTowModel(TowObject owner) : this(owner, m: 2, ws: null, bs: 2, s: 5, t: 5, w: 5, i: null, a: null, ld: null)
+    public BloodwrackShrineTowModel(TowObject owner) : this(owner, m: 2, ws: null, bs: null, s: 5, t: 5, w: 5, i: null, a: null, ld: null)
     {
         
     }

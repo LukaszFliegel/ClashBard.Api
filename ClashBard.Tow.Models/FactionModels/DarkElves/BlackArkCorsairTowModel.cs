@@ -21,12 +21,11 @@ public class BlackArkCorsairTowModel : TowModel
             25, 25, minUnitSize: 10)
     {
         // special rules
-        AssignSpecialRule(new CloseOrder());
         AssignSpecialRule(new ElvenReflexes());
         AssignSpecialRule(new HatredHighElves());
-        AssignSpecialRule(new MartialProwess());
-
-        AvailableSpecialRules.Add((TowSpecialRuleType.Veteran, 1));
+        AssignSpecialRule(new MoveThroughCover());
+        AssignSpecialRule(new OpenOrder());
+        AssignSpecialRule(new SeaDragonCloak());
 
         // weapons
         OptionalWeapons.Add(new TowMandatoryOneOfTwoOption<TowWeaponType>(this, TowWeaponType.AdditionalHandWeapon, 0, TowWeaponType.RepeaterHandbow, 0));

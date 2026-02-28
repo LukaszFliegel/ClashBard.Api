@@ -52,6 +52,9 @@ So if you implementing/validating model "Eellyrian Reavers" from faction "High E
 https://tow.whfb.app/unit/ellyrian-reavers
 /ClashBard.Tow.StaticData/high-elf-realms.json
 
+Whenever you would implement new special rule, check for it's description under:
+https://tow.whfb.app/special-rules/{rule_name} (e.g. rule `Warriors of Nagarythe` shall be checked under https://tow.whfb.app/special-rules/warriors-of-nagarythe)
+
 Useful naming conventions:
 - model - plastic model represnting an entity in the game
 - unit - group of models that can be used in the game

@@ -124,6 +124,8 @@ public enum HighElvesTowModelType
     PhoenixGuard,
     [Description("White Lions of Chrace")]
     WhiteLionsOfChrace,
+    [Description("Chracian Woodsmen")]
+    ChracianWoodsmen,
     [Description("Sword Masters of Hoeth")]
     SwordMastersOfHoeth,
     [Description("Shadow Warriors")]
@@ -136,8 +138,14 @@ public enum HighElvesTowModelType
     LionChariotsOfChrace,
     [Description("Eagle Claw Bolt Thrower")]
     EagleClawBoltThrower,
+    [Description("Lothern Skycutters")]
+    LothernSkycutters,
+    [Description("Dragon Princes")]
+    DragonPrinces,
     
     // Rare Units
+    [Description("Lion Guard")]
+    LionGuard,
     [Description("Flamespyre Phoenix")]
     FlamesphyrePhoenix,
     [Description("Frostheart Phoenix")]
@@ -146,6 +154,14 @@ public enum HighElvesTowModelType
     GreatEagle,
     [Description("Dragons")]
     Dragons,
+    [Description("Ship's Company")]
+    ShipsCompany,
+    [Description("Merwyrm")]
+    Merwyrm,
+    [Description("War Lions")]
+    WarLions,
+    [Description("Sisters of Avelorn")]
+    SistersOfAvelorn,
 }
 
 /*

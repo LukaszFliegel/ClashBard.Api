@@ -30,7 +30,11 @@ public class EllyrianReaversTowModel : TowModel
 
         // weapons        
         AvailableWeapons.Add((TowWeaponType.CavalrySpear, 0)); // Default weapon
-        AvailableWeapons.Add((TowWeaponType.Shortbow, 1)); // Optional shortbows
+        AvailableWeapons.Add((TowWeaponType.Shortbow, 2)); // Optional shortbows (+2 pts per model)
+
+        // Special rule options
+        AvailableSpecialRules.Add((TowSpecialRuleType.Scouts, 2)); // +2 pts per model
+        AvailableSpecialRules.Add((TowSpecialRuleType.Skirmishers, 1)); // +1 pt per model
 
         // armours
         AssignDefault(new LightArmourTowArmour(this));

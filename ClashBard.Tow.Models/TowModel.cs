@@ -607,6 +607,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         switch (modelTroopType)
         {
             case TowModelTroopType.RegularInfantry:
+            case TowModelTroopType.HeavyInfantry:
             case TowModelTroopType.RegularInfantryCharacter:
                 return 1;
             case TowModelTroopType.MonstrousInfantry:
@@ -649,6 +650,7 @@ public class TowModel: TowObjectWithSpecialRules, ISavesBearer, ISaveImprover
         switch (ModelTroopType)
         {
             case TowModelTroopType.RegularInfantry:
+            case TowModelTroopType.HeavyInfantry:
             case TowModelTroopType.RegularInfantryCharacter:
                 BaseSizeLength = 25;
                 BaseSizeWidth = 25;
@@ -717,6 +719,7 @@ public enum TowModelTroopType
 {     
     //Undefined = 0,
     RegularInfantry = 1,
+    HeavyInfantry,
     RegularInfantryCharacter,
     MonstrousInfantry,
     Swarm,

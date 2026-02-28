@@ -447,6 +447,34 @@ public enum TowSpecialRuleType
     [Description("Cold-Blooded Banner")]
     ColdBloodedBannerRules,
 
+    // Dark Elves Magic Items
+    [Description("Multiple Shots (D3+1)")]
+    MultipleShotsD3Plus1,
+    [Description("Executioner's Axe Notes")]
+    ExecutionersAxeRules,
+    [Description("Sword of Ruin Notes")]
+    SwordOfRuinRules,
+    [Description("Whip of Agony Notes")]
+    WhipOfAgonyRules,
+    [Description("Shield of Ghrond Notes")]
+    ShieldOfGhrondRules,
+    [Description("Blood Armour Notes")]
+    BloodArmourRules,
+    [Description("Pearl of Infinite Bleakness Notes")]
+    PearlOfInfiniteBleanessRules,
+    [Description("Black Dragon Egg Notes")]
+    BlackDragonEggRules,
+    [Description("Hydra's Tooth Notes")]
+    HydrasToothRules,
+    [Description("The Guiding Eye Notes")]
+    GuidingEyeRules,
+    [Description("Black Staff Notes")]
+    BlackStaffRules,
+    [Description("Banner of Nagarythe Notes")]
+    BannerOfNagarytheRules,
+    [Description("Standard of Slaughter Notes")]
+    StandardOfSlaughterRules,
+
     // High Elves Special Rules
     [Description("Accomplished Archers")]
     AccomplishedArchers,
@@ -490,4 +518,30 @@ public enum TowSpecialRuleType
     IthilmarWeapons,
     [Description("Horn of Isha")]
     HornOfIsha,
+    [Description("Champions of Chrace")]
+    ChampionsOfChrace,
+    [Description("Witness to Destiny")]
+    WitnessToDestiny,
+    [Description("Warriors of Nagarythe")]
+    WarriorsOfNagarythe,
+    [Description("Stomp Attacks (1)")]
+    StompAttacks1,
+    [Description("Stomp Attacks (2)")]
+    StompAttacks2,
+    [Description("Chracian Warriors")]
+    ChracianWarriors,
+    [Description("King's Guard")]
+    KingsGuard,
+    [Description("Deflect Shots")]
+    DeflectShots,
+    [Description("Warriors of the White Tower")]
+    WarriorsOfTheWhiteTower,
+    [Description("From the Ashes")]
+    FromTheAshes,
+    [Description("Sons of Caledor")]
+    SonsOfCaledor,
+    [Description("Abyssal Cloak")]
+    AbyssalCloak,
+    [Description("Enfeebling Cold")]
+    EnfeeblingCold,
 }

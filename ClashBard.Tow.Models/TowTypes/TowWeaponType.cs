@@ -17,6 +17,8 @@ public enum TowWeaponType
     Morningstar,
     [Description("Halberd")]
     Halberd,
+    [Description("Ceremonial Halberd")]
+    CeremonialHalberd,
     [Description("Whip")]
     Whip,
     [Description("Lance")]
@@ -117,8 +119,18 @@ public enum TowWeaponType
     Chayal,
     [Description("Chracian Great Blade")]
     ChracianGreatBlade,
+    [Description("Swords of Hoeth")]
+    SwordsOfHoeth,
     [Description("Handmaiden's Spear")]
     HandmaidensSpear,
     [Description("Bow of Avelorn")]
     BowOfAvelorn,
+    [Description("Lashing Talons")]
+    LashingTalons,
+    [Description("Serpentine Tail")]
+    SerpentineTail,
+    [Description("Briny Breath")]
+    BrinyBreath,
+    [Description("Eagle-Eye Bolt Thrower")]
+    EagleEyeBoltThrower,
 }

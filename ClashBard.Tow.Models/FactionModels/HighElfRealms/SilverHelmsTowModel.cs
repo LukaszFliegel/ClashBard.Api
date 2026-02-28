@@ -29,7 +29,7 @@ public class SilverHelmsTowModel : TowModel
         AssignSpecialRule(new ValourOfAges());
 
         // weapons        
-        AvailableWeapons.Add((TowWeaponType.Lance, 3));
+        AssignDefault(new LanceTowWeapon(this));
         // Default: Hand weapons, already included in base class
 
         // armours

@@ -1,7 +1,8 @@
+using ClashBard.Tow.Models.Armors;
 using ClashBard.Tow.Models.Factions;
 using ClashBard.Tow.Models.SpecialRules;
-using ClashBard.Tow.Models.SpecialRules.HighElvesSpecialRules;
 using ClashBard.Tow.Models.SpecialRules.DarkElvesSpecialRules;
+using ClashBard.Tow.Models.SpecialRules.HighElvesSpecialRules;
 using ClashBard.Tow.Models.TowTypes;
 using ClashBard.Tow.Models.Weapons;
 
@@ -13,7 +14,7 @@ public class LothernSeaGuardTowModel : TowModel
 
     public LothernSeaGuardTowModel(TowObject owner) : this(owner, m: 5, ws: 4, bs: 4, s: 3, t: 3, w: 1, i: 4, a: 1, ld: 8)
     {
-        SetCommandGroup(new LothernSeaGuardChampionTowModel(this), 7, 5, 5, 50, "Sea Master");
+        SetCommandGroup(new LothernSeaGuardChampionTowModel(this), 7, 5, 5, 25, "Sea Master");
     }
 
     protected LothernSeaGuardTowModel(TowObject owner, int? m, int ws, int bs, int s, int t, int w, int i, int a, int ld) 
@@ -23,23 +24,26 @@ public class LothernSeaGuardTowModel : TowModel
         AssignSpecialRule(new CloseOrder());
         AssignSpecialRule(new ElvenReflexes());
         AssignSpecialRule(new MartialProwess());
+        AssignSpecialRule(new NavalDiscipline());
         AssignSpecialRule(new ValourOfAges());
 
-        // weapons
-        AssignDefault(new HandWeaponTowWeapon(this));
+        // weapons - all are default equipment according to official rules
         AssignDefault(new ThrustingSpearTowWeapon(this));
-        AvailableWeapons.Add((TowWeaponType.Warbow, 0)); // Default weapon
+        AssignDefault(new WarbowTowWeapon(this));
 
         // armours
         AssignDefault(new LightArmourTowArmour(this));
-        AvailableArmours.Add((TowArmourType.Shield, 1)); // Optional shield
+        
+        // optional upgrades
+        AvailableArmours.Add((TowArmourType.Shield, 1)); // Optional shield upgrade for +1 pt per model
+        AvailableSpecialRules.Add((TowSpecialRuleType.Veteran, 1)); // Optional veteran upgrade for +1 pt per model
     }
 }
 
 public class LothernSeaGuardChampionTowModel : LothernSeaGuardTowModel
 {
     public LothernSeaGuardChampionTowModel(TowObject owner)
-        : base(owner, m: 5, ws: 4, bs: 4, s: 3, t: 3, w: 1, i: 4, a: 2, ld: 8)
+        : base(owner, m: 5, ws: 4, bs: 5, s: 3, t: 3, w: 1, i: 4, a: 2, ld: 8)
     {
         
     }

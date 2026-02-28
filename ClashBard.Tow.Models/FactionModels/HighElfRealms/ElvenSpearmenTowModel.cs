@@ -32,6 +32,19 @@ public class ElvenSpearmenTowModel : TowModel
         // armours
         AssignDefault(new LightArmourTowArmour(this));
         AssignDefault(new ShieldTowArmour(this));
+
+        // Unit Options (from JSON data)
+        // Shieldwall (+10 points for the unit)
+        AvailableSpecialRules.Add((TowSpecialRuleType.Shieldwall, 10));
+        
+        // Veteran (+1 point per model)
+        AvailableSpecialRules.Add((TowSpecialRuleType.Veteran, 1));
+        
+        // Move Through Cover (+1 point per model, only for Chracian Warhost composition)
+        AvailableSpecialRules.Add((TowSpecialRuleType.MoveThroughCover, 1));
+        
+        // Lion Cloak (+10 points, only for Chracian Warhost composition)
+        AvailableSpecialRules.Add((TowSpecialRuleType.LionCloak, 10));
     }
 }
 
