@@ -2,11 +2,26 @@ import { Empty } from 'antd';
 import { useArmy } from '../contexts/ArmyContext';
 import CharacterEditor from './CharacterEditor';
 import UnitEditor from './UnitEditor';
+import UnitPicker from './UnitPicker';
 
 export default function EditorPanel() {
   const { state, activeArmy } = useArmy();
 
-  if (!activeArmy || !state.selectedItemId) {
+  if (!activeArmy) {
+    return (
+      <Empty
+        description="Select or create an army to start building"
+        style={{ marginTop: 80 }}
+      />
+    );
+  }
+
+  // Show the inline unit/character picker when a slot is selected
+  if (state.addSlot) {
+    return <UnitPicker slot={state.addSlot} />;
+  }
+
+  if (!state.selectedItemId) {
     return (
       <Empty
         description="Select a character or unit to edit"
@@ -29,3 +44,4 @@ export default function EditorPanel() {
 
   return null;
 }
+

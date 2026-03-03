@@ -51,10 +51,13 @@ export interface CharacterCatalogDto {
   basePoints: number;
   stats: ModelStatsDto;
   troopType: string;
+  baseSizeWidth: number | null;
+  baseSizeLength: number | null;
   defaultWeapons: CatalogOptionDto[];
   availableWeapons: CatalogOptionDto[];
   defaultArmours: CatalogOptionDto[];
   availableArmours: CatalogOptionDto[];
+  defaultSpecialRules: CatalogOptionDto[];
   availableSpecialRules: CatalogOptionDto[];
   availableMounts: MountCatalogDto[];
   availableMagicItemCategories: string[];
@@ -70,6 +73,7 @@ export interface CommandGroupDto {
   musicianCost: number | null;
   magicStandardAllowance: number | null;
   championMagicItemAllowance: number | null;
+  championMagicItemCategories: string[] | null;
 }
 
 export interface UnitModelCatalogDto {
@@ -81,10 +85,13 @@ export interface UnitModelCatalogDto {
   troopType: string;
   minUnitSize: number;
   maxUnitSize: number | null;
+  baseSizeWidth: number | null;
+  baseSizeLength: number | null;
   defaultWeapons: CatalogOptionDto[];
   availableWeapons: CatalogOptionDto[];
   defaultArmours: CatalogOptionDto[];
   availableArmours: CatalogOptionDto[];
+  defaultSpecialRules: CatalogOptionDto[];
   availableSpecialRules: CatalogOptionDto[];
   commandGroup: CommandGroupDto | null;
 }

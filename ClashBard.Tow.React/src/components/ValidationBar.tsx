@@ -1,45 +1,27 @@
-import { Alert, Space, Spin, Tag, Typography } from 'antd';
+import { Alert, Flex, Space, Tag, Typography, theme } from 'antd';
 import {
   CheckCircleOutlined,
   CloseCircleOutlined,
-  LoadingOutlined,
 } from '@ant-design/icons';
 import { useArmy } from '../contexts/ArmyContext';
 
 export default function ValidationBar() {
   const { state, activeArmy } = useArmy();
-  const { validation, validating } = state;
-
-  if (!activeArmy) return null;
+  const { validation } = state;
+  const { token } = theme.useToken();
 
   return (
-    <div
-      style={{
-        padding: '8px 24px',
-        borderBottom: '1px solid rgba(255,255,255,0.08)',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 16,
-        flexWrap: 'wrap',
-      }}
+    <Flex
+      className="validation-bar"
+      align="center"
+      gap={16}
+      wrap
+      style={{ borderBottomColor: token.colorBorderSecondary, minHeight: 45 }}
     >
-      {validating && (
-        <Space>
-          <Spin indicator={<LoadingOutlined />} size="small" />
-          <Typography.Text type="secondary">Validating…</Typography.Text>
-        </Space>
-      )}
-
-      {validation && !validating && (
+      {activeArmy && validation && (
         <>
           <Tag
-            icon={
-              validation.isValid ? (
-                <CheckCircleOutlined />
-              ) : (
-                <CloseCircleOutlined />
-              )
-            }
+            icon={validation.isValid ? <CheckCircleOutlined /> : <CloseCircleOutlined />}
             color={validation.isValid ? 'success' : 'error'}
           >
             {validation.isValid ? 'Valid' : 'Invalid'}
@@ -57,27 +39,14 @@ export default function ValidationBar() {
           </Space>
 
           {validation.errors.length > 0 && (
-            <div style={{ width: '100%', marginTop: 4 }}>
+            <Flex vertical style={{ width: '100%', marginTop: 4 }} gap={4}>
               {validation.errors.map((e, i) => (
-                <Alert
-                  key={i}
-                  type="warning"
-                  showIcon
-                  message={e.message}
-                  style={{ marginBottom: 4 }}
-                  closable
-                />
+                <Alert key={i} type="warning" showIcon message={e.message} closable />
               ))}
-            </div>
+            </Flex>
           )}
         </>
       )}
-
-      {!validation && !validating && (
-        <Typography.Text type="secondary">
-          Add models to see points & validation
-        </Typography.Text>
-      )}
-    </div>
+    </Flex>
   );
 }

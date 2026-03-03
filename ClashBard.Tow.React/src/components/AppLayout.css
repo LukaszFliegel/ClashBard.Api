@@ -22,6 +22,11 @@
 
 .theme-toggle {
   font-size: 18px;
+  color: #ffffff !important;
+}
+
+.app-title {
+  color: #ffffff !important;
 }
 
 .app-content {
@@ -50,4 +55,46 @@
   width: 500px;
   min-width: 300px;
   flex-shrink: 0;
+}
+
+/* ── Army list ── */
+.army-list {
+  width: 100%;
+}
+
+.army-card-active {
+  border-color: #722ed1 !important;
+}
+
+.army-card-content {
+  margin-bottom: 8px;
+}
+
+/* ── Composition sections ── */
+.army-section {
+  margin-bottom: 16px;
+  border: 1px solid var(--ant-color-border, rgba(0,0,0,0.15));
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.army-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--ant-color-bg-container-disabled, rgba(0,0,0,0.02));
+  border-bottom: 1px solid var(--ant-color-border, rgba(0,0,0,0.08));
+}
+
+/* ── Validation bar ── */
+.validation-bar {
+  padding: 8px 24px;
+  border-bottom: 1px solid;
+  flex-wrap: wrap;
+}
+
+/* ── Points presets ── */
+.points-presets {
+  margin-top: 6px;
 }

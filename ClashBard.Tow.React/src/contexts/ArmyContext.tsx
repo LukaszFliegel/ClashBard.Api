@@ -22,7 +22,16 @@ const STORAGE_KEY = 'clashbard_armies';
 function loadArmies(): StoredArmy[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as StoredArmy[]) : [];
+    if (!raw) return [];
+    const armies = JSON.parse(raw) as StoredArmy[];
+    // Migrate units missing the championMagicItemIds field (added in v2)
+    return armies.map((army) => ({
+      ...army,
+      units: army.units.map((unit) => ({
+        ...unit,
+        championMagicItemIds: (unit as ArmyUnitConfigDto).championMagicItemIds ?? [],
+      })),
+    }));
   } catch {
     return [];
   }
@@ -34,11 +43,14 @@ function saveArmies(armies: StoredArmy[]) {
 
 /* ─── state ────────────────────────────────────────── */
 
+export type AddSlot = 'character' | 'Core' | 'Special' | 'Rare';
+
 export interface ArmyState {
   armies: StoredArmy[];
   activeArmyId: string | null;
   selectedItemId: string | null;
   selectedItemType: 'character' | 'unit' | null;
+  addSlot: AddSlot | null;
   validation: ArmyValidationResponseDto | null;
   validating: boolean;
 }
@@ -48,6 +60,7 @@ const initialState: ArmyState = {
   activeArmyId: null,
   selectedItemId: null,
   selectedItemType: null,
+  addSlot: null,
   validation: null,
   validating: false,
 };
@@ -70,7 +83,8 @@ type Action =
   | { type: 'UPDATE_UNIT'; payload: { armyId: string; unit: ArmyUnitConfigDto } }
   | { type: 'REMOVE_UNIT'; payload: { armyId: string; unitId: string } }
   | { type: 'SET_VALIDATION'; payload: ArmyValidationResponseDto | null }
-  | { type: 'SET_VALIDATING'; payload: boolean };
+  | { type: 'SET_VALIDATING'; payload: boolean }
+  | { type: 'SET_ADD_SLOT'; payload: AddSlot | null };
 
 function reducer(state: ArmyState, action: Action): ArmyState {
   switch (action.type) {
@@ -90,7 +104,7 @@ function reducer(state: ArmyState, action: Action): ArmyState {
       };
       const armies = [...state.armies, army];
       saveArmies(armies);
-      return { ...state, armies, activeArmyId: army.id, validation: null };
+      return { ...state, armies, activeArmyId: army.id, validation: null, validating: true };
     }
 
     case 'DELETE_ARMY': {
@@ -103,6 +117,7 @@ function reducer(state: ArmyState, action: Action): ArmyState {
         selectedItemId: null,
         selectedItemType: null,
         validation: null,
+        validating: true,
       };
     }
 
@@ -113,6 +128,7 @@ function reducer(state: ArmyState, action: Action): ArmyState {
         selectedItemId: null,
         selectedItemType: null,
         validation: null,
+        validating: true,
       };
 
     case 'SELECT_ITEM':
@@ -120,6 +136,15 @@ function reducer(state: ArmyState, action: Action): ArmyState {
         ...state,
         selectedItemId: action.payload?.id ?? null,
         selectedItemType: action.payload?.itemType ?? null,
+        addSlot: null,
+      };
+
+    case 'SET_ADD_SLOT':
+      return {
+        ...state,
+        addSlot: action.payload,
+        selectedItemId: null,
+        selectedItemType: null,
       };
 
     case 'UPDATE_ARMY_NAME':
@@ -209,7 +234,7 @@ function updateArmy(
     return { ...updater(a), updatedAt: new Date().toISOString() };
   });
   saveArmies(armies);
-  return { ...state, armies, validation: null };
+  return { ...state, armies, validation: null, validating: true };
 }
 
 /* ─── context ──────────────────────────────────────── */

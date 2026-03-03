@@ -1,6 +1,7 @@
 import {
   Card,
   Checkbox,
+  Flex,
   InputNumber,
   Select,
   Space,
@@ -12,6 +13,8 @@ import { useCatalog } from '../contexts/CatalogContext';
 import { useArmy } from '../contexts/ArmyContext';
 import type { ArmyUnitConfigDto } from '../types/army';
 import StatsBlock from './StatsBlock';
+import UnitInfoBlock from './UnitInfoBlock';
+import MagicItemSelector from './MagicItemSelector';
 
 interface Props {
   unit: ArmyUnitConfigDto;
@@ -44,7 +47,17 @@ export default function UnitEditor({ unit }: Props) {
         {cat.name}
       </Typography.Title>
 
-      <StatsBlock stats={cat.stats} troopType={cat.troopType} />
+      <UnitInfoBlock
+        troopType={cat.troopType}
+        baseSizeWidth={cat.baseSizeWidth}
+        baseSizeLength={cat.baseSizeLength}
+        minUnitSize={cat.minUnitSize}
+        defaultWeapons={cat.defaultWeapons}
+        defaultArmours={cat.defaultArmours}
+        defaultSpecialRules={cat.defaultSpecialRules}
+      />
+
+      <StatsBlock stats={cat.stats} />
 
       {/* Unit Size */}
       <Card size="small" title="Unit Size">
@@ -63,38 +76,58 @@ export default function UnitEditor({ unit }: Props) {
       {/* Command Group */}
       {cmd && (
         <Card size="small" title="Command Group">
-          <Space direction="vertical">
+          <Flex vertical gap="small">
             {cmd.championName && cmd.championCost != null && (
-              <Switch
-                checkedChildren={`${cmd.championName} (${cmd.championCost} pts)`}
-                unCheckedChildren={cmd.championName}
-                checked={unit.hasChampion}
-                onChange={(val) => update({ hasChampion: val })}
-              />
+              <Flex align="center" gap={8}>
+                <Switch
+                  checked={unit.hasChampion}
+                  onChange={(val) => update({ hasChampion: val, championMagicItemIds: val ? unit.championMagicItemIds : [] })}
+                />
+                <Typography.Text>
+                  {cmd.championName}{unit.hasChampion ? ` (${cmd.championCost} pts)` : ''}
+                </Typography.Text>
+              </Flex>
             )}
             {cmd.standardCost != null && (
-              <Switch
-                checkedChildren={`Standard Bearer (${cmd.standardCost} pts)`}
-                unCheckedChildren="Standard Bearer"
-                checked={unit.hasStandard}
-                onChange={(val) =>
-                  update({
-                    hasStandard: val,
-                    magicStandardId: val ? unit.magicStandardId : null,
-                  })
-                }
-              />
+              <Flex align="center" gap={8}>
+                <Switch
+                  checked={unit.hasStandard}
+                  onChange={(val) =>
+                    update({
+                      hasStandard: val,
+                      magicStandardId: val ? unit.magicStandardId : null,
+                    })
+                  }
+                />
+                <Typography.Text>
+                  Standard Bearer{unit.hasStandard ? ` (${cmd.standardCost} pts)` : ''}
+                </Typography.Text>
+              </Flex>
             )}
             {cmd.musicianCost != null && (
-              <Switch
-                checkedChildren={`Musician (${cmd.musicianCost} pts)`}
-                unCheckedChildren="Musician"
-                checked={unit.hasMusician}
-                onChange={(val) => update({ hasMusician: val })}
-              />
+              <Flex align="center" gap={8}>
+                <Switch
+                  checked={unit.hasMusician}
+                  onChange={(val) => update({ hasMusician: val })}
+                />
+                <Typography.Text>
+                  Musician{unit.hasMusician ? ` (${cmd.musicianCost} pts)` : ''}
+                </Typography.Text>
+              </Flex>
             )}
-          </Space>
+          </Flex>
         </Card>
+      )}
+
+      {/* Champion Magic Items */}
+      {unit.hasChampion && cmd?.championMagicItemAllowance != null && cmd.championMagicItemAllowance > 0 && cmd.championMagicItemCategories && (
+        <MagicItemSelector
+          title={`${cmd.championName ?? 'Champion'} Magic Items`}
+          selectedIds={unit.championMagicItemIds}
+          allowance={cmd.championMagicItemAllowance}
+          categories={cmd.championMagicItemCategories}
+          onChange={(ids) => update({ championMagicItemIds: ids })}
+        />
       )}
 
       {/* Magic Standard for unit */}
@@ -109,7 +142,7 @@ export default function UnitEditor({ unit }: Props) {
             options={catalog.magicItems
               .filter(
                 (mi) =>
-                  mi.category === 'MagicBanners' &&
+                  mi.category === 'MagicStandard' &&
                   mi.points <= cmd.magicStandardAllowance!,
               )
               .map((mi) => ({
@@ -176,3 +209,4 @@ export default function UnitEditor({ unit }: Props) {
     </Space>
   );
 }
+

@@ -58,6 +58,7 @@ export default function AddModelModal({ modelType, onClose }: Props) {
       equippedArmours: cat.defaultArmours.map((a) => a.id),
       equippedSpecialRules: [],
       magicStandardId: null,
+      championMagicItemIds: [],
     };
     dispatch({
       type: 'ADD_UNIT',

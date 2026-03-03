@@ -1,16 +1,6 @@
 import { useState } from 'react';
-import {
-  Button,
-  Card,
-  List,
-  Typography,
-  Popconfirm,
-  Space,
-} from 'antd';
-import {
-  PlusOutlined,
-  DeleteOutlined,
-} from '@ant-design/icons';
+import { Button, Card, Flex, List, Popconfirm, Typography } from 'antd';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { useArmy } from '../contexts/ArmyContext';
 import CreateArmyModal from './CreateArmyModal';
 
@@ -20,7 +10,7 @@ export default function ArmyListPanel() {
 
   return (
     <>
-      <Space direction="vertical" style={{ width: '100%' }}>
+      <Flex vertical gap="small" className="army-list">
         <Button
           type="primary"
           icon={<PlusOutlined />}
@@ -37,15 +27,10 @@ export default function ArmyListPanel() {
             <Card
               size="small"
               hoverable
-              className={army.id === state.activeArmyId ? 'army-card-active' : ''}
-              style={{
-                marginBottom: 8,
-                borderColor:
-                  army.id === state.activeArmyId ? '#722ed1' : undefined,
-              }}
+              className={`army-card-content${army.id === state.activeArmyId ? ' army-card-active' : ''}`}
               onClick={() => dispatch({ type: 'SET_ACTIVE_ARMY', payload: army.id })}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Flex justify="space-between" align="center">
                 <div>
                   <Typography.Text strong>{army.name}</Typography.Text>
                   <br />
@@ -69,11 +54,11 @@ export default function ArmyListPanel() {
                     onClick={(e) => e.stopPropagation()}
                   />
                 </Popconfirm>
-              </div>
+              </Flex>
             </Card>
           )}
         />
-      </Space>
+      </Flex>
 
       <CreateArmyModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </>

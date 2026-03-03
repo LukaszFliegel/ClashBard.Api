@@ -1,8 +1,8 @@
 import {
   Card,
   Checkbox,
-  Descriptions,
-  Divider,
+  Flex,
+  Radio,
   Select,
   Space,
   Switch,
@@ -14,6 +14,7 @@ import { useArmy } from '../contexts/ArmyContext';
 import type { ArmyCharacterConfigDto } from '../types/army';
 import MagicItemSelector from './MagicItemSelector';
 import StatsBlock from './StatsBlock';
+import UnitInfoBlock from './UnitInfoBlock';
 
 interface Props {
   character: ArmyCharacterConfigDto;
@@ -50,43 +51,48 @@ export default function CharacterEditor({ character }: Props) {
         {cat.name}
       </Typography.Title>
 
-      <StatsBlock stats={cat.stats} troopType={cat.troopType} />
+      <UnitInfoBlock
+        troopType={cat.troopType}
+        baseSizeWidth={cat.baseSizeWidth}
+        baseSizeLength={cat.baseSizeLength}
+        defaultWeapons={cat.defaultWeapons}
+        defaultArmours={cat.defaultArmours}
+        defaultSpecialRules={cat.defaultSpecialRules}
+      />
+
+      <StatsBlock stats={cat.stats} />
 
       {/* General / BSB toggles */}
       <Card size="small" title="Roles">
-        <Space>
-          <Switch
-            checkedChildren="General"
-            unCheckedChildren="General"
-            checked={activeArmy.generalId === character.id}
-            onChange={(checked) =>
-              dispatch({
-                type: 'SET_GENERAL',
-                payload: {
-                  armyId: activeArmy!.id,
-                  characterId: checked ? character.id : null,
-                },
-              })
-            }
-          />
-          {isBsbEligible && (
+        <Flex vertical gap="small">
+          <Flex align="center" gap={8}>
             <Switch
-              checkedChildren="BSB"
-              unCheckedChildren="BSB"
-              checked={character.isBsb}
-              onChange={(checked) => {
-                update({ isBsb: checked, magicStandardId: checked ? character.magicStandardId : null });
+              checked={activeArmy.generalId === character.id}
+              onChange={(checked) =>
                 dispatch({
-                  type: 'SET_BSB',
-                  payload: {
-                    armyId: activeArmy!.id,
-                    characterId: checked ? character.id : null,
-                  },
-                });
-              }}
+                  type: 'SET_GENERAL',
+                  payload: { armyId: activeArmy!.id, characterId: checked ? character.id : null },
+                })
+              }
             />
+            <Typography.Text>General</Typography.Text>
+          </Flex>
+          {isBsbEligible && (
+            <Flex align="center" gap={8}>
+              <Switch
+                checked={character.isBsb}
+                onChange={(checked) => {
+                  update({ isBsb: checked, magicStandardId: checked ? character.magicStandardId : null });
+                  dispatch({
+                    type: 'SET_BSB',
+                    payload: { armyId: activeArmy!.id, characterId: checked ? character.id : null },
+                  });
+                }}
+              />
+              <Typography.Text>Battle Standard Bearer</Typography.Text>
+            </Flex>
           )}
-        </Space>
+        </Flex>
       </Card>
 
       {/* Weapons */}
@@ -165,18 +171,27 @@ export default function CharacterEditor({ character }: Props) {
         <Card size="small" title="Magic">
           <Space direction="vertical" style={{ width: '100%' }}>
             <div>
-              <Typography.Text type="secondary">Level</Typography.Text>
-              <Select
-                style={{ width: '100%' }}
-                value={character.magicLevel}
-                onChange={(val) => update({ magicLevel: val ?? null })}
-                allowClear
-                placeholder={`Base Level ${cat.mageInfo!.baseLevel}`}
-                options={cat.mageInfo!.availableLevelUpgrades.map((l) => ({
-                  value: l.id,
-                  label: `${l.name} (+${l.cost} pts)`,
-                }))}
-              />
+              <Typography.Text type="secondary" style={{ display: 'block', marginBottom: 6 }}>
+                Level
+              </Typography.Text>
+              <Radio.Group
+                value={character.magicLevel ?? '__base__'}
+                optionType="button"
+                buttonStyle="solid"
+                onChange={(e) => {
+                  const val = e.target.value;
+                  update({ magicLevel: val === '__base__' ? null : val });
+                }}
+              >
+                <Radio.Button value="__base__">
+                  Level {cat.mageInfo!.baseLevel} (Base)
+                </Radio.Button>
+                {cat.mageInfo!.availableLevelUpgrades.map((l) => (
+                  <Radio.Button key={l.id} value={l.id}>
+                    {l.name} (+{l.cost} pts)
+                  </Radio.Button>
+                ))}
+              </Radio.Group>
             </div>
             <div>
               <Typography.Text type="secondary">Lore</Typography.Text>
@@ -206,7 +221,7 @@ export default function CharacterEditor({ character }: Props) {
             value={character.magicStandardId}
             onChange={(val) => update({ magicStandardId: val ?? null })}
             options={catalog.magicItems
-              .filter((mi) => mi.category === 'MagicBanners' && mi.points <= cat.bsbInfo!.magicStandardAllowance)
+              .filter((mi) => mi.category === 'MagicStandard' && mi.points <= cat.bsbInfo!.magicStandardAllowance)
               .map((mi) => ({
                 value: mi.id,
                 label: `${mi.name} (${mi.points} pts)`,

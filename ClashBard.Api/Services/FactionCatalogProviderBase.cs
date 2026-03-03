@@ -51,6 +51,11 @@ public abstract class FactionCatalogProviderBase : IFactionCatalogProvider
             .Select(r => new CatalogOptionDto(r.Item1.ToString()!, r.Item1.ToNameString(), r.Item2))
             .ToList();
 
+        var defaultSpecialRules = character.GetSpecialRules()
+            .Where(r => r.PrintInSummary)
+            .Select(r => new CatalogOptionDto(r.RuleType.ToString()!, r.RuleType.ToNameString(), 0))
+            .ToList();
+
         var availableMounts = ExtractMounts(character);
         var availableMagicItemCategories = GetAvailableMagicItemCategories(character);
 
@@ -72,10 +77,13 @@ public abstract class FactionCatalogProviderBase : IFactionCatalogProvider
             character.PointCost,
             stats,
             character.ModelTroopType.ToNameString(),
+            character.BaseSizeWidth,
+            character.BaseSizeLength,
             defaultWeapons,
             availableWeapons,
             defaultArmours,
             availableArmours,
+            defaultSpecialRules,
             availableSpecialRules,
             availableMounts,
             availableMagicItemCategories,
@@ -243,6 +251,11 @@ public abstract class FactionCatalogProviderBase : IFactionCatalogProvider
             .Select(r => new CatalogOptionDto(r.Item1.ToString()!, r.Item1.ToNameString(), r.Item2))
             .ToList();
 
+        var defaultSpecialRules = model.GetSpecialRules()
+            .Where(r => r.PrintInSummary)
+            .Select(r => new CatalogOptionDto(r.RuleType.ToString()!, r.RuleType.ToNameString(), 0))
+            .ToList();
+
         CommandGroupDto? commandGroup = null;
         if (model.ChampionUpgradeCost.HasValue || model.StandardBearerUpgradeCost.HasValue || model.MusicianUpgradeCost.HasValue)
         {
@@ -252,6 +265,7 @@ public abstract class FactionCatalogProviderBase : IFactionCatalogProvider
                 model.StandardBearerUpgradeCost,
                 model.MusicianUpgradeCost,
                 model.MagicStandardUpToPoints,
+                null,
                 null
             );
 
@@ -262,7 +276,18 @@ public abstract class FactionCatalogProviderBase : IFactionCatalogProvider
                 var champMiValue = champMiProp.GetValue(model) as int?;
                 if (champMiValue.HasValue)
                 {
-                    commandGroup = commandGroup with { ChampionMagicItemAllowance = champMiValue };
+                    var champCategories = new List<string>
+                    {
+                        TowMagicItemCategory.MagicWeapon.ToString(),
+                        TowMagicItemCategory.MagicArmour.ToString(),
+                        TowMagicItemCategory.EnchantedItem.ToString(),
+                        TowMagicItemCategory.Talisman.ToString(),
+                    };
+                    commandGroup = commandGroup with
+                    {
+                        ChampionMagicItemAllowance = champMiValue,
+                        ChampionMagicItemCategories = champCategories
+                    };
                 }
             }
         }
@@ -276,10 +301,13 @@ public abstract class FactionCatalogProviderBase : IFactionCatalogProvider
             model.ModelTroopType.ToNameString(),
             model.MinUnitSize,
             model.MaxUnitSize,
+            model.BaseSizeWidth,
+            model.BaseSizeLength,
             defaultWeapons,
             availableWeapons,
             defaultArmours,
             availableArmours,
+            defaultSpecialRules,
             availableSpecialRules,
             commandGroup
         );

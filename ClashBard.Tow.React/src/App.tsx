@@ -15,6 +15,12 @@ export default function App() {
         token: {
           colorPrimary: '#722ed1',
         },
+        components: {
+          Layout: {
+            headerBg: '#1a0a2e',
+            headerColor: '#ffffff',
+          },
+        },
       }}
     >
       <CatalogProvider>

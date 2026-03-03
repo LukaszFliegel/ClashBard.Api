@@ -7,6 +7,7 @@ interface Props {
   allowance: number;
   categories: string[];
   onChange: (ids: string[]) => void;
+  title?: string;
 }
 
 export default function MagicItemSelector({
@@ -14,6 +15,7 @@ export default function MagicItemSelector({
   allowance,
   categories,
   onChange,
+  title = 'Magic Items',
 }: Props) {
   const { catalog } = useCatalog();
 
@@ -22,7 +24,7 @@ export default function MagicItemSelector({
     return catalog.magicItems.filter(
       (mi) =>
         categories.includes(mi.category) &&
-        mi.category !== 'MagicBanners', // banners handled separately
+        mi.category !== 'MagicStandard', // banners handled separately
     );
   }, [catalog, categories]);
 
@@ -50,7 +52,7 @@ export default function MagicItemSelector({
       size="small"
       title={
         <Space>
-          Magic Items
+          {title}
           <Tag color={totalSpent > allowance ? 'red' : 'green'}>
             {totalSpent} / {allowance} pts
           </Tag>

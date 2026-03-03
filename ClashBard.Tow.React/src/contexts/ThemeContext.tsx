@@ -22,7 +22,7 @@ function loadMode(): ThemeMode {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw === 'light' || raw === 'dark') return raw;
   } catch { /* ignore */ }
-  return 'dark';
+  return 'light';
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {

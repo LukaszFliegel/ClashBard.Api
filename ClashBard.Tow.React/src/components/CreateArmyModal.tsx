@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Flex, Form, Input, InputNumber, Modal, Select, Tag } from 'antd';
 import { useArmy } from '../contexts/ArmyContext';
 import { getFactions } from '../api/catalogApi';
@@ -18,6 +18,8 @@ export default function CreateArmyModal({ open, onClose }: Props) {
   const [factions, setFactions] = useState<FactionSummaryDto[]>([]);
   const [loadingFactions, setLoadingFactions] = useState(false);
   const currentPoints = Form.useWatch('pointsLimit', form);
+  const watchedFactionId = Form.useWatch('factionId', form);
+  const prevAutoFill = useRef<string>('');
 
   useEffect(() => {
     if (!open) return;
@@ -28,16 +30,29 @@ export default function CreateArmyModal({ open, onClose }: Props) {
       .finally(() => setLoadingFactions(false));
   }, [open]);
 
+  useEffect(() => {
+    if (!watchedFactionId || factions.length === 0) return;
+    const faction = factions.find((f) => f.id === watchedFactionId);
+    if (!faction) return;
+    const currentName = form.getFieldValue('name') as string | undefined;
+    if (!currentName || currentName === prevAutoFill.current) {
+      form.setFieldValue('name', faction.name);
+      prevAutoFill.current = faction.name;
+    }
+  }, [watchedFactionId, factions, form]);
+
   function handleOk() {
     form.validateFields().then((values) => {
+      const factionName = factions.find((f) => f.id === values.factionId)?.name ?? values.factionId;
       dispatch({
         type: 'CREATE_ARMY',
         payload: {
-          name: values.name,
+          name: (values.name as string | undefined)?.trim() || factionName,
           factionId: values.factionId,
           pointsLimit: values.pointsLimit,
         },
       });
+      prevAutoFill.current = '';
       form.resetFields();
       onClose();
     });
@@ -49,7 +64,7 @@ export default function CreateArmyModal({ open, onClose }: Props) {
       open={open}
       onOk={handleOk}
       onCancel={onClose}
-      destroyOnClose
+      destroyOnHidden
     >
       <Form form={form} layout="vertical" initialValues={{ pointsLimit: 2000 }}>
         <Form.Item

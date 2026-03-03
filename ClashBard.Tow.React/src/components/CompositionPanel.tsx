@@ -1,13 +1,12 @@
-import { useState } from 'react';
 import {
   Button,
-  Collapse,
   Empty,
+  Flex,
   List,
   Popconfirm,
-  Space,
   Tag,
   Typography,
+  theme,
 } from 'antd';
 import {
   PlusOutlined,
@@ -17,12 +16,11 @@ import {
 } from '@ant-design/icons';
 import { useArmy } from '../contexts/ArmyContext';
 import { useCatalog } from '../contexts/CatalogContext';
-import AddModelModal from './AddModelModal';
 
 export default function CompositionPanel() {
   const { state, dispatch, activeArmy } = useArmy();
   const { catalog } = useCatalog();
-  const [addType, setAddType] = useState<'character' | 'unit' | null>(null);
+  const { token } = theme.useToken();
 
   if (!activeArmy) {
     return (
@@ -32,11 +30,9 @@ export default function CompositionPanel() {
       />
     );
   }
-
   const charCatalog = catalog?.characters ?? [];
   const unitCatalog = catalog?.units ?? [];
 
-  // Group units by slot
   const coreUnits = activeArmy.units.filter((u) => {
     const cat = unitCatalog.find((c) => c.modelTypeId === u.modelTypeId);
     return cat?.slotType === 'Core';
@@ -58,24 +54,28 @@ export default function CompositionPanel() {
     );
   }
 
-  const items = [
-    {
-      key: 'characters',
-      label: `Characters (${activeArmy.characters.length})`,
-      extra: (
-        <Button
-          size="small"
-          type="link"
-          icon={<PlusOutlined />}
-          onClick={(e) => {
-            e.stopPropagation();
-            setAddType('character');
-          }}
-        >
+  function SectionHeader({ label, onAdd }: { label: string; onAdd: () => void }) {
+    return (
+      <div className="army-section-header">
+        <Typography.Text strong>{label}</Typography.Text>
+        <Button size="small" type="link" icon={<PlusOutlined />} onClick={onAdd}>
           Add
         </Button>
-      ),
-      children: (
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Typography.Title level={4} style={{ marginTop: 0 }}>
+        {activeArmy.name} – {activeArmy.pointsLimit} pts
+      </Typography.Title>
+
+      <div className="army-section">
+        <SectionHeader
+          label={`Characters (${activeArmy.characters.length})`}
+          onAdd={() => dispatch({ type: 'SET_ADD_SLOT', payload: 'character' })}
+        />
         <List
           size="small"
           dataSource={activeArmy.characters}
@@ -87,13 +87,11 @@ export default function CompositionPanel() {
               <List.Item
                 style={{
                   cursor: 'pointer',
-                  background: isSelected ? 'rgba(114,46,209,0.15)' : undefined,
+                  background: isSelected ? token.colorPrimaryBg : undefined,
+                  borderLeft: isSelected ? `3px solid ${token.colorPrimary}` : '3px solid transparent',
                 }}
                 onClick={() =>
-                  dispatch({
-                    type: 'SELECT_ITEM',
-                    payload: { id: ch.id, itemType: 'character' },
-                  })
+                  dispatch({ type: 'SELECT_ITEM', payload: { id: ch.id, itemType: 'character' } })
                 }
                 actions={[
                   <Popconfirm
@@ -101,110 +99,42 @@ export default function CompositionPanel() {
                     title="Remove?"
                     onConfirm={(e) => {
                       e?.stopPropagation();
-                      dispatch({
-                        type: 'REMOVE_CHARACTER',
-                        payload: { armyId: activeArmy.id, characterId: ch.id },
-                      });
+                      dispatch({ type: 'REMOVE_CHARACTER', payload: { armyId: activeArmy.id, characterId: ch.id } });
                     }}
                   >
-                    <Button
-                      type="text"
-                      danger
-                      size="small"
-                      icon={<DeleteOutlined />}
-                      onClick={(e) => e.stopPropagation()}
-                    />
+                    <Button type="text" danger size="small" icon={<DeleteOutlined />} onClick={(e) => e.stopPropagation()} />
                   </Popconfirm>,
                 ]}
               >
-                <Space>
+                <Flex gap="small" align="center">
                   <Typography.Text>{nameOf(ch.modelTypeId)}</Typography.Text>
                   {activeArmy.generalId === ch.id && (
-                    <Tag color="gold" icon={<StarOutlined />}>
-                      General
-                    </Tag>
+                    <Tag color="gold" icon={<StarOutlined />}>General</Tag>
                   )}
                   {activeArmy.bsbId === ch.id && (
-                    <Tag color="blue" icon={<FlagOutlined />}>
-                      BSB
-                    </Tag>
+                    <Tag color="blue" icon={<FlagOutlined />}>BSB</Tag>
                   )}
-                </Space>
+                </Flex>
               </List.Item>
             );
           }}
         />
-      ),
-    },
-    {
-      key: 'core',
-      label: `Core (${coreUnits.length})`,
-      extra: (
-        <Button
-          size="small"
-          type="link"
-          icon={<PlusOutlined />}
-          onClick={(e) => {
-            e.stopPropagation();
-            setAddType('unit');
-          }}
-        >
-          Add
-        </Button>
-      ),
-      children: <UnitSlotList units={coreUnits} nameOf={nameOf} />,
-    },
-    {
-      key: 'special',
-      label: `Special (${specialUnits.length})`,
-      extra: (
-        <Button
-          size="small"
-          type="link"
-          icon={<PlusOutlined />}
-          onClick={(e) => {
-            e.stopPropagation();
-            setAddType('unit');
-          }}
-        >
-          Add
-        </Button>
-      ),
-      children: <UnitSlotList units={specialUnits} nameOf={nameOf} />,
-    },
-    {
-      key: 'rare',
-      label: `Rare (${rareUnits.length})`,
-      extra: (
-        <Button
-          size="small"
-          type="link"
-          icon={<PlusOutlined />}
-          onClick={(e) => {
-            e.stopPropagation();
-            setAddType('unit');
-          }}
-        >
-          Add
-        </Button>
-      ),
-      children: <UnitSlotList units={rareUnits} nameOf={nameOf} />,
-    },
-  ];
+      </div>
 
-  return (
-    <>
-      <Typography.Title level={4} style={{ marginTop: 0 }}>
-        {activeArmy.name} – {activeArmy.pointsLimit} pts
-      </Typography.Title>
-      <Collapse
-        defaultActiveKey={['characters', 'core', 'special', 'rare']}
-        items={items}
-      />
-      <AddModelModal
-        modelType={addType}
-        onClose={() => setAddType(null)}
-      />
+      <div className="army-section">
+        <SectionHeader label={`Core (${coreUnits.length})`} onAdd={() => dispatch({ type: 'SET_ADD_SLOT', payload: 'Core' })} />
+        <UnitSlotList units={coreUnits} nameOf={nameOf} token={token} />
+      </div>
+
+      <div className="army-section">
+        <SectionHeader label={`Special (${specialUnits.length})`} onAdd={() => dispatch({ type: 'SET_ADD_SLOT', payload: 'Special' })} />
+        <UnitSlotList units={specialUnits} nameOf={nameOf} token={token} />
+      </div>
+
+      <div className="army-section">
+        <SectionHeader label={`Rare (${rareUnits.length})`} onAdd={() => dispatch({ type: 'SET_ADD_SLOT', payload: 'Rare' })} />
+        <UnitSlotList units={rareUnits} nameOf={nameOf} token={token} />
+      </div>
     </>
   );
 }
@@ -212,17 +142,26 @@ export default function CompositionPanel() {
 /* ─── sub-component for unit slots ─── */
 
 import type { ArmyUnitConfigDto } from '../types/army';
+import type { GlobalToken } from 'antd';
 
 function UnitSlotList({
   units,
   nameOf,
+  token,
 }: {
   units: ArmyUnitConfigDto[];
   nameOf: (id: string) => string;
+  token: GlobalToken;
 }) {
   const { state, dispatch, activeArmy } = useArmy();
+  const { catalog } = useCatalog();
 
   if (!activeArmy) return null;
+
+  function pointsOf(modelTypeId: string, amount: number): number {
+    const cat = catalog?.units.find((u) => u.modelTypeId === modelTypeId);
+    return cat ? cat.pointsPerModel * amount : 0;
+  }
 
   return (
     <List
@@ -232,17 +171,16 @@ function UnitSlotList({
       renderItem={(u) => {
         const isSelected =
           state.selectedItemId === u.id && state.selectedItemType === 'unit';
+        const pts = pointsOf(u.modelTypeId, u.amount);
         return (
           <List.Item
             style={{
               cursor: 'pointer',
-              background: isSelected ? 'rgba(114,46,209,0.15)' : undefined,
+              background: isSelected ? token.colorPrimaryBg : undefined,
+              borderLeft: isSelected ? `3px solid ${token.colorPrimary}` : '3px solid transparent',
             }}
             onClick={() =>
-              dispatch({
-                type: 'SELECT_ITEM',
-                payload: { id: u.id, itemType: 'unit' },
-              })
+              dispatch({ type: 'SELECT_ITEM', payload: { id: u.id, itemType: 'unit' } })
             }
             actions={[
               <Popconfirm
@@ -250,25 +188,21 @@ function UnitSlotList({
                 title="Remove?"
                 onConfirm={(e) => {
                   e?.stopPropagation();
-                  dispatch({
-                    type: 'REMOVE_UNIT',
-                    payload: { armyId: activeArmy.id, unitId: u.id },
-                  });
+                  dispatch({ type: 'REMOVE_UNIT', payload: { armyId: activeArmy.id, unitId: u.id } });
                 }}
               >
-                <Button
-                  type="text"
-                  danger
-                  size="small"
-                  icon={<DeleteOutlined />}
-                  onClick={(e) => e.stopPropagation()}
-                />
+                <Button type="text" danger size="small" icon={<DeleteOutlined />} onClick={(e) => e.stopPropagation()} />
               </Popconfirm>,
             ]}
           >
-            <Typography.Text>
-              {nameOf(u.modelTypeId)} × {u.amount}
-            </Typography.Text>
+            <Flex justify="space-between" align="center" style={{ flex: 1, paddingRight: 8 }}>
+              <Typography.Text>
+                {nameOf(u.modelTypeId)} × {u.amount}
+              </Typography.Text>
+              {pts > 0 && (
+                <Typography.Text type="secondary">{pts} pts</Typography.Text>
+              )}
+            </Flex>
           </List.Item>
         );
       }}

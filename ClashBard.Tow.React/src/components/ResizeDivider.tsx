@@ -3,9 +3,10 @@ import { useTheme } from '../contexts/ThemeContext';
 
 interface Props {
   direction?: 'vertical';
+  onResizeEnd?: (prevPercent: number, nextPercent: number) => void;
 }
 
-export default function ResizeDivider({ direction: _ }: Props) {
+export default function ResizeDivider({ direction: _, onResizeEnd }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const { mode } = useTheme();
 
@@ -40,6 +41,21 @@ export default function ResizeDivider({ direction: _ }: Props) {
         document.removeEventListener('mouseup', onMouseUp);
         document.body.style.cursor = '';
         document.body.style.userSelect = '';
+
+        if (onResizeEnd) {
+          const container = divider!.parentElement;
+          if (container) {
+            const totalWidth = container.getBoundingClientRect().width;
+            if (totalWidth > 0) {
+              const prevFinalWidth = prev!.getBoundingClientRect().width;
+              const nextFinalWidth = next!.getBoundingClientRect().width;
+              onResizeEnd(
+                (prevFinalWidth / totalWidth) * 100,
+                (nextFinalWidth / totalWidth) * 100,
+              );
+            }
+          }
+        }
       }
 
       document.body.style.cursor = 'col-resize';
@@ -47,7 +63,7 @@ export default function ResizeDivider({ direction: _ }: Props) {
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
     },
-    [],
+    [onResizeEnd],
   );
 
   const borderColor =
@@ -76,3 +92,4 @@ export default function ResizeDivider({ direction: _ }: Props) {
     />
   );
 }
+

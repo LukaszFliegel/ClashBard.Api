@@ -34,6 +34,7 @@ export interface ArmyUnitConfigDto {
   equippedArmours: string[];
   equippedSpecialRules: string[];
   magicStandardId: string | null;
+  championMagicItemIds: string[];
 }
 
 /* ===== Validation Response DTOs (from API) ===== */

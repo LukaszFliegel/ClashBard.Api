@@ -61,10 +61,13 @@ public record CharacterCatalogDto(
     int BasePoints,
     ModelStatsDto Stats,
     string TroopType,
+    int? BaseSizeWidth,
+    int? BaseSizeLength,
     IReadOnlyList<CatalogOptionDto> DefaultWeapons,
     IReadOnlyList<CatalogOptionDto> AvailableWeapons,
     IReadOnlyList<CatalogOptionDto> DefaultArmours,
     IReadOnlyList<CatalogOptionDto> AvailableArmours,
+    IReadOnlyList<CatalogOptionDto> DefaultSpecialRules,
     IReadOnlyList<CatalogOptionDto> AvailableSpecialRules,
     IReadOnlyList<MountCatalogDto> AvailableMounts,
     IReadOnlyList<string> AvailableMagicItemCategories,
@@ -80,7 +83,8 @@ public record CommandGroupDto(
     int? StandardCost,
     int? MusicianCost,
     int? MagicStandardAllowance,
-    int? ChampionMagicItemAllowance
+    int? ChampionMagicItemAllowance,
+    IReadOnlyList<string>? ChampionMagicItemCategories
 );
 
 // === Unit Model Catalog ===
@@ -93,10 +97,13 @@ public record UnitModelCatalogDto(
     string TroopType,
     int MinUnitSize,
     int? MaxUnitSize,
+    int? BaseSizeWidth,
+    int? BaseSizeLength,
     IReadOnlyList<CatalogOptionDto> DefaultWeapons,
     IReadOnlyList<CatalogOptionDto> AvailableWeapons,
     IReadOnlyList<CatalogOptionDto> DefaultArmours,
     IReadOnlyList<CatalogOptionDto> AvailableArmours,
+    IReadOnlyList<CatalogOptionDto> DefaultSpecialRules,
     IReadOnlyList<CatalogOptionDto> AvailableSpecialRules,
     CommandGroupDto? CommandGroup
 );
