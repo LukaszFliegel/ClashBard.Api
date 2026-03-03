@@ -16,11 +16,11 @@ public enum TowFactionType
     KingdomOfBretonnia,
     [Description("Beastmen Brayherds")]
     BeastmenBrayherds,
-    [Description("Wood Elves")]
+    [Description("Wood Elf Realms")]
     WoodElves,
     [Description("Tomb Kings of Khemri")]
     TombKingsOfKhemri,
-    [Description("High Elves")]
+    [Description("High Elf Realms")]
     HighElves,
     [Description("Dark Elves")]
     DarkElves,
@@ -36,4 +36,6 @@ public enum TowFactionType
     Lizardmen,
     [Description("Chaos Dwarfs")]
     ChaosDwarfs,
+    [Description("Grand Cathay")]
+    GrandCathay,
 }

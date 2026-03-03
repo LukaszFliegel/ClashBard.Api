@@ -9,7 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TowDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("ClashBardConnection")));
 
-builder.Services.AddSingleton<ICatalogService, DarkElvesCatalogService>();
+builder.Services.AddSingleton<IFactionCatalogProvider, DarkElvesCatalogProvider>();
+builder.Services.AddSingleton<ICatalogService, CatalogService>();
 builder.Services.AddScoped<IArmyBuilderService, DarkElvesArmyBuilderService>();
 
 builder.Services.AddControllers();
