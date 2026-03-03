@@ -36,6 +36,7 @@ ClashBard.Tow.Models - main project, contains all models for units and rules
     ClashBard.Tow.Models\MagicItems - contains all magic items that can be used by models and units
     ClashBard.Tow.Models\MagicItems\DarkElves - contains all magic items that are specific to Dark Elves faction
     etc. - each faction has its own folder with specific rules and magic items
+ClashBard.Tow.React - frontend for building army lists
 ClashBard.Tow.Pdf - ignore this project
 ClashBard.Tow.Pdf.Console - ignore this project
 ClashBard.Tow.StaticData - use if some static data needed across all projects, also contains json data with all faction units (huge files)
